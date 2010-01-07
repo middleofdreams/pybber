@@ -1,10 +1,12 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
-!/usr/bin/env python
-import pygtk,gtk,gtk.glade
+
+import pygtk,gtk,gtk.glade,xmpp,send,sys
+
 
 class okno:
 	def __init__(self):
-		self.gladefile = "pybber.glade"
+		self.gladefile = "client.glade"
 		self.wTree = gtk.glade.XML(self.gladefile) 
 		# pobieramy główne okno
 		self.window = self.wTree.get_widget("window1")
@@ -15,30 +17,40 @@ class okno:
 		#po zamknięciu okna - kończymy program
 		
 		#pobranie obiektow z glade i przypisywanie ich do zmiennych:
-		self.etykieta=self.wTree.get_widget("label1")
-		self.pole=self.wTree.get_widget("entry1")
-		
+		self.menu=self.wTree.get_widget("menubar1")
+		self.list=self.wTree.get_widget("treeview1")
+		self.statusbar=self.wTree.get_widget("comboboxentry1")
+		self.button=self.wTree.get_widget("button1")
+		self.message=self.wTree.get_widget("entry1")
+		self.chatwindow=self.wTree.get_widget("treeview2")
 		#tworzymy słownik par - "sygnał":funkcja
 		dic={
-		"ok": self.ok,
-		"wyczysc": self.wyczysc,
-		"zamknij": gtk.main_quit}
+		"send": self.send,
+		}
 		
+		self.chat=gtk.ListStore(str)
+		self.chatwindow.set_model(self.chat)
 		#i podpinamy go do sygnałow z glade
 		self.wTree.signal_autoconnect(dic)
+	#------------------------------------------------login i haslo
 	
-	def ok(self,widget):
-		#pobieramy sobie wartość pola tekstowego do zmiennej:
-		tekst=self.pole.get_text()
-		#i zapisujemy go do etykiety - tak po prostu ;)
-		self.etykieta.set_text(tekst)
-		
-	def wyczysc(self,widget):
-		self.pole.set_text("")
-		self.etykieta.set_text("")
-		
+		jid = 'pybberclient@gmail.com' # @gmail.com 
+		pwd   = 'pybberjabber'
+		jid=xmpp.protocol.JID(jid)  
+		self.cl=xmpp.Client(jid.getDomain(),debug=[])
+		if self.cl.connect() == "":
+			print "not connected"
+			sys.exit(0) 
+		if self.cl.auth(jid.getNode(),pwd) == None: 
+			print "authentication failed"
+			sys.exit(0)
+		self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status="Pybber test"))
+	#------------------------------------------------
+	
+	def send(self,widget):
+		send.send(self)
+				
 if __name__ == "__main__":
-	#uruchamiamy okno:
+
 	klasa=okno()
-	#uruchamiamy gtk:
 	gtk.main()	

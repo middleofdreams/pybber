@@ -8,9 +8,10 @@
         <property name="visible">True</property>
         <child>
           <widget class="GtkVBox" id="vbox3">
+            <property name="visible">True</property>
             <property name="orientation">vertical</property>
             <child>
-              <widget class="GtkTextView" id="textview1">
+              <widget class="GtkTreeView" id="treeview2">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
               </widget>
@@ -40,6 +41,7 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <signal name="clicked" handler="send"/>
+                    <accelerator key="Return" signal="activate"/>
                   </widget>
                   <packing>
                     <property name="position">1</property>
@@ -58,6 +60,8 @@
         </child>
         <child>
           <widget class="GtkFrame" id="frame1">
+            <property name="width_request">201</property>
+            <property name="height_request">382</property>
             <property name="visible">True</property>
             <property name="label_xalign">0</property>
             <property name="label_yalign">0</property>
