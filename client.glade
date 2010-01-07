@@ -19,14 +19,35 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkEntry" id="entry1">
+              <widget class="GtkHBox" id="hbox2">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="invisible_char">&#x2022;</property>
+                <child>
+                  <widget class="GtkEntry" id="entry1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="invisible_char">&#x25CF;</property>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkButton" id="button1">
+                    <property name="label" translatable="yes">Wy&#x15B;lij</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <signal name="clicked" handler="send"/>
+                  </widget>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
               </widget>
               <packing>
                 <property name="expand">False</property>
-                <property name="fill">False</property>
                 <property name="position">1</property>
               </packing>
             </child>
