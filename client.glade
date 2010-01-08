@@ -223,13 +223,22 @@
                       </packing>
                     </child>
                     <child>
+                      <widget class="GtkProgressBar" id="progressbar1">
+                        <property name="text" translatable="yes">Connecting...</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
                       <widget class="GtkComboBoxEntry" id="comboboxentry1">
                         <property name="visible">True</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">False</property>
-                        <property name="position">2</property>
+                        <property name="position">3</property>
                       </packing>
                     </child>
                   </widget>
