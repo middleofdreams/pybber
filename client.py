@@ -28,7 +28,9 @@ class okno:
 		self.chatwindow=self.wTree.get_widget("treeview2")
 		self.progress=self.wTree.get_widget("progressbar1")
 		self.desc=self.wTree.get_widget("entry2")
-		
+		self.toolong=self.wTree.get_widget("vbox1")
+		self.not_connected=self.wTree.get_widget("vbox4")
+
 		#ustawienie statusow
 		self.statuslist=gtk.ListStore(str)
 		self.statusbar.set_model(self.statuslist)
@@ -49,7 +51,10 @@ class okno:
 		dic={
 		"send": self.send,
 		"chdesc": self.chdesc,
-		"chstatus": self.chstatus
+		"chstatus": self.chstatus,
+		"reconnect": self.reconnect,
+		"reconnect2": self.reconnect2,
+		"hidewarn": self.hidewarn
 		}
 		
 	#---------Skroty klawiszowe--------------------------------------
@@ -82,6 +87,12 @@ class okno:
 		index=self.statusbar.get_active()
 		self.connection.set_status(index,desc)
 		
+	def hidewarn(self,widget):
+		self.toolong.hide()
+	def reconnect(self,widget):
+		self.connection.reconnect()
+	def reconnect2(self,widget):
+		self.connection.reconnect2()	
 	def close(self,*widget):
 		self.connection.cl=None
 		self.connection=None

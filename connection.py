@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
-import pygtk,gtk,xmpp,threading,time,xmpp,gobject,sys
+import pygtk,gtk,xmpp,threading,time,xmpp,gobject,sys,thread
 
 
 #----------klasa do zarzadzania polaczeniem-------------------------#
@@ -9,14 +9,20 @@ class connection(threading.Thread):
 	def __init__(self,guiclass):
 
 		#przypisanie paru zmiennych z glownej klasy
-
+	
 		self.desc=guiclass.desc
 		self.chat=guiclass.chat
 		self.statusbar=guiclass.statusbar
 		self.progress=guiclass.progress
+		self.toolong=guiclass.toolong
+		self.not_connected=guiclass.not_connected
 		
-        #rozpoczecie watku polaczenia
-	
+        #pare zmiennych
+		self.i=0.00 #licznik czasu polaczenie
+		self.active=False #okresla czy jest nawiazane aktywne polaczenie
+		self.stop=False #okresla czy polaczenie jest 'przerywane'
+		
+		#rozpoczecie watku polaczenia
 		threading.Thread.__init__(self)
 		threading.Thread(target=self.connecting,args=()).start()
 		
@@ -32,39 +38,90 @@ class connection(threading.Thread):
 		
 		jid = 'pybberclient@gmail.com' 
 		pwd   = 'pybberjabber'
-		jid=xmpp.protocol.JID(jid)  
-		self.cl=xmpp.Client(jid.getDomain(),debug=[])
-		if self.cl.connect() == "":
+		jid=xmpp.protocol.JID(jid) 
+		
+		# testowe polaczenie:
+		cl=xmpp.Client(jid.getDomain(),debug=[])
+		if cl.connect() == "":
 			print "not connected"
 			sys.exit(0) 
-		if self.cl.auth(jid.getNode(),pwd) == None: 
+		if cl.auth(jid.getNode(),pwd) == None: 
 			print "authentication failed"
 			sys.exit(0)
+		self.connected=True
+		#jesli polaczy sie w czasie krotszym niz pare sekund przyjmij
+		#jako glowne polaczenie:
+		if not self.active:	
+			self.cl=cl
 			
-		#handler do odbierania wiadomosci
-		
-		self.cl.RegisterHandler('message',self.messageCB)
-		
-		#wylaczenie progressbara
-		self.ifrun=False
-		
-		#ustawienie poczatkowego statusu
-		self.cl.sendInitPresence()
-		self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status="Pybber test"))
-		self.desc.set_text("Pybber test")
-		self.statusbar.set_active(0)
-		
-		#to rowniez do odbierania wiadomosci
-		self.GoOn(self.cl)
+			#handler do odbierania wiadomosci
+			
+			self.cl.RegisterHandler('message',self.messageCB)
+			
+			#wylaczenie progressbara
+			self.ifrun=False
+			
+			#ustawienie poczatkowego statusu
+			self.cl.sendInitPresence()
+			self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status="Pybber test"))
+			self.desc.set_text("Pybber test")
+			self.statusbar.set_active(0)
+			
+			#to rowniez do odbierania wiadomosci
+			self.GoOn(self.cl)
 		
 	def connectbar(self):
+		
+		#reset zmiennej stop
+		self.stop=False
+		
 		gobject.idle_add(self.progress.show)
-		while(self.ifrun):
+
+		self.i=0.00
+		
+		while(self.ifrun and self.i<1):
+			gobject.idle_add(self.progress.set_fraction,self.i)
+
 			time.sleep(0.1)
-			gobject.idle_add(self.progress.pulse)
+			self.i=self.i+0.005
+			
+			#wyswietlanie komunikatu o za dlugim polaczeniu:
+			if(str(self.i)=='0.15'):
+				self.toolong.show()
+				
+			#przerwanie petli po nacisnieciu przycisku z komunikatu
+			if self.stop:
+				break
+		
+		#ukrycie progressbara
 		gobject.idle_add(self.progress.hide)
+		
+		#jesli polaczony w czasie krotszym niz 25s
+		if(not self.ifrun and self.i<1 and not self.stop):
+			#ustaw zmienna odpowiadajaca za aktywne polaczenie
+			self.active=True
+			
+		#jesli polaczenie bylo 'przerwane'
+		if self.stop:
+			#zrestartuj polaczenie
+			threading.Thread(target=self.connecting,args=()).start()	
+
+		#jesli minelo 25 i sie nie polaczyl i nie bylo reakcji usera
+		if(str(self.i)=='1.0'):
+			#wyswietl komunikat o bledzie
+				self.toolong.hide()
+				self.not_connected.show()
+		
+	#funkcje dla komunikatow
+	def reconnect(self):
+		self.stop=True
+		self.toolong.hide()
+	def reconnect2(self):
+		self.not_connected.hide()
+		threading.Thread(target=self.connecting,args=()).start()	
+
 	def send(self,msg):
-		self.cl.send(xmpp.Message("middleofdreams@gmail.com",msg))
+		self.cl.send(xmpp.Message("edpl90@gmail.com",msg))
 		
 	def set_desc(self,desc):
 		self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status=desc))
