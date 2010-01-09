@@ -29,8 +29,8 @@ class okno:
 		self.progress=self.wTree.get_widget("progressbar1")
 		self.desc=self.wTree.get_widget("entry2")
 		
-		self.desc=login.wTree.get_widget("entry4")
-		self.desc=passwd.wTree.get_widget("entry3")
+		self.login=self.wTree.get_widget("entry4")
+		self.passwd=self.wTree.get_widget("entry3")
 		
 		
 		#ustawienie statusow
