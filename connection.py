@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
-import pygtk,gtk,xmpp,threading,time,xmpp,gobject
+import pygtk,gtk,xmpp,threading,time,xmpp,gobject,sys
 
 class connection(threading.Thread):
 	def __init__(self,guiclass):
 		#self.gui=guiclass
+		self.desc=guiclass.desc
 		threading.Thread.__init__(self)
 		threading.Thread(target=self.connecting,args=()).start()
 		self.progress=guiclass.progress
@@ -25,12 +26,17 @@ class connection(threading.Thread):
 			sys.exit(0)
 		self.ifrun=False
 		self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status="Pybber test"))
+		self.desc.set_text("Pybber test")
 	def connectbar(self):
 		gobject.idle_add(self.progress.show)
 		while(self.ifrun):
 			time.sleep(0.1)
 			gobject.idle_add(self.progress.pulse)
 		gobject.idle_add(self.progress.hide)
-	def send(self,msg,tt):
+	def send(self,msg):
 		self.cl.send(xmpp.Message("edpl90@gmail.com",msg))
+		
+	def set_desc(self,desc):
+		self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status=desc))
+
 

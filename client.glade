@@ -41,7 +41,6 @@
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <signal name="clicked" handler="send"/>
-                    <accelerator key="Return" signal="activate"/>
                   </widget>
                   <packing>
                     <property name="position">1</property>
@@ -59,200 +58,212 @@
           </packing>
         </child>
         <child>
-          <widget class="GtkFrame" id="frame1">
-            <property name="width_request">201</property>
-            <property name="height_request">382</property>
+          <widget class="GtkVBox" id="vbox2">
+            <property name="width_request">60</property>
             <property name="visible">True</property>
-            <property name="label_xalign">0</property>
-            <property name="label_yalign">0</property>
+            <property name="orientation">vertical</property>
             <child>
-              <widget class="GtkAlignment" id="alignment1">
+              <widget class="GtkMenuBar" id="menubar1">
+                <property name="width_request">0</property>
                 <property name="visible">True</property>
-                <property name="left_padding">12</property>
                 <child>
-                  <widget class="GtkVBox" id="vbox2">
-                    <property name="width_request">60</property>
+                  <widget class="GtkMenuItem" id="menuitem1">
                     <property name="visible">True</property>
-                    <property name="orientation">vertical</property>
+                    <property name="label" translatable="yes">_Plik</property>
+                    <property name="use_underline">True</property>
                     <child>
-                      <widget class="GtkMenuBar" id="menubar1">
-                        <property name="width_request">0</property>
+                      <widget class="GtkMenu" id="menu1">
                         <property name="visible">True</property>
                         <child>
-                          <widget class="GtkMenuItem" id="menuitem1">
+                          <widget class="GtkImageMenuItem" id="imagemenuitem1">
+                            <property name="label">gtk-new</property>
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">_Plik</property>
                             <property name="use_underline">True</property>
-                            <child>
-                              <widget class="GtkMenu" id="menu1">
-                                <property name="visible">True</property>
-                                <child>
-                                  <widget class="GtkImageMenuItem" id="imagemenuitem1">
-                                    <property name="label">gtk-new</property>
-                                    <property name="visible">True</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="use_stock">True</property>
-                                  </widget>
-                                </child>
-                                <child>
-                                  <widget class="GtkImageMenuItem" id="imagemenuitem2">
-                                    <property name="label">gtk-open</property>
-                                    <property name="visible">True</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="use_stock">True</property>
-                                  </widget>
-                                </child>
-                                <child>
-                                  <widget class="GtkImageMenuItem" id="imagemenuitem3">
-                                    <property name="label">gtk-save</property>
-                                    <property name="visible">True</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="use_stock">True</property>
-                                  </widget>
-                                </child>
-                                <child>
-                                  <widget class="GtkImageMenuItem" id="imagemenuitem4">
-                                    <property name="label">gtk-save-as</property>
-                                    <property name="visible">True</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="use_stock">True</property>
-                                  </widget>
-                                </child>
-                                <child>
-                                  <widget class="GtkSeparatorMenuItem" id="separatormenuitem1">
-                                    <property name="visible">True</property>
-                                  </widget>
-                                </child>
-                                <child>
-                                  <widget class="GtkImageMenuItem" id="imagemenuitem5">
-                                    <property name="label">gtk-quit</property>
-                                    <property name="visible">True</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="use_stock">True</property>
-                                  </widget>
-                                </child>
-                              </widget>
-                            </child>
+                            <property name="use_stock">True</property>
                           </widget>
                         </child>
                         <child>
-                          <widget class="GtkMenuItem" id="menuitem2">
+                          <widget class="GtkImageMenuItem" id="imagemenuitem2">
+                            <property name="label">gtk-open</property>
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">_Edycja</property>
                             <property name="use_underline">True</property>
-                            <child>
-                              <widget class="GtkMenu" id="menu2">
-                                <property name="visible">True</property>
-                                <child>
-                                  <widget class="GtkImageMenuItem" id="imagemenuitem6">
-                                    <property name="label">gtk-cut</property>
-                                    <property name="visible">True</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="use_stock">True</property>
-                                  </widget>
-                                </child>
-                                <child>
-                                  <widget class="GtkImageMenuItem" id="imagemenuitem7">
-                                    <property name="label">gtk-copy</property>
-                                    <property name="visible">True</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="use_stock">True</property>
-                                  </widget>
-                                </child>
-                                <child>
-                                  <widget class="GtkImageMenuItem" id="imagemenuitem8">
-                                    <property name="label">gtk-paste</property>
-                                    <property name="visible">True</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="use_stock">True</property>
-                                  </widget>
-                                </child>
-                                <child>
-                                  <widget class="GtkImageMenuItem" id="imagemenuitem9">
-                                    <property name="label">gtk-delete</property>
-                                    <property name="visible">True</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="use_stock">True</property>
-                                  </widget>
-                                </child>
-                              </widget>
-                            </child>
+                            <property name="use_stock">True</property>
                           </widget>
                         </child>
                         <child>
-                          <widget class="GtkMenuItem" id="menuitem3">
+                          <widget class="GtkImageMenuItem" id="imagemenuitem3">
+                            <property name="label">gtk-save</property>
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">_Widok</property>
                             <property name="use_underline">True</property>
+                            <property name="use_stock">True</property>
                           </widget>
                         </child>
                         <child>
-                          <widget class="GtkMenuItem" id="menuitem4">
+                          <widget class="GtkImageMenuItem" id="imagemenuitem4">
+                            <property name="label">gtk-save-as</property>
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">Pomo_c</property>
                             <property name="use_underline">True</property>
-                            <child>
-                              <widget class="GtkMenu" id="menu3">
-                                <property name="visible">True</property>
-                                <child>
-                                  <widget class="GtkImageMenuItem" id="imagemenuitem10">
-                                    <property name="label">gtk-about</property>
-                                    <property name="visible">True</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="use_stock">True</property>
-                                  </widget>
-                                </child>
-                              </widget>
-                            </child>
+                            <property name="use_stock">True</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkSeparatorMenuItem" id="separatormenuitem1">
+                            <property name="visible">True</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkImageMenuItem" id="imagemenuitem5">
+                            <property name="label">gtk-quit</property>
+                            <property name="visible">True</property>
+                            <property name="use_underline">True</property>
+                            <property name="use_stock">True</property>
                           </widget>
                         </child>
                       </widget>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">False</property>
-                        <property name="position">0</property>
-                      </packing>
                     </child>
+                  </widget>
+                </child>
+                <child>
+                  <widget class="GtkMenuItem" id="menuitem2">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">_Edycja</property>
+                    <property name="use_underline">True</property>
                     <child>
-                      <widget class="GtkTreeView" id="treeview1">
+                      <widget class="GtkMenu" id="menu2">
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
+                        <child>
+                          <widget class="GtkImageMenuItem" id="imagemenuitem6">
+                            <property name="label">gtk-cut</property>
+                            <property name="visible">True</property>
+                            <property name="use_underline">True</property>
+                            <property name="use_stock">True</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkImageMenuItem" id="imagemenuitem7">
+                            <property name="label">gtk-copy</property>
+                            <property name="visible">True</property>
+                            <property name="use_underline">True</property>
+                            <property name="use_stock">True</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkImageMenuItem" id="imagemenuitem8">
+                            <property name="label">gtk-paste</property>
+                            <property name="visible">True</property>
+                            <property name="use_underline">True</property>
+                            <property name="use_stock">True</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkImageMenuItem" id="imagemenuitem9">
+                            <property name="label">gtk-delete</property>
+                            <property name="visible">True</property>
+                            <property name="use_underline">True</property>
+                            <property name="use_stock">True</property>
+                          </widget>
+                        </child>
                       </widget>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
                     </child>
+                  </widget>
+                </child>
+                <child>
+                  <widget class="GtkMenuItem" id="menuitem3">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">_Widok</property>
+                    <property name="use_underline">True</property>
+                  </widget>
+                </child>
+                <child>
+                  <widget class="GtkMenuItem" id="menuitem4">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Pomo_c</property>
+                    <property name="use_underline">True</property>
                     <child>
-                      <widget class="GtkProgressBar" id="progressbar1">
-                        <property name="text" translatable="yes">Connecting...</property>
-                      </widget>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkComboBoxEntry" id="comboboxentry1">
+                      <widget class="GtkMenu" id="menu3">
                         <property name="visible">True</property>
+                        <child>
+                          <widget class="GtkImageMenuItem" id="imagemenuitem10">
+                            <property name="label">gtk-about</property>
+                            <property name="visible">True</property>
+                            <property name="use_underline">True</property>
+                            <property name="use_stock">True</property>
+                          </widget>
+                        </child>
                       </widget>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">False</property>
-                        <property name="position">3</property>
-                      </packing>
                     </child>
                   </widget>
                 </child>
               </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
             </child>
             <child>
-              <widget class="GtkLabel" id="label1">
+              <widget class="GtkTreeView" id="treeview1">
                 <property name="visible">True</property>
-                <property name="yalign">0.43999999761581421</property>
-                <property name="use_markup">True</property>
+                <property name="can_focus">True</property>
               </widget>
               <packing>
-                <property name="type">label_item</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkProgressBar" id="progressbar1">
+                <property name="show_text">True</property>
+                <property name="text" translatable="yes">Connecting...</property>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkHBox" id="hbox3">
+                <property name="visible">True</property>
+                <child>
+                  <widget class="GtkEntry" id="entry2">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="invisible_char">&#x25CF;</property>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkButton" id="button2">
+                    <property name="label" translatable="yes">
+</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <signal name="clicked" handler="chdesc"/>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkComboBoxEntry" id="comboboxentry1">
+                <property name="visible">True</property>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">4</property>
               </packing>
             </child>
           </widget>

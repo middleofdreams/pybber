@@ -3,6 +3,7 @@
 
 import pygtk,gtk,gtk.glade,xmpp,send,sys
 from connection import connection
+import keys
 
 class okno:
 	def __init__(self):
@@ -24,10 +25,21 @@ class okno:
 		self.message=self.wTree.get_widget("entry1")
 		self.chatwindow=self.wTree.get_widget("treeview2")
 		self.progress=self.wTree.get_widget("progressbar1")
+		self.desc=self.wTree.get_widget("entry2")
+
 		#tworzymy słownik par - "sygnał":funkcja
 		dic={
 		"send": self.send,
+		"chdesc": self.chdesc
 		}
+		
+	#---------Skroty klawiszowe--------------------------------------
+		
+		self.message.connect("key_press_event", keys.message,self)
+		self.desc.connect("key_press_event", keys.status,self)
+	
+	#----------------------------------------------------------------
+	
 		
 		self.chat=gtk.ListStore(str)
 		self.chatwindow.set_model(self.chat)
@@ -36,14 +48,18 @@ class okno:
 		self.chatwindow.append_column(self.column)
 		#self.column.set_title("test")
 		self.wTree.signal_autoconnect(dic)
-	#------------------------------------------------login i haslo
+	
+	#------Połączenie z serwerem XMPP----------------
 		
 		self.connection=connection(self)
 		
-			#------------------------------------------------
+	#------------------------------------------------
 	
-	def send(self,widget):
+	def send(self,*widget):
 		send.send(self)
+	def chdesc(self,*widget):
+		desc=self.desc.get_text()
+		self.connection.set_desc(desc)
 				
 if __name__ == "__main__":
 	gtk.gdk.threads_init()
