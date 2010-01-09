@@ -6,6 +6,7 @@ class connection(threading.Thread):
 	def __init__(self,guiclass):
 		#self.gui=guiclass
 		self.desc=guiclass.desc
+		self.chat=guiclass.chat
 		threading.Thread.__init__(self)
 		threading.Thread(target=self.connecting,args=()).start()
 		self.progress=guiclass.progress
@@ -24,9 +25,13 @@ class connection(threading.Thread):
 		if self.cl.auth(jid.getNode(),pwd) == None: 
 			print "authentication failed"
 			sys.exit(0)
+		self.cl.RegisterHandler('message',self.messageCB)
 		self.ifrun=False
+		self.cl.sendInitPresence()
 		self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status="Pybber test"))
 		self.desc.set_text("Pybber test")
+		self.GoOn(self.cl)
+		
 	def connectbar(self):
 		gobject.idle_add(self.progress.show)
 		while(self.ifrun):
@@ -39,4 +44,18 @@ class connection(threading.Thread):
 	def set_desc(self,desc):
 		self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status=desc))
 
+	def messageCB(self,conn,mess):
+		text=mess.getBody()
+		user=mess.getFrom()
+		if text!=None:
+			user=user.getStripped()
+			self.chat.append([user+": "+text])
+		
+	def StepOn(self, conn):
+		try:
+			conn.Process(1)
+		except KeyboardInterrupt: return 0
+		return 1
 
+	def GoOn(self,conn):
+		while self.StepOn(conn): pass

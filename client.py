@@ -52,7 +52,6 @@ class okno:
 	#------Połączenie z serwerem XMPP----------------
 		
 		self.connection=connection(self)
-		
 	#------------------------------------------------
 	
 	def send(self,*widget):
@@ -60,6 +59,8 @@ class okno:
 	def chdesc(self,*widget):
 		desc=self.desc.get_text()
 		self.connection.set_desc(desc)
+
+
 				
 if __name__ == "__main__":
 	gtk.gdk.threads_init()
