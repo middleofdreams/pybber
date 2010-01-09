@@ -1,0 +1,8 @@
+W pierwszej kolejnosci:
+	-kreator konta (osobny plik glade + 2 klasy - do gui i do 
+	przechowywania ustawien)
+	-sprawdzenie czy nadchodzaca wiadomosc jest od danego kontaktu
+	-lista kontaktow...
+	-podkreslanie kontaktow od ktorych dostajemy wiadomosc
+	-ustawienia nt poczatkowego statusu
+	
