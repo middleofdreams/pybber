@@ -64,7 +64,7 @@ class connection(threading.Thread):
 			gobject.idle_add(self.progress.pulse)
 		gobject.idle_add(self.progress.hide)
 	def send(self,msg):
-		self.cl.send(xmpp.Message("edpl90@gmail.com",msg))
+		self.cl.send(xmpp.Message("middleofdreams@gmail.com",msg))
 		
 	def set_desc(self,desc):
 		self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status=desc))

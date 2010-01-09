@@ -15,7 +15,7 @@ class okno:
 		self.window.show()
 		#wyświetlamy głowne okno
 		if (self.window):
-			self.window.connect("destroy",gtk.main_quit)
+			self.window.connect("destroy",self.close)
 		#po zamknięciu okna - kończymy program
 		
 		#pobranie obiektow z glade i przypisywanie ich do zmiennych:
@@ -81,7 +81,12 @@ class okno:
 		desc=self.desc.get_text()
 		index=self.statusbar.get_active()
 		self.connection.set_status(index,desc)
-
+		
+	def close(self,*widget):
+		self.connection.cl=None
+		self.connection=None
+		gtk.main_quit()
+		sys.exit(0)
 				
 if __name__ == "__main__":
 	gtk.gdk.threads_init()
