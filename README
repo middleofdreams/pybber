@@ -1,4 +1,5 @@
 W pierwszej kolejnosci:
+	-konczenie watku polaczenia przy zamknieciu gui
 	-kreator konta (osobny plik glade + 2 klasy - do gui i do 
 	przechowywania ustawien)
 	-sprawdzenie czy nadchodzaca wiadomosc jest od danego kontaktu
