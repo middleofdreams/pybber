@@ -54,7 +54,8 @@ class okno:
 		"chstatus": self.chstatus,
 		"reconnect": self.reconnect,
 		"reconnect2": self.reconnect2,
-		"hidewarn": self.hidewarn
+		"hidewarn": self.hidewarn,
+		"resize": self.resize
 		}
 		
 	#---------Skroty klawiszowe--------------------------------------
@@ -66,8 +67,10 @@ class okno:
 	
 		self.chat=gtk.ListStore(str)
 		self.chatwindow.set_model(self.chat)
-		renderer=gtk.CellRendererText()
-		self.column=gtk.TreeViewColumn("Rozmowa z ...",renderer, text=0)
+		self.renderer=gtk.CellRendererText()
+		self.renderer.props.wrap_width = 300
+		self.renderer.props.wrap_mode = gtk.WRAP_WORD
+		self.column=gtk.TreeViewColumn("Rozmowa z ...",self.renderer, text=0)
 		self.chatwindow.append_column(self.column)
 		#self.column.set_title("test")
 		self.wTree.signal_autoconnect(dic)
@@ -92,7 +95,9 @@ class okno:
 	def reconnect(self,widget):
 		self.connection.reconnect()
 	def reconnect2(self,widget):
-		self.connection.reconnect2()	
+		self.connection.reconnect2()
+	def resize(self,widget):
+		  self.renderer.props.wrap_width = int(self.column.get_width())-int(10)
 	def close(self,*widget):
 		self.connection.cl=None
 		self.connection=None

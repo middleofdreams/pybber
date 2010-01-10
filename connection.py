@@ -45,10 +45,10 @@ class connection(threading.Thread):
 		if cl.connect() == "":
 			print "not connected"
 			sys.exit(0) 
-		if cl.auth(jid.getNode(),pwd) == None: 
-			print "authentication failed"
-			sys.exit(0)
-		self.connected=True
+		if not self.active:
+			if cl.auth(jid.getNode(),pwd) == None: 
+				print "authentication failed"
+				sys.exit(0)
 		#jesli polaczy sie w czasie krotszym niz pare sekund przyjmij
 		#jako glowne polaczenie:
 		if not self.active:	
@@ -66,6 +66,10 @@ class connection(threading.Thread):
 			self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status="Pybber test"))
 			self.desc.set_text("Pybber test")
 			self.statusbar.set_active(0)
+			
+			#chowa ewentualne komunikaty
+			self.toolong.hide()
+			self.not_connected.hide()
 			
 			#to rowniez do odbierania wiadomosci
 			self.GoOn(self.cl)

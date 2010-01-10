@@ -5,6 +5,8 @@
   <widget class="GtkWindow" id="window1">
     <property name="default_width">500</property>
     <property name="default_height">300</property>
+    <signal name="drag_drop" handler="resize"/>
+    <signal name="drag_end" handler="resize"/>
     <child>
       <widget class="GtkHBox" id="hbox1">
         <property name="visible">True</property>
@@ -13,9 +15,18 @@
             <property name="visible">True</property>
             <property name="orientation">vertical</property>
             <child>
-              <widget class="GtkTreeView" id="treeview2">
+              <widget class="GtkScrolledWindow" id="scrolledwindow1">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">automatic</property>
+                <property name="vscrollbar_policy">automatic</property>
+                <property name="shadow_type">etched-out</property>
+                <child>
+                  <widget class="GtkTreeView" id="treeview2">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                  </widget>
+                </child>
               </widget>
               <packing>
                 <property name="position">0</property>
@@ -31,8 +42,6 @@
                     <property name="invisible_char">&#x25CF;</property>
                   </widget>
                   <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">False</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
@@ -45,6 +54,8 @@
                     <signal name="clicked" handler="send"/>
                   </widget>
                   <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
                     <property name="position">1</property>
                   </packing>
                 </child>

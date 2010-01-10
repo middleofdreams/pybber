@@ -9,4 +9,5 @@ def send(guiclass):
 	
   #for i in range(100): 
   guiclass.connection.send(msg)
-  guiclass.chat.append(["Me: "+msg])
+  guiclass.chat.append(["-= Me : "+msg])
+  guiclass.renderer.props.wrap_width = int(guiclass.column.get_width())-int(10)
