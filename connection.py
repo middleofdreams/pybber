@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
-import pygtk,gtk,xmpp,threading,time,xmpp,gobject,sys,thread
-
+import pygtk,gtk,xmpp,threading,time,gobject,sys,thread
+from chatwindow import *
 
 #----------klasa do zarzadzania polaczeniem-------------------------#
 
@@ -9,7 +9,7 @@ class connection(threading.Thread):
 	def __init__(self,guiclass):
 
 		#przypisanie paru zmiennych z glownej klasy
-	
+		self.gui=guiclass
 		self.desc=guiclass.desc
 		self.chat=guiclass.chat
 		self.statusbar=guiclass.statusbar
@@ -157,8 +157,8 @@ class connection(threading.Thread):
 			
 			#wypisywanie tresci w oknie
 			
-			self.chat.append([user+": "+text])
-
+			n=self.chat.append(["-= "+user+": "+text])
+			update(self.gui,n)
 
 	#funkcje sledzace wiadomosci:
 	def StepOn(self, conn):
