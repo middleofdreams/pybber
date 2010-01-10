@@ -31,6 +31,11 @@ class okno:
 		self.toolong=self.wTree.get_widget("vbox1")
 		self.not_connected=self.wTree.get_widget("vbox4")
 
+		
+		self.login=self.wTree.get_widget("entry4")
+		self.passwd=self.wTree.get_widget("entry3")
+		
+		
 		#ustawienie statusow
 		self.statuslist=gtk.ListStore(str)
 		self.statusbar.set_model(self.statuslist)
