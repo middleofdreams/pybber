@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 import pygtk,gtk,xmpp,threading,time,gobject,sys,thread
 from chatwindow import *
-
+from list import update_list
 #----------klasa do zarzadzania polaczeniem-------------------------#
 
 class connection(threading.Thread):
@@ -66,7 +66,7 @@ class connection(threading.Thread):
 			self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status="Pybber test"))
 			self.desc.set_text("Pybber test")
 			self.statusbar.set_active(0)
-			
+			self.get_list()
 			#chowa ewentualne komunikaty
 			self.toolong.hide()
 			self.not_connected.hide()
@@ -143,7 +143,12 @@ class connection(threading.Thread):
 		if index==5:
 			self.cl.send(xmpp.dispatcher.Presence(show="unavailable",status=desc))
 		
-
+	def get_list(self):
+		self.roster=self.cl.Roster.getRoster()
+		print self.roster.getItems()		
+		items=self.roster.getItems()
+		update_list(self.gui,items)
+		
 #------------Odbieranie wiadomosci:-------------------------------------
 
 	def messageCB(self,conn,mess):

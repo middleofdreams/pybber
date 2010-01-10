@@ -5,6 +5,8 @@ import pygtk,gtk,gtk.glade,xmpp,sys,pango
 from connection import connection
 import keys
 import send
+from list import create_empty_list
+
 
 class okno:
 	def __init__(self):
@@ -69,7 +71,7 @@ class okno:
 		self.desc.connect("key_press_event", keys.status,self)
 	
 	#---Stworzenie modelu dla wyswietlania rozmow----------------------
-	
+		create_empty_list(self)
 		self.chat=gtk.ListStore(str)
 		self.chatwindow.set_model(self.chat)
 		self.renderer=gtk.CellRendererText()
@@ -108,6 +110,8 @@ class okno:
 		self.connection=None
 		gtk.main_quit()
 		sys.exit(0)
+		
+	
 				
 if __name__ == "__main__":
 	gtk.gdk.threads_init()
