@@ -38,19 +38,23 @@ class okno:
 		self.passwd=self.wTree.get_widget("entry3")
 		
 		
-		#ustawienie statusow
-		self.statuslist=gtk.ListStore(str)
+		#ustawienie statusow z ikonami
+		self.statuslist=gtk.ListStore(str,gtk.gdk.Pixbuf)
 		self.statusbar.set_model(self.statuslist)
-		self.statuslist.append(["Dostepny"])
-		self.statuslist.append(["Zaraz wracam"])
-		self.statuslist.append(["Wrócę później"])
-		self.statuslist.append(["Nie przeszkadzać"])
-		self.statuslist.append(["Chcę pogadać"])
-		self.statuslist.append(["Niewidoczny"])
+		self.statuslist.append(["Dostepny",gtk.gdk.pixbuf_new_from_file("icons/online.png")])
+		self.statuslist.append(["Zaraz wracam",gtk.gdk.pixbuf_new_from_file("icons/away.png")])
+		self.statuslist.append(["Wrócę później",gtk.gdk.pixbuf_new_from_file("icons/extended-away.png")])
+		self.statuslist.append(["Nie przeszkadzać",gtk.gdk.pixbuf_new_from_file("icons/busy.png")])
+		self.statuslist.append(["Chcę pogadać",gtk.gdk.pixbuf_new_from_file("icons/chat.png")])
+		self.statuslist.append(["Niewidoczny",gtk.gdk.pixbuf_new_from_file("icons/invisible.png")])
 		
 		#wyswietlanie statusow
 		cell = gtk.CellRendererText()
+		cell2=gtk.CellRendererPixbuf()
+		cell2.set_fixed_size(24,24)
+		self.statusbar.pack_start(cell2,expand=False)
 		self.statusbar.pack_start(cell)
+		self.statusbar.add_attribute(cell2, 'pixbuf', 1)
 		self.statusbar.add_attribute(cell, 'text', 0)
 		
 		

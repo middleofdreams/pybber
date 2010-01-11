@@ -2,7 +2,8 @@
 #!/usr/bin/env python
 import pygtk,gtk,xmpp
 
-def on_activated(widget, row, col,guiclass):       
+def on_activated(widget, row, col,guiclass):    
+	'''przelacza aktualnego rozmowce'''
      model = widget.get_model()
      text = model[row][0]
      guiclass.column.set_title("Rozmowa z "+text)
@@ -12,6 +13,7 @@ def on_activated(widget, row, col,guiclass):
 	 
 	 
 def create_empty_list(guiclass):
+	'''tworzy pusta liste'''
 	guiclass.listmodel=gtk.ListStore(str,str,gtk.gdk.Pixbuf)
 	guiclass.list.set_model(guiclass.listmodel)
 	guiclass.lrenderer=gtk.CellRendererText()
@@ -25,25 +27,33 @@ def create_empty_list(guiclass):
 	guiclass.list.connect("row-activated", on_activated, guiclass)
 	
 def update_list(guiclass,sess,pres):
+	'''aktualizuje zmieniajace sie wpisy'''
+	
+	#sprawdzanie kto sie zmienil 
 	jid=pres.getFrom()
 	nick=pres.getFrom().getStripped()
-	print nick
-	cats = list ()
-	item = guiclass.listmodel.get_iter_first ()
+	
+	
 	status=guiclass.connection.roster.getStatus(jid.__str__())	
 	priority= guiclass.connection.roster.getPriority(jid.__str__())
+	
+	#sprawdzenie czy zalogowany
 	if priority==None:
 		show='offline'
 	else:	
 		show=guiclass.connection.roster.getShow(jid.__str__())		
-
+	
+	#przypisanie kontaktow do tymczasowej listy
+	cats = list ()
+	item = guiclass.listmodel.get_iter_first ()
 	while ( item != None ):
 		cats.append (guiclass.listmodel.get_value (item, 0))
 		item = guiclass.listmodel.iter_next(item)
-		
+	#sprawdzenie czy kontakt znajduje sie na liscie	
 	if not nick in cats:
 		guiclass.listmodel.append([nick,status,show])
 	else:
+	#jesli tak - aktualizuj wpis
 		item = guiclass.listmodel.get_iter_first ()
 		while ( guiclass.listmodel.get_value(item,0)!=nick):
 			cats.append (guiclass.listmodel.get_value (item, 0))
@@ -53,12 +63,16 @@ def update_list(guiclass,sess,pres):
 
 
 def get_all(guiclass,list):	
+	'''pobiera wszystkie kontakty z rostera'''
 	for i in list:		
 		status=guiclass.connection.roster.getStatus(str(xmpp.protocol.JID(jid=i)))	
 		show=guiclass.connection.roster.getShow(str(xmpp.protocol.JID(jid=i)))	
+		
+		#domyslne oznaczanie kontaktow jako niedostepnych
 		guiclass.listmodel.append([i,status,get_show('offline')])
 		
 def get_show(show):
+	'''pobiera obrazek statusu'''
 	if show==None:
 		show=gtk.gdk.pixbuf_new_from_file("icons/online.png")
 	if show=="dnd":
