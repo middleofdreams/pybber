@@ -69,6 +69,8 @@ class okno:
 		"resize": self.resize
 		}
 		
+		self.messages={}
+		self.recipent=""
 	#---------Skroty klawiszowe--------------------------------------
 		
 		self.message.connect("key_press_event", keys.message,self)

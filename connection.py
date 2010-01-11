@@ -2,8 +2,8 @@
 #!/usr/bin/env python
 import pygtk,gtk,xmpp,threading,time,gobject,sys,thread
 from chatwindow import *
-from list import update_list
-from list import get_all
+from list import *
+
 #----------klasa do zarzadzania polaczeniem-------------------------#
 
 class connection(threading.Thread):
@@ -171,10 +171,13 @@ class connection(threading.Thread):
 		if text!=None:
 			user=user.getStripped()
 			
+			savechat(self.gui,user,user,text)
 			#wypisywanie tresci w oknie
-			
-			n=self.chat.append(["-= "+user+": "+text])
-			update(self.gui,n)
+			if user==self.gui.recipent:
+				n=self.chat.append(["-= "+user+": "+text])
+				update(self.gui,n)
+			else: is_typing(self.gui,user)
+				
 
 	#funkcje sledzace wiadomosci:
 	def StepOn(self, conn):

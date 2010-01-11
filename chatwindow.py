@@ -9,3 +9,14 @@ def update(guiclass,n):
 		pass
 	n=guiclass.chat.get_path(n)
 	guiclass.chatwindow.scroll_to_cell(n) 
+
+def savechat(guiclass,recipent,user,chat):
+	text="-= "+user+": "+chat
+	if recipent in guiclass.messages: 
+		guiclass.messages[recipent].append(text)
+	else : guiclass.messages[recipent]=[text]
+
+def loadchat(guiclass,recipent):
+	if recipent in guiclass.messages:
+			for text in guiclass.messages[recipent]: n=guiclass.chat.append([text])
+			update(guiclass,n)
