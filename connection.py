@@ -3,6 +3,7 @@
 import pygtk,gtk,xmpp,threading,time,gobject,sys,thread
 from chatwindow import *
 from list import update_list
+from list import get_all
 #----------klasa do zarzadzania polaczeniem-------------------------#
 
 class connection(threading.Thread):
@@ -57,7 +58,6 @@ class connection(threading.Thread):
 			#handler do odbierania wiadomosci
 			
 			self.cl.RegisterHandler('message',self.messageCB)
-			
 			#wylaczenie progressbara
 			self.ifrun=False
 			
@@ -70,7 +70,8 @@ class connection(threading.Thread):
 			#chowa ewentualne komunikaty
 			self.toolong.hide()
 			self.not_connected.hide()
-			
+			self.cl.RegisterHandler('presence',self.presenceCB)
+
 			#to rowniez do odbierania wiadomosci
 			self.GoOn(self.cl)
 		
@@ -125,7 +126,7 @@ class connection(threading.Thread):
 		threading.Thread(target=self.connecting,args=()).start()	
 
 	def send(self,msg):
-		self.cl.send(xmpp.Message("edpl90@gmail.com",msg))
+		self.cl.send(xmpp.Message(self.gui.recipent,msg))
 		
 	def set_desc(self,desc):
 		self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status=desc))
@@ -147,7 +148,7 @@ class connection(threading.Thread):
 		self.roster=self.cl.Roster.getRoster()
 		print self.roster.getItems()		
 		items=self.roster.getItems()
-		update_list(self.gui,items)
+		get_all(self.gui,items)
 		
 #------------Odbieranie wiadomosci:-------------------------------------
 
@@ -174,3 +175,16 @@ class connection(threading.Thread):
 
 	def GoOn(self,conn):
 		while self.StepOn(conn): pass
+		
+	def presenceCB(self, sess,pres):
+		update_list(self.gui,sess,pres)
+		#nick=pres.getFrom().getResource()
+		#text=”
+		#if pres.getType()==’unavailable’:
+		#	if nick in roster:
+		#		text=nick
+		#		roster.remove(nick)
+		#else:
+		#	if nick not in roster:
+		#		text=nick
+		#		roster.append(nick)
