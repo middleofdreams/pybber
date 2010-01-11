@@ -2,13 +2,13 @@
 #!/usr/bin/env python
 import pygtk,gtk,xmpp
 
-def on_activated(widget, row, col,guiclass):    
-	'''przelacza aktualnego rozmowce'''
-     model = widget.get_model()
-     text = model[row][0]
-     guiclass.column.set_title("Rozmowa z "+text)
-     guiclass.recipent=text
-     guiclass.wTree.get_widget("vbox3").show()
+def on_activated(widget, row, col,guiclass):
+	'''zmienia aktualnego rozmowce'''  
+	model = widget.get_model()
+	text = model[row][0]
+	guiclass.column.set_title("Rozmowa z "+text)
+	guiclass.recipent=text
+	guiclass.wTree.get_widget("vbox3").show()
      
 	 
 	 
