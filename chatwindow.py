@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
-import pygtk,gtk
+import pygtk,gtk,gobject,time
 #-----------aktualizacja szerokosci wrappera i scrolldown
 def update(guiclass,n):
 	try:
@@ -11,12 +11,18 @@ def update(guiclass,n):
 	guiclass.chatwindow.scroll_to_cell(n) 
 
 def savechat(guiclass,recipent,user,chat):
-	text="-= "+user+": "+chat
+	text="<b>-= <font color=blue>"+user+"</font></b>: "+chat
+	
 	if recipent in guiclass.messages: 
-		guiclass.messages[recipent].append(text)
-	else : guiclass.messages[recipent]=[text]
+		guiclass.messages[recipent]=guiclass.messages[recipent]+"<br/>"+text
+	else : guiclass.messages[recipent]=text
 
 def loadchat(guiclass,recipent):
 	if recipent in guiclass.messages:
-			for text in guiclass.messages[recipent]: n=guiclass.chat.append([text])
-			update(guiclass,n)
+		html=guiclass.messages[recipent]
+	else: html=""
+	gobject.idle_add(guiclass.chat.load_html_string ,"<font size=-3>"+html, "file:///")
+		
+	
+	#guiclass.chat.scroll()
+			#update(guiclass,n)

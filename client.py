@@ -6,7 +6,7 @@ from connection import connection
 import keys
 import send
 from list import create_empty_list
-
+import webkit
 
 class okno:
 	def __init__(self):
@@ -27,7 +27,7 @@ class okno:
 		self.statusbar=self.wTree.get_widget("combobox1")
 		self.button=self.wTree.get_widget("button1")
 		self.message=self.wTree.get_widget("entry1")
-		self.chatwindow=self.wTree.get_widget("treeview2")
+		#self.chatwindow=self.wTree.get_widget("treeview2")
 		self.progress=self.wTree.get_widget("progressbar1")
 		self.desc=self.wTree.get_widget("entry2")
 		self.toolong=self.wTree.get_widget("vbox1")
@@ -75,19 +75,22 @@ class okno:
 		
 		self.message.connect("key_press_event", keys.message,self)
 		self.desc.connect("key_press_event", keys.status,self)
-	
+		
 	#---Stworzenie modelu dla wyswietlania rozmow----------------------
 		create_empty_list(self)
-		self.chat=gtk.ListStore(str)
-		self.chatwindow.set_model(self.chat)
-		self.renderer=gtk.CellRendererText()
-		self.renderer.props.wrap_width = 300
-		self.renderer.props.wrap_mode = gtk.WRAP_WORD
-		self.column=gtk.TreeViewColumn("Rozmowa z ...",self.renderer, text=0)
-		self.chatwindow.append_column(self.column)
+		#self.chat=gtk.ListStore(str)
+		self.chatwindow=self.wTree.get_widget("scrolledwindow1")
+		#self.renderer=gtk.CellRendererText()
+		#self.renderer.props.wrap_width = 300
+		#self.renderer.props.wrap_mode = gtk.WRAP_WORD
+		#self.column=gtk.TreeViewColumn("Rozmowa z ...",self.renderer, text=0)
+		#self.chatwindow.append_column(self.column)
 		#self.column.set_title("test")
+		self.chat=webkit.WebView()
+		self.wTree.get_widget("scrolledwindow1").add(self.chat)
+		self.chat.show()
 		self.wTree.signal_autoconnect(dic)
-	
+		self.chat.connect("load-finished", self.loadFinished)
 	#------Połączenie z serwerem XMPP----------------
 		
 		self.connection=connection(self)
@@ -110,14 +113,19 @@ class okno:
 	def reconnect2(self,widget):
 		self.connection.reconnect2()
 	def resize(self,widget):
-		  self.renderer.props.wrap_width = int(self.column.get_width())-int(10)
+		pass
+		#  self.renderer.props.wrap_width = int(self.column.get_width())-int(10)
 	def close(self,*widget):
 		self.connection.cl=None
 		self.connection=None
 		gtk.main_quit()
 		sys.exit(0)
 		
-	
+	def loadFinished(self,a,b):
+		pos=self.chatwindow.get_vadjustment()
+		newpos=pos.get_upper()
+		pos.set_value(newpos)
+		self.chatwindow.set_vadjustment(pos)  
 				
 if __name__ == "__main__":
 	gtk.gdk.threads_init()

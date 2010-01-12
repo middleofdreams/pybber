@@ -174,8 +174,9 @@ class connection(threading.Thread):
 			savechat(self.gui,user,user,text)
 			#wypisywanie tresci w oknie
 			if user==self.gui.recipent:
-				n=self.chat.append(["-= "+user+": "+text])
-				update(self.gui,n)
+				loadchat(self.gui,user)
+				#n=self.chat.append(["-= "+user+": "+text])
+				#update(self.gui,n)
 			else: is_typing(self.gui,user)
 				
 

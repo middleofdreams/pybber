@@ -19,12 +19,10 @@
                 <property name="can_focus">True</property>
                 <property name="hscrollbar_policy">automatic</property>
                 <property name="vscrollbar_policy">automatic</property>
+                <property name="window_placement">bottom-left</property>
                 <property name="shadow_type">etched-out</property>
                 <child>
-                  <widget class="GtkTreeView" id="treeview2">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                  </widget>
+                  <placeholder/>
                 </child>
               </widget>
               <packing>
