@@ -211,9 +211,17 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkTreeView" id="treeview1">
+              <widget class="GtkScrolledWindow" id="scrolledwindow2">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">automatic</property>
+                <property name="vscrollbar_policy">automatic</property>
+                <child>
+                  <widget class="GtkTreeView" id="treeview1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                  </widget>
+                </child>
               </widget>
               <packing>
                 <property name="position">1</property>
@@ -389,6 +397,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="tooltip" translatable="yes">login</property>
+                <property name="visibility">False</property>
                 <property name="invisible_char">&#x2022;</property>
                 <property name="text" translatable="yes">haslo</property>
                 <property name="invisible_char_set">True</property>
