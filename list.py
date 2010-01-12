@@ -7,12 +7,15 @@ def on_activated(widget, row, col,guiclass):
 	'''zmienia aktualnego rozmowce'''  
 	model = widget.get_model()
 	text = model[row][0]
-#	guiclass.column.set_title("Rozmowa z "+text)
+	if guiclass.window.get_title()=="Pybber":
+		pass
+	guiclass.window.set_title("Rozmowa z "+text)
 	guiclass.recipent=text
+
 	guiclass.wTree.get_widget("vbox3").show()
-#	guiclass.chat.clear()
 	loadchat(guiclass,text)
 	show_back(guiclass,model[row])
+
 	 
 def create_empty_list(guiclass):
 	'''tworzy pusta liste'''

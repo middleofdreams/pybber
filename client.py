@@ -20,6 +20,9 @@ class okno:
 			self.window.connect("destroy",self.close)
 		#po zamknięciu okna - kończymy program
 		
+		
+		self.window.set_title("Pybber")
+		
 		#pobranie obiektow z glade i przypisywanie ich do zmiennych:
 		
 		self.menu=self.wTree.get_widget("menubar1")

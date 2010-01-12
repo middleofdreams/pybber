@@ -22,7 +22,7 @@ class connection(threading.Thread):
 		self.i=0.00 #licznik czasu polaczenie
 		self.active=False #okresla czy jest nawiazane aktywne polaczenie
 		self.stop=False #okresla czy polaczenie jest 'przerywane'
-		
+	
 		#rozpoczecie watku polaczenia
 		threading.Thread.__init__(self)
 		threading.Thread(target=self.connecting,args=()).start()
