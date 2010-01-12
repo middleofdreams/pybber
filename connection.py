@@ -7,8 +7,8 @@ from list import *
 #----------klasa do zarzadzania polaczeniem-------------------------#
 
 class connection(threading.Thread):
-	def __init__(self,guiclass):
-
+	def __init__(self,guiclass,jid,pwd):
+		
 		#przypisanie paru zmiennych z glownej klasy
 		self.gui=guiclass
 		self.desc=guiclass.desc
@@ -22,8 +22,12 @@ class connection(threading.Thread):
 		self.i=0.00 #licznik czasu polaczenie
 		self.active=False #okresla czy jest nawiazane aktywne polaczenie
 		self.stop=False #okresla czy polaczenie jest 'przerywane'
+
 	
+		self.jid=jid
+		self.pwd=pwd
 		#rozpoczecie watku polaczenia
+	
 		threading.Thread.__init__(self)
 		threading.Thread(target=self.connecting,args=()).start()
 		
@@ -36,10 +40,9 @@ class connection(threading.Thread):
 		threading.Thread(target=self.connectbar,args=()).start()
 		
 		#todo - dane do polaczenia pobrac z kreatora       !!!
-		
-		jid = 'pybberclient@gmail.com' 
-		pwd   = 'pybberjabber'
-		jid=xmpp.protocol.JID(jid) 
+		#jid = 'pybberclient@gmail.com' 
+		#pwd   = 'pybberjabber'
+		jid=xmpp.protocol.JID(self.jid) 
 		
 		# testowe polaczenie:
 		cl=xmpp.Client(jid.getDomain(),debug=[])
@@ -47,7 +50,7 @@ class connection(threading.Thread):
 			print "not connected"
 			sys.exit(0) 
 		if not self.active:
-			if cl.auth(jid.getNode(),pwd) == None: 
+			if cl.auth(jid.getNode(),self.pwd) == None: 
 				print "authentication failed"
 				sys.exit(0)
 		#jesli polaczy sie w czasie krotszym niz pare sekund przyjmij

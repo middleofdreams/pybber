@@ -19,7 +19,6 @@
                 <property name="can_focus">True</property>
                 <property name="hscrollbar_policy">automatic</property>
                 <property name="vscrollbar_policy">automatic</property>
-                <property name="window_placement">bottom-left</property>
                 <property name="shadow_type">etched-out</property>
                 <child>
                   <placeholder/>
@@ -327,12 +326,24 @@
             </child>
             <child>
               <widget class="GtkProgressBar" id="progressbar1">
+                <property name="sensitive">False</property>
                 <property name="show_text">True</property>
                 <property name="text" translatable="yes">Connecting...</property>
               </widget>
               <packing>
                 <property name="expand">False</property>
                 <property name="position">4</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkComboBox" id="combobox1">
+                <property name="visible">True</property>
+                <signal name="changed" handler="chstatus"/>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">5</property>
               </packing>
             </child>
             <child>
@@ -357,29 +368,6 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
-                <property name="position">5</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkComboBox" id="combobox1">
-                <property name="visible">True</property>
-                <signal name="changed" handler="chstatus"/>
-              </widget>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">6</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkEntry" id="entry3">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="invisible_char">&#x2022;</property>
-              </widget>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
                 <property name="position">6</property>
               </packing>
             </child>
@@ -387,12 +375,43 @@
               <widget class="GtkEntry" id="entry4">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="invisible_char">&#x2022;</property>
+                <property name="tooltip" translatable="yes">haslo</property>
+                <property name="text" translatable="yes">login</property>
               </widget>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
-                <property name="position">5</property>
+                <property name="position">7</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkEntry" id="entry3">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="tooltip" translatable="yes">login</property>
+                <property name="invisible_char">&#x2022;</property>
+                <property name="text" translatable="yes">haslo</property>
+                <property name="invisible_char_set">True</property>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">8</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkButton" id="button5">
+                <property name="label" translatable="yes">zaloguj...</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="xalign">0.33000001311302185</property>
+                <signal name="clicked" handler="logon"/>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">9</property>
               </packing>
             </child>
           </widget>
