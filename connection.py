@@ -71,14 +71,15 @@ class connection(threading.Thread):
 			#ustawienie poczatkowego statusu
 			self.cl.sendInitPresence()
 			self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status=""))
-			self.desc.set_text("Pybber test")
+			self.desc.set_text(self.gui.settings.status)
 			self.statusbar.set_active(0)
 			self.get_list()
 			#chowa ewentualne komunikaty
 			self.toolong.hide()
 			self.not_connected.hide()
 			self.cl.RegisterHandler('presence',self.presenceCB)
-			
+			self.set_status(self.gui.settings.show,self.gui.settings.status)
+			self.gui.statusbar.set_active(self.gui.settings.show)
 			#to rowniez do odbierania wiadomosci
 			self.GoOn(self.cl)
 		
@@ -147,6 +148,7 @@ class connection(threading.Thread):
 		
 	def set_status(self,index,desc):
 		'''ustawia status'''
+		if index=="": index=0
 		if index==0:
 			self.cl.send(xmpp.dispatcher.Presence(show=None,status=desc))
 		if index==1:

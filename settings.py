@@ -31,14 +31,18 @@ class settings():
 			os.makedirs(workpath)
 		d = gdbm.open(prefs, 'c')
 		if d.firstkey()==None:
-			d['show']=''
+			d['show']=0
 			d['status']="Pybber"
 			d['me']="Me"
 		d.close()
 					
 	def loadprefs(self,mainclass):
 		d = gdbm.open(prefs, 'r')
-		self.show=d['show']
+		show=d['show']
+		try:
+			self.show=int(show)
+		except:
+			self.show=1
 		self.status=d['status']
 		self.me=d['me']
 		try:
@@ -59,18 +63,20 @@ class settings():
 			pass		
 			
 		d.close()	
-	def saveprefs(self,mainclass):
-				
-		
+	def save(self,mainclass):	
+		model = mainclass.wTree.get_widget('combobox2').get_model()
+		active = mainclass.wTree.get_widget('combobox2').get_active()
+		if active < 0:
+		  show=0
+		else:
+			show=active
 		d = gdbm.open(prefs, 'c')
-		d["action"]=str(action)
-		d["minutes"]=str(time)
-		d["hours"]=str(timeh)
-		d["closeapp"]=str(closeapp)
-		d["runbefore"]=str(runbefore)
-		d["userdata1"]=str(puserdata)
-		d["userdata2"]=str(puserdata2)
+		d['show']=str(show)
+		d['status']=mainclass.wTree.get_widget('entry5').get_text()
+		self.show=show
+		self.status=d['status']
 		d.close()	
+		print self.show
 		
 	def saveacc(self,mainclass):
 		d = gdbm.open(prefs, 'c')
@@ -84,4 +90,3 @@ class settings():
 			d['remember']=""
 		
 		d.close()		
-	

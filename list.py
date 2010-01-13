@@ -6,12 +6,12 @@ from chatwindow import *
 def on_activated(widget, row, col,guiclass):
 	'''zmienia aktualnego rozmowce'''  
 	model = widget.get_model()
-	text = model[row][0]
+	text = model[row][4]
 	if guiclass.window.get_title()=="Pybber":
 		x=guiclass.window.get_size()[0]
 		y=guiclass.window.get_size()[1]
 		guiclass.window.resize(x+400,y)
-	guiclass.window.set_title("Rozmowa z "+text)
+	guiclass.window.set_title("Rozmowa z "+model[row][0]+" ("+text+")")
 	guiclass.recipent=text
 
 	guiclass.wTree.get_widget("vbox3").show()
@@ -21,7 +21,7 @@ def on_activated(widget, row, col,guiclass):
 	 
 def create_empty_list(guiclass):
 	'''tworzy pusta liste'''
-	guiclass.listmodel=gtk.ListStore(str,str,gtk.gdk.Pixbuf,gtk.gdk.Pixbuf)
+	guiclass.listmodel=gtk.ListStore(str,str,gtk.gdk.Pixbuf,gtk.gdk.Pixbuf,str)
 	guiclass.list.set_model(guiclass.listmodel)
 	guiclass.lrenderer=gtk.CellRendererText()
 	guiclass.lcolumn=gtk.TreeViewColumn("Kontakty:",guiclass.lrenderer, text=0)
@@ -54,16 +54,16 @@ def update_list(guiclass,sess,pres):
 	cats = list ()
 	item = guiclass.listmodel.get_iter_first ()
 	while ( item != None ):
-		cats.append (guiclass.listmodel.get_value (item, 0))
+		cats.append (guiclass.listmodel.get_value (item, 4))
 		item = guiclass.listmodel.iter_next(item)
 	#sprawdzenie czy kontakt znajduje sie na liscie	
 	if not nick in cats:
-		guiclass.listmodel.append([nick,status,get_show(show),None])
+		guiclass.listmodel.append([nick,status,get_show(show),None,nick])
 	else:
 	#jesli tak - aktualizuj wpis
 		item = guiclass.listmodel.get_iter_first ()
-		while ( guiclass.listmodel.get_value(item,0)!=nick):
-			cats.append (guiclass.listmodel.get_value (item, 0))
+		while ( guiclass.listmodel.get_value(item,4)!=nick):
+			cats.append (guiclass.listmodel.get_value (item, 4))
 			item = guiclass.listmodel.iter_next(item)
 		guiclass.listmodel.set_value(item,1,status)
 		if guiclass.listmodel.get_value(item,3)!=None:
@@ -77,9 +77,10 @@ def get_all(guiclass,list):
 	for i in list:		
 		status=guiclass.connection.roster.getStatus(str(xmpp.protocol.JID(jid=i)))	
 		show=guiclass.connection.roster.getShow(str(xmpp.protocol.JID(jid=i)))	
-		print guiclass.connection.roster.getName(str(xmpp.protocol.JID(jid=i)))
+		name=guiclass.connection.roster.getName(str(xmpp.protocol.JID(jid=i)))
 		#domyslne oznaczanie kontaktow jako niedostepnych
-		guiclass.listmodel.append([i,status,get_show('offline'),None])
+		if name==None: name=i
+		guiclass.listmodel.append([name,status,get_show('offline'),None,i])
 		
 def get_show(show):
 	'''pobiera obrazek statusu'''
@@ -103,16 +104,16 @@ def is_typing(guiclass,nick):
 	cats = list()
 	item = guiclass.listmodel.get_iter_first ()
 	while ( item != None ):
-		cats.append (guiclass.listmodel.get_value (item, 0))
+		cats.append (guiclass.listmodel.get_value (item, 4))
 		item = guiclass.listmodel.iter_next(item)
 	#sprawdzenie czy kontakt znajduje sie na liscie	
 	if not nick in cats:
-		guiclass.listmodel.append([nick,status,show])
+		guiclass.listmodel.append([nick,status,show,nick])
 	else:
 	#jesli tak - aktualizuj wpis
 		item = guiclass.listmodel.get_iter_first ()
-		while ( guiclass.listmodel.get_value(item,0)!=nick):
-			cats.append (guiclass.listmodel.get_value (item, 0))
+		while ( guiclass.listmodel.get_value(item,4)!=nick):
+			cats.append (guiclass.listmodel.get_value (item, 4))
 			item = guiclass.listmodel.iter_next(item)
 	pshow=guiclass.listmodel.get_value(item,2)
 	guiclass.listmodel.set_value(item,3,pshow)

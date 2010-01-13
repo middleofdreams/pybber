@@ -74,7 +74,10 @@ class okno:
 		"resize": self.resize,
 		"logon": self.logon,
 		"clear": self.clear,
-		"changedata":self.changedata
+		"changedata":self.changedata,
+		"savesettings":self.savesettings,
+		"closesettings":self.closesettings,
+		"opensettings":self.opensettings
 		}
 		
 		self.messages={}
@@ -153,6 +156,16 @@ class okno:
 		newpos=pos.get_upper()
 		pos.set_value(newpos)
 		self.chatwindow.set_vadjustment(pos)  
+		
+	def savesettings(self,widget):
+		self.settings.save(self)
+			
+	def closesettings(self,widget):
+		self.wTree.get_widget('frame1').hide()
+	def opensettings(self,widget):
+		self.wTree.get_widget('frame1').show()
+		self.wTree.get_widget('combobox2').set_active(self.settings.show)
+		self.wTree.get_widget('entry5').set_text(self.settings.status)
 				
 if __name__ == "__main__":
 	gtk.gdk.threads_init()
