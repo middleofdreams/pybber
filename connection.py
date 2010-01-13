@@ -57,16 +57,17 @@ class connection(threading.Thread):
 		#jako glowne polaczenie:
 		if not self.active:	
 			self.cl=cl
-			
+			#wylaczenie progressbara
+			self.ifrun=False
+			self.active=True
 			#handler do odbierania wiadomosci
 			
 			self.cl.RegisterHandler('message',self.messageCB)
-			#wylaczenie progressbara
-			self.ifrun=False
+			
 			
 			#ustawienie poczatkowego statusu
 			self.cl.sendInitPresence()
-			self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status="Pybber test"))
+			self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status=""))
 			self.desc.set_text("Pybber test")
 			self.statusbar.set_active(0)
 			self.get_list()

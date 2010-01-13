@@ -8,7 +8,9 @@ def on_activated(widget, row, col,guiclass):
 	model = widget.get_model()
 	text = model[row][0]
 	if guiclass.window.get_title()=="Pybber":
-		pass
+		x=guiclass.window.get_size()[0]
+		y=guiclass.window.get_size()[1]
+		guiclass.window.resize(x+400,y)
 	guiclass.window.set_title("Rozmowa z "+text)
 	guiclass.recipent=text
 
@@ -56,7 +58,7 @@ def update_list(guiclass,sess,pres):
 		item = guiclass.listmodel.iter_next(item)
 	#sprawdzenie czy kontakt znajduje sie na liscie	
 	if not nick in cats:
-		guiclass.listmodel.append([nick,status,show,None])
+		guiclass.listmodel.append([nick,status,get_show(show),None])
 	else:
 	#jesli tak - aktualizuj wpis
 		item = guiclass.listmodel.get_iter_first ()

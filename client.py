@@ -7,6 +7,7 @@ import keys
 import send
 from list import create_empty_list
 import webkit
+from settings import *
 
 class okno:
 	def __init__(self):
@@ -95,12 +96,18 @@ class okno:
 		self.chat.show()
 		self.wTree.signal_autoconnect(dic)
 		self.chat.connect("load-finished", self.loadFinished)
+		
+		self.settings=settings()
+		self.settings.loadprefs(self)
+		
+		
 	#------Połączenie z serwerem XMPP----------------
 		
 	def logon(self,*widget):
 		jid=self.login.get_text()
 		pwd=self.passwd.get_text()
 		self.connection=connection(self,jid,pwd)
+		self.settings.saveacc(self)
 	#------------------------------------------------
 	
 	def send(self,*widget):
