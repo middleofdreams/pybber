@@ -59,7 +59,7 @@
                 </child>
                 <child>
                   <widget class="GtkButton" id="button6">
-                    <property name="label">czysc</property>
+                    <property name="label">czy&#x15B;&#x107;</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -265,7 +265,7 @@
                     <property name="layout_style">center</property>
                     <child>
                       <widget class="GtkButton" id="button3">
-                        <property name="label" translatable="yes">Przerwij i polacz ponownie</property>
+                        <property name="label" translatable="yes">Przerwij i po&#x142;&#x105;cz ponownie</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -289,6 +289,21 @@
                         <property name="expand">False</property>
                         <property name="fill">False</property>
                         <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkButton" id="button8">
+                        <property name="label" translatable="yes">zmie&#x144; dane</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <signal name="clicked" handler="changedata"/>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
+                        <property name="pack_type">end</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                   </widget>
@@ -321,9 +336,10 @@
                 <child>
                   <widget class="GtkHButtonBox" id="hbuttonbox2">
                     <property name="visible">True</property>
+                    <property name="layout_style">center</property>
                     <child>
                       <widget class="GtkButton" id="button2">
-                        <property name="label" translatable="yes">Ponow probe</property>
+                        <property name="label" translatable="yes">Pon&#xF3;w pr&#xF3;b&#x119;</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -333,6 +349,21 @@
                         <property name="expand">False</property>
                         <property name="fill">False</property>
                         <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkButton" id="button7">
+                        <property name="label" translatable="yes">zmie&#x144; dane</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <signal name="clicked" handler="changedata"/>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
+                        <property name="pack_type">end</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                   </widget>
@@ -352,7 +383,7 @@
               <widget class="GtkProgressBar" id="progressbar1">
                 <property name="sensitive">False</property>
                 <property name="show_text">True</property>
-                <property name="text" translatable="yes">Connecting...</property>
+                <property name="text" translatable="yes">&#x142;&#x105;cz&#x119;...</property>
               </widget>
               <packing>
                 <property name="expand">False</property>

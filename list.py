@@ -77,7 +77,7 @@ def get_all(guiclass,list):
 	for i in list:		
 		status=guiclass.connection.roster.getStatus(str(xmpp.protocol.JID(jid=i)))	
 		show=guiclass.connection.roster.getShow(str(xmpp.protocol.JID(jid=i)))	
-		
+		print guiclass.connection.roster.getName(str(xmpp.protocol.JID(jid=i)))
 		#domyslne oznaczanie kontaktow jako niedostepnych
 		guiclass.listmodel.append([i,status,get_show('offline'),None])
 		

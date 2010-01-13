@@ -47,7 +47,7 @@ class okno:
 		#ustawienie statusow z ikonami
 		self.statuslist=gtk.ListStore(str,gtk.gdk.Pixbuf)
 		self.statusbar.set_model(self.statuslist)
-		self.statuslist.append(["Dostepny",gtk.gdk.pixbuf_new_from_file("icons/online.png")])
+		self.statuslist.append(["Dostępny",gtk.gdk.pixbuf_new_from_file("icons/online.png")])
 		self.statuslist.append(["Zaraz wracam",gtk.gdk.pixbuf_new_from_file("icons/away.png")])
 		self.statuslist.append(["Wrócę później",gtk.gdk.pixbuf_new_from_file("icons/extended-away.png")])
 		self.statuslist.append(["Nie przeszkadzać",gtk.gdk.pixbuf_new_from_file("icons/busy.png")])
