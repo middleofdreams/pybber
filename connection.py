@@ -7,7 +7,7 @@ from list import *
 #----------klasa do zarzadzania polaczeniem-------------------------#
 
 class connection(threading.Thread):
-	def __init__(self,guiclass,jid,pwd):
+	def __init__(self,guiclass):
 		
 		#przypisanie paru zmiennych z glownej klasy
 		self.gui=guiclass
@@ -22,8 +22,7 @@ class connection(threading.Thread):
 		self.i=0.00 #licznik czasu polaczenie
 		self.active=False #okresla czy jest nawiazane aktywne polaczenie
 		self.stop=False #okresla czy polaczenie jest 'przerywane'
-
-	
+	def connect_init(self,guiclass,jid,pwd):
 		self.jid=jid
 		self.pwd=pwd
 		#rozpoczecie watku polaczenia
@@ -59,6 +58,7 @@ class connection(threading.Thread):
 		#jesli polaczy sie w czasie krotszym niz pare sekund przyjmij
 		#jako glowne polaczenie:
 		if not self.active:	
+			self.gui.loginbox.hide()
 			self.cl=cl
 			#wylaczenie progressbara
 			self.ifrun=False
@@ -123,7 +123,8 @@ class connection(threading.Thread):
 		if(str(self.i)=='1.0'):
 			#wyswietl komunikat o bledzie
 				self.toolong.hide()
-				self.not_connected.show()
+				if not self.active:
+					self.not_connected.show()
 		
 #----------funkcje dla komunikatow--------------------------------------
 	def reconnect(self):

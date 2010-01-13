@@ -43,7 +43,6 @@ class okno:
 		self.login=self.wTree.get_widget("entry4")
 		self.passwd=self.wTree.get_widget("entry3")
 		self.logonbtn=self.wTree.get_widget("button5")
-		
 		#ustawienie statusow z ikonami
 		self.statuslist=gtk.ListStore(str,gtk.gdk.Pixbuf)
 		self.statusbar.set_model(self.statuslist)
@@ -74,7 +73,8 @@ class okno:
 		"hidewarn": self.hidewarn,
 		"resize": self.resize,
 		"logon": self.logon,
-		"clear": self.clear
+		"clear": self.clear,
+		"changedata":self.changedata
 		}
 		
 		self.messages={}
@@ -104,19 +104,25 @@ class okno:
 		self.settings.loadprefs(self)
 		
 		
+		self.connection=connection(self)
+		
 	#------Połączenie z serwerem XMPP----------------
 	def clear(self, *widget):
 		if self.recipent in self.messages:
 			self.messages[self.recipent]=""
 			loadchat(self,self.recipent)	
 	def logon(self,*widget):
+		
 		jid=self.login.get_text()
 		pwd=self.passwd.get_text()
-		self.connection=connection(self,jid,pwd)
+		self.connection.connect_init(self,jid,pwd)
 		self.settings.saveacc(self)
 		self.loginbox.hide()		
 	#------------------------------------------------
-	
+	def changedata(self, *widget):
+		self.toolong.hide()
+		self.loginbox.show()
+		self.not_connected.hide()
 	def send(self,*widget):
 		send.send(self)
 	def chdesc(self,*widget):
