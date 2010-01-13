@@ -6,6 +6,7 @@ from connection import connection
 import keys
 import send
 from list import create_empty_list
+from chatwindow import *
 import webkit
 
 class okno:
@@ -35,7 +36,7 @@ class okno:
 		self.desc=self.wTree.get_widget("entry2")
 		self.toolong=self.wTree.get_widget("vbox1")
 		self.not_connected=self.wTree.get_widget("vbox4")
-
+		self.clearmsg=self.wTree.get_widget("button6")
 		
 		self.login=self.wTree.get_widget("entry4")
 		self.passwd=self.wTree.get_widget("entry3")
@@ -70,7 +71,8 @@ class okno:
 		"reconnect2": self.reconnect2,
 		"hidewarn": self.hidewarn,
 		"resize": self.resize,
-		"logon": self.logon
+		"logon": self.logon,
+		"clear": self.clear
 		}
 		
 		self.messages={}
@@ -96,11 +98,17 @@ class okno:
 		self.wTree.signal_autoconnect(dic)
 		self.chat.connect("load-finished", self.loadFinished)
 	#------Połączenie z serwerem XMPP----------------
-		
+	def clear(self, *widget):
+		if self.recipent in self.messages:
+			self.messages[self.recipent]=""
+			loadchat(self,self.recipent)	
 	def logon(self,*widget):
 		jid=self.login.get_text()
 		pwd=self.passwd.get_text()
 		self.connection=connection(self,jid,pwd)
+		self.login.hide()
+		self.passwd.hide()
+		self.logonbtn.hide()		
 	#------------------------------------------------
 	
 	def send(self,*widget):
