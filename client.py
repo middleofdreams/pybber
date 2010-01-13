@@ -22,7 +22,6 @@ class okno:
 			self.window.connect("destroy",self.close)
 		#po zamknięciu okna - kończymy program
 		
-		
 		self.window.set_title("Pybber")
 		
 		#pobranie obiektow z glade i przypisywanie ich do zmiennych:
@@ -43,6 +42,14 @@ class okno:
 		self.login=self.wTree.get_widget("entry4")
 		self.passwd=self.wTree.get_widget("entry3")
 		self.logonbtn=self.wTree.get_widget("button5")
+		self.addform=self.wTree.get_widget("table1")
+		self.delform=self.wTree.get_widget("table2")
+		self.editform=self.wTree.get_widget("table3")
+		self.addjid=self.wTree.get_widget("entry5")
+		self.deljid=self.wTree.get_widget("entry7")
+		self.editjid=self.wTree.get_widget("entry9")
+		self.setname=self.wTree.get_widget("entry6")
+		self.editname=self.wTree.get_widget("entry10")
 		#ustawienie statusow z ikonami
 		self.statuslist=gtk.ListStore(str,gtk.gdk.Pixbuf)
 		self.statusbar.set_model(self.statuslist)
@@ -63,6 +70,7 @@ class okno:
 		self.statusbar.add_attribute(cell, 'text', 0)
 		
 		
+		
 		#sygnaly
 		dic={
 		"send": self.send,
@@ -75,9 +83,20 @@ class okno:
 		"logon": self.logon,
 		"clear": self.clear,
 		"changedata":self.changedata,
+
 		"savesettings":self.savesettings,
 		"closesettings":self.closesettings,
-		"opensettings":self.opensettings
+		"opensettings":self.opensettings,
+		"show_hide":self.show_hide,
+		"authorize":self.authorize,
+		"adduser":self.adduser,
+		"deluser":self.deluser,
+		"edituser":self.edituser,
+		"close":self.close,
+		"add":self.add,
+		"delete":self.delete,
+		"edit":self.edit,
+
 		}
 		
 		self.messages={}
@@ -89,27 +108,68 @@ class okno:
 		
 	#---Stworzenie modelu dla wyswietlania rozmow----------------------
 		create_empty_list(self)
-		#self.chat=gtk.ListStore(str)
 		self.chatwindow=self.wTree.get_widget("scrolledwindow1")
-		#self.renderer=gtk.CellRendererText()
-		#self.renderer.props.wrap_width = 300
-		#self.renderer.props.wrap_mode = gtk.WRAP_WORD
-		#self.column=gtk.TreeViewColumn("Rozmowa z ...",self.renderer, text=0)
-		#self.chatwindow.append_column(self.column)
-		#self.column.set_title("test")
 		self.chat=webkit.WebView()
 		self.wTree.get_widget("scrolledwindow1").add(self.chat)
 		self.chat.show()
 		self.wTree.signal_autoconnect(dic)
 		self.chat.connect("load-finished", self.loadFinished)
-		
 		self.settings=settings()
 		self.settings.loadprefs(self)
-		
-		
+		self.leftwindow=self.wTree.get_widget("vbox3")
+		self.hidebtn=self.wTree.get_widget("button9")
 		self.connection=connection(self)
+	#------------------------------------------elementy menu Kontakty	
+	
+	def adduser(self, *widget):
+		self.list.hide()
+		self.addform.show()
 		
-	#------Połączenie z serwerem XMPP----------------
+		
+	def deluser(self, *widget):
+		self.list.hide()
+		self.delform.show()
+		
+	def edituser(self, *widget):
+		self.list.hide()
+		self.editform.show()
+		edititem=self.editjid.get_text()
+	def authorize(self, *widget):
+		pass
+			
+	#----------------------------------------------------------------
+	
+	def add(self, *widget):				#przycisk "dodaj" w formularzu
+		self.list.show()				#dodania uzytkownika
+		self.addform.hide()
+		additem=self.addjid.get_text()
+		#name=self.setname.get_text()
+		self.connection.roster.setItem(additem, name=None, groups=[])
+		self.connection.roster.Authorize(additem)
+		self.connection.roster.Subscribe(additem)
+	def delete(self, *widget):				#przycisk "usuń" w formularzu
+		self.list.show()				#dodania uzytkownika
+		self.delform.hide()
+		delitem=self.deljid.get_text()
+		self.connection.roster.delItem(delitem)
+		self.connection.roster.Authorize(delitem)
+		self.connection.roster.Subscribe(delitem)
+	def edit(self, *widget):				#przycisk "edytuj" w formularzu
+		self.list.show()				#dodania uzytkownika
+		self.editform.hide()
+		edititem=self.editjid.get_text()
+		name=self.editname.get_text()
+		self.connection.roster.setItem(edititem, name=name, groups=[])
+	def show_hide(self, *widget):  #hide chat
+		if self.recipent !="":
+			self.leftwindow.hide()
+			self.recipent=""
+			mainh=self.window.get_size()[1]
+			self.window.resize(300,mainh)	
+		else :
+			self.leftwindow.show() #show chat
+			
+			
 	def clear(self, *widget):
 		if self.recipent in self.messages:
 			self.messages[self.recipent]=""
