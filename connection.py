@@ -27,7 +27,8 @@ class connection(threading.Thread):
 		self.jid=jid
 		self.pwd=pwd
 		#rozpoczecie watku polaczenia
-	
+	#	print jid
+	#	print pwd
 		threading.Thread.__init__(self)
 		threading.Thread(target=self.connecting,args=()).start()
 		
@@ -42,6 +43,7 @@ class connection(threading.Thread):
 		#todo - dane do polaczenia pobrac z kreatora       !!!
 		#jid = 'pybberclient@gmail.com' 
 		#pwd   = 'pybberjabber'
+		
 		jid=xmpp.protocol.JID(self.jid) 
 		
 		# testowe polaczenie:
@@ -53,6 +55,7 @@ class connection(threading.Thread):
 			if cl.auth(jid.getNode(),self.pwd) == None: 
 				print "authentication failed"
 				sys.exit(0)
+		
 		#jesli polaczy sie w czasie krotszym niz pare sekund przyjmij
 		#jako glowne polaczenie:
 		if not self.active:	
@@ -75,7 +78,7 @@ class connection(threading.Thread):
 			self.toolong.hide()
 			self.not_connected.hide()
 			self.cl.RegisterHandler('presence',self.presenceCB)
-
+			
 			#to rowniez do odbierania wiadomosci
 			self.GoOn(self.cl)
 		
