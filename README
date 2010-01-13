@@ -1,9 +1,18 @@
-W pierwszej kolejnosci:
-	-konczenie watku polaczenia przy zamknieciu gui
-	-kreator konta (osobny plik glade + 2 klasy - do gui i do 
-	przechowywania ustawien)
+Zrobione:
+ 	-konczenie watku polaczenia przy zamknieciu gui
+	-kreator konta
 	-sprawdzenie czy nadchodzaca wiadomosc jest od danego kontaktu
 	-lista kontaktow...
 	-podkreslanie kontaktow od ktorych dostajemy wiadomosc
-	-ustawienia nt poczatkowego statusu
 	
+Do zrobienia	
+	-ustawienia nt poczatkowego statusu
+	-zarzadzanie lista kontaktow
+	-Tray
+	-wlasne ikony
+	-zarzadzanie autoryzacja
+	-emoticony
+	-menu
+	-skroty typu kopiuj wklej
+	-automatyczna zamiana linkow
+	-wycinanie groznych tagow (np <object> <script>)
