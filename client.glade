@@ -396,48 +396,74 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkEntry" id="entry4">
+              <widget class="GtkVBox" id="vbox5">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="tooltip" translatable="yes">haslo</property>
-                <property name="text" translatable="yes">login</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <widget class="GtkEntry" id="entry4">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="tooltip" translatable="yes">haslo</property>
+                    <property name="invisible_char">&#x25CF;</property>
+                    <property name="text" translatable="yes">login</property>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkEntry" id="entry3">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="tooltip" translatable="yes">login</property>
+                    <property name="visibility">False</property>
+                    <property name="invisible_char">&#x2022;</property>
+                    <property name="text" translatable="yes">haslo</property>
+                    <property name="invisible_char_set">True</property>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkCheckButton" id="checkbutton1">
+                    <property name="label" translatable="yes">Pam&#x119;taj has&#x142;o</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="draw_indicator">True</property>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkButton" id="button5">
+                    <property name="label" translatable="yes">zaloguj...</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="xalign">0.33000001311302185</property>
+                    <signal name="clicked" handler="logon"/>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="pack_type">end</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
               </widget>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
                 <property name="position">7</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkEntry" id="entry3">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="tooltip" translatable="yes">login</property>
-                <property name="visibility">False</property>
-                <property name="invisible_char">&#x2022;</property>
-                <property name="text" translatable="yes">haslo</property>
-                <property name="invisible_char_set">True</property>
-              </widget>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">8</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkButton" id="button5">
-                <property name="label" translatable="yes">zaloguj...</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="xalign">0.33000001311302185</property>
-                <signal name="clicked" handler="logon"/>
-              </widget>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="pack_type">end</property>
-                <property name="position">9</property>
               </packing>
             </child>
           </widget>

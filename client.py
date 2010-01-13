@@ -39,6 +39,7 @@ class okno:
 		self.not_connected=self.wTree.get_widget("vbox4")
 		self.clearmsg=self.wTree.get_widget("button6")
 		
+		self.loginbox=self.wTree.get_widget("vbox5")
 		self.login=self.wTree.get_widget("entry4")
 		self.passwd=self.wTree.get_widget("entry3")
 		self.logonbtn=self.wTree.get_widget("button5")
@@ -113,9 +114,7 @@ class okno:
 		pwd=self.passwd.get_text()
 		self.connection=connection(self,jid,pwd)
 		self.settings.saveacc(self)
-		self.login.hide()
-		self.passwd.hide()
-		self.logonbtn.hide()		
+		self.loginbox.hide()		
 	#------------------------------------------------
 	
 	def send(self,*widget):

@@ -49,9 +49,14 @@ class settings():
 		try:
 			self.pwd=d['pwd']
 			mainclass.passwd.set_text(self.pwd)
-
 		except:
 			self.pwd=None
+		try:
+			remember=d['remember']
+			if remember=="True":
+				mainclass.wTree.get_widget('checkbutton1').set_active(True)
+		except:
+			pass		
 			
 		d.close()	
 	def saveprefs(self,mainclass):
@@ -70,6 +75,13 @@ class settings():
 	def saveacc(self,mainclass):
 		d = gdbm.open(prefs, 'c')
 		d['login']=mainclass.login.get_text()
-		d['pwd']=mainclass.passwd.get_text()
+		remember=mainclass.wTree.get_widget('checkbutton1').get_active()
+		if remember:
+			d['pwd']=mainclass.passwd.get_text()
+			d['remember']='True'
+		else:
+			d['pwd']=""
+			d['remember']=""
+		
 		d.close()		
 	
