@@ -9,6 +9,7 @@ from list import create_empty_list
 from chatwindow import *
 import webkit
 from settings import *
+from list import *
 
 class okno:
 	def __init__(self):
@@ -37,7 +38,8 @@ class okno:
 		self.toolong=self.wTree.get_widget("vbox1")
 		self.not_connected=self.wTree.get_widget("vbox4")
 		self.clearmsg=self.wTree.get_widget("button6")
-		
+		self.statusentry=self.wTree.get_widget("entry2")
+	
 		self.loginbox=self.wTree.get_widget("vbox5")
 		self.login=self.wTree.get_widget("entry4")
 		self.passwd=self.wTree.get_widget("entry3")
@@ -96,7 +98,7 @@ class okno:
 		"add":self.add,
 		"delete":self.delete,
 		"edit":self.edit,
-
+		"cancel":self.cancel
 		}
 		
 		self.messages={}
@@ -119,6 +121,10 @@ class okno:
 		self.leftwindow=self.wTree.get_widget("vbox3")
 		self.hidebtn=self.wTree.get_widget("button9")
 		self.connection=connection(self)
+		self.list.set_reorderable(True)
+		
+		self.statusentry.hide()
+		self.statusbar.hide()
 	#------------------------------------------elementy menu Kontakty	
 	
 	def adduser(self, *widget):
@@ -129,13 +135,27 @@ class okno:
 	def deluser(self, *widget):
 		self.list.hide()
 		self.delform.show()
+		index=self.list.get_selection()
+		index=index.get_selected()[1]
+		index=self.listmodel.get_value(index,4)
+		print index
+		self.deljid.set_text(index)
 		
 	def edituser(self, *widget):
 		self.list.hide()
 		self.editform.show()
-		edititem=self.editjid.get_text()
+		index=self.list.get_selection()
+		index=index.get_selected()[1]
+		index=self.listmodel.get_value(index,4)
+		print index
+		self.editjid.set_text(index)
 	def authorize(self, *widget):
-		pass
+		index=self.list.get_selection()
+		index=index.get_selected()[1]
+		index=self.listmodel.get_value(index,4)
+		print index
+		self.connection.roster.Authorize(index)
+		self.connection.roster.Subscribe(index)
 			
 	#----------------------------------------------------------------
 	
@@ -143,33 +163,73 @@ class okno:
 		self.list.show()				#dodania uzytkownika
 		self.addform.hide()
 		additem=self.addjid.get_text()
-		#name=self.setname.get_text()
-		self.connection.roster.setItem(additem, name=None, groups=[])
+		name=self.setname.get_text()
+		if name=='' or name=="": name=additem
+		self.listmodel.prepend([name,'',get_show('offline'),None,additem]) 
+		self.connection.roster.setItem(additem, name=name, groups=[])
 		self.connection.roster.Authorize(additem)
 		self.connection.roster.Subscribe(additem)
+		self.addjid.set_text("")
+		
 	def delete(self, *widget):				#przycisk "usuń" w formularzu
 		self.list.show()				#dodania uzytkownika
 		self.delform.hide()
+		is_deletable=False
 		delitem=self.deljid.get_text()
+		item = self.listmodel.get_iter_first ()
+		while ( item != None ):
+			if self.listmodel.get_value(item, 4)==delitem: 
+				delete=item
+				is_deletable=True
+			item =self.listmodel.iter_next(item)
+		if is_deletable: self.listmodel.remove(delete)
 		self.connection.roster.delItem(delitem)
-		self.connection.roster.Authorize(delitem)
-		self.connection.roster.Subscribe(delitem)
+		self.connection.roster.Unauthorize(delitem)
+		self.connection.roster.Unsubscribe(delitem)
+		self.deljid.set_text("")
+	
 	def edit(self, *widget):				#przycisk "edytuj" w formularzu
 		self.list.show()				#dodania uzytkownika
 		self.editform.hide()
-		edititem=self.editjid.get_text()
+		
+		is_deletable=False
+		delitem=self.editjid.get_text()
+		item = self.listmodel.get_iter_first ()
+		while ( item != None ):
+			if self.listmodel.get_value(item, 4)==delitem: 
+				delete=item
+				is_deletable=True
+			item =self.listmodel.iter_next(item)
+		if is_deletable: self.listmodel.remove(delete)
+		self.connection.roster.delItem(delitem)
+		self.connection.roster.Unauthorize(delitem)
+		self.connection.roster.Unsubscribe(delitem)
+		
+		additem=self.editjid.get_text()
 		name=self.editname.get_text()
-		self.connection.roster.setItem(edititem, name=name, groups=[])
+		if name=='' or name=="": name=additem
+		self.listmodel.prepend([name,'',get_show('offline'),None,additem]) 
+		self.connection.roster.setItem(additem, name=name, groups=[])
+		self.connection.roster.Authorize(additem)
+		self.connection.roster.Subscribe(additem)
+		self.editjid.set_text("")
 	def show_hide(self, *widget):  #hide chat
 		if self.recipent !="":
 			self.leftwindow.hide()
+			self.window.set_title("Pybber")
 			self.recipent=""
 			mainh=self.window.get_size()[1]
 			self.window.resize(300,mainh)	
+			self.window.set_position(500,500)
 		else :
 			self.leftwindow.show() #show chat
-			
-			
+		
+	def cancel(self, *widget):	
+		self.list.show()				
+		self.addform.hide()
+		self.delform.hide()
+		self.editform.hide()
+
 	def clear(self, *widget):
 		if self.recipent in self.messages:
 			self.messages[self.recipent]=""
@@ -180,7 +240,8 @@ class okno:
 		pwd=self.passwd.get_text()
 		self.connection.connect_init(self,jid,pwd)
 		self.settings.saveacc(self)
-		self.loginbox.hide()		
+		self.loginbox.hide()
+		
 	#------------------------------------------------
 	def changedata(self, *widget):
 		self.toolong.hide()

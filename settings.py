@@ -72,7 +72,7 @@ class settings():
 			show=active
 		d = gdbm.open(prefs, 'c')
 		d['show']=str(show)
-		d['status']=mainclass.wTree.get_widget('entry5').get_text()
+		d['status']=mainclass.wTree.get_widget('entry8').get_text()
 		self.show=show
 		self.status=d['status']
 		d.close()	

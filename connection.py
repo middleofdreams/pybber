@@ -3,7 +3,6 @@
 import pygtk,gtk,xmpp,threading,time,gobject,sys,thread
 from chatwindow import *
 from list import *
-
 #----------klasa do zarzadzania polaczeniem-------------------------#
 
 class connection(threading.Thread):
@@ -15,9 +14,11 @@ class connection(threading.Thread):
 		self.chat=guiclass.chat
 		self.statusbar=guiclass.statusbar
 		self.progress=guiclass.progress
+		self.statusentry=guiclass.statusentry
 		self.toolong=guiclass.toolong
 		self.not_connected=guiclass.not_connected
 		
+	
         #pare zmiennych
 		self.i=0.00 #licznik czasu polaczenie
 		self.active=False #okresla czy jest nawiazane aktywne polaczenie
@@ -63,6 +64,10 @@ class connection(threading.Thread):
 			#wylaczenie progressbara
 			self.ifrun=False
 			self.active=True
+			self.statusentry.show()
+			self.statusbar.show()
+			self.statusentry.set_sensitive(1)
+			self.statusbar.set_sensitive(1)
 			#handler do odbierania wiadomosci
 			
 			self.cl.RegisterHandler('message',self.messageCB)
