@@ -3,14 +3,17 @@ Zrobione:
 	-kreator konta
 	-sprawdzenie czy nadchodzaca wiadomosc jest od danego kontaktu
 	-lista kontaktow...
-	-podkreslanie kontaktow od ktorych dostajemy wiadomosc
-	
-Do zrobienia	
+	-podkreslanie kontaktow od ktorych dostajemy wiadomosc	
 	-ustawienia nt poczatkowego statusu
 	-zarzadzanie lista kontaktow
+	-zarzadzanie autoryzacja
+	
+Do zdrobienia:
+	- MOVE przy zmianie rozmiaru okna
+	-domyslny focus na entry
+	-powiadomienie o aktywnosci	
 	-Tray
 	-wlasne ikony
-	-zarzadzanie autoryzacja
 	-emoticony
 	-menu
 	-skroty typu kopiuj wklej

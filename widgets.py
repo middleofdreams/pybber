@@ -19,6 +19,8 @@ def assignwidgets(self):
 		self.not_connected=self.wTree.get_widget("vbox4")
 		self.clearmsg=self.wTree.get_widget("button6")
 		
+		self.statusentry=self.wTree.get_widget("entry2")
+		
 		self.loginbox=self.wTree.get_widget("vbox5")
 		self.login=self.wTree.get_widget("entry4")
 		self.passwd=self.wTree.get_widget("entry3")
@@ -76,6 +78,7 @@ def assignwidgets(self):
 		"add":self.add,
 		"delete":self.delete,
 		"edit":self.edit,
+		"cancel":self.cancel
 		}
 		
 			#---------Skroty klawiszowe--------------------------------------

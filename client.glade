@@ -289,6 +289,30 @@
                   </packing>
                 </child>
                 <child>
+                  <widget class="GtkEntry" id="entry5">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="invisible_char">&#x2022;</property>
+                  </widget>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkEntry" id="entry6">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="invisible_char">&#x2022;</property>
+                  </widget>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
+                  </packing>
+                </child>
+                <child>
                   <widget class="GtkButton" id="button10">
                     <property name="label" translatable="yes">dodaj</property>
                     <property name="visible">True</property>
@@ -304,30 +328,16 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkEntry" id="entry5">
+                  <widget class="GtkButton" id="button15">
+                    <property name="label" translatable="yes">anuluj</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="invisible_char">&#x25CF;</property>
+                    <property name="receives_default">True</property>
+                    <signal name="clicked" handler="cancel"/>
                   </widget>
                   <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <widget class="GtkEntry" id="entry6">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="invisible_char">&#x25CF;</property>
-                  </widget>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">1</property>
-                    <property name="bottom_attach">2</property>
+                    <property name="top_attach">2</property>
+                    <property name="bottom_attach">3</property>
                   </packing>
                 </child>
               </widget>
@@ -374,7 +384,17 @@
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <widget class="GtkButton" id="button16">
+                    <property name="label" translatable="yes">anuluj</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <signal name="clicked" handler="cancel"/>
+                  </widget>
+                  <packing>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
+                  </packing>
                 </child>
               </widget>
               <packing>
@@ -443,7 +463,17 @@
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <widget class="GtkButton" id="button17">
+                    <property name="label" translatable="yes">anuluj</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <signal name="clicked" handler="cancel"/>
+                  </widget>
+                  <packing>
+                    <property name="top_attach">2</property>
+                    <property name="bottom_attach">3</property>
+                  </packing>
                 </child>
               </widget>
               <packing>
@@ -618,7 +648,7 @@
             </child>
             <child>
               <widget class="GtkComboBox" id="combobox1">
-                <property name="visible">True</property>
+                <property name="sensitive">False</property>
                 <signal name="changed" handler="chstatus"/>
               </widget>
               <packing>
@@ -632,7 +662,7 @@
                 <property name="visible">True</property>
                 <child>
                   <widget class="GtkEntry" id="entry2">
-                    <property name="visible">True</property>
+                    <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">&#x25CF;</property>
                   </widget>

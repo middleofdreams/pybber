@@ -9,6 +9,7 @@ import send
 from chatwindow import *
 from widgets import *
 
+
 class okno:
 	from mainactions import *
 	def __init__(self):
@@ -31,8 +32,12 @@ class okno:
 		self.recipent=""
 		assignwidgets(self)
 		self.connection=connection(self)
+
+		self.list.set_reorderable(True)
 		
-	
+		self.statusentry.hide()
+		self.statusbar.hide()
+
 
 if __name__ == "__main__":
 	gtk.gdk.threads_init()
