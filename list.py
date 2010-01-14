@@ -7,17 +7,16 @@ def on_activated(widget, row, col,guiclass):
 	'''zmienia aktualnego rozmowce'''  
 	model = widget.get_model()
 	text = model[row][4]
-	print model[row][4]
-	print model[row][0]
-	print ""
 	if guiclass.window.get_title()=="Pybber":
-		x=guiclass.window.get_size()[0]
-		y=guiclass.window.get_size()[1]
-		guiclass.window.resize(x+400,y)
+		x1,y1=guiclass.window.get_position()
+		guiclass.window.move(x1-400,y1)
+		guiclass.leftwindow.show()
+		
+		
 	guiclass.window.set_title("Rozmowa z "+model[row][0]+" ("+text+")")
 	guiclass.recipent=text
 
-	guiclass.wTree.get_widget("vbox3").show()
+	
 	loadchat(guiclass,text)
 	show_back(guiclass,model[row])
 
