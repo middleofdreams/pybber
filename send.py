@@ -3,7 +3,7 @@
 import pygtk,gtk,xmpp,time
 from chatwindow import *
 
-def send(guiclass):
+def sendmsg(guiclass):
   msg=guiclass.message.get_text()
   guiclass.message.set_text("")
  # msg=str("ME:"+msg)

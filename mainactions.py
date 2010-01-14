@@ -1,8 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from listmanage import *
-import gtk
-
+import gtk,sys
+from send import *
 def show_hide(self, *widget):  #hide chat
 	if self.recipent !="":
 		self.leftwindow.hide()
@@ -30,7 +30,7 @@ def changedata(self, *widget):
 	self.loginbox.show()
 	self.not_connected.hide()
 def send(self,*widget):
-	send.send(self)
+	sendmsg(self)
 def chdesc(self,*widget):
 	desc=self.desc.get_text()
 	self.connection.set_desc(desc)
