@@ -2,9 +2,10 @@
 #!/usr/bin/env python
 import pygtk,gtk,xmpp
 from chatwindow import *
-
+	
 def on_activated(widget, row, col,guiclass):
 	'''zmienia aktualnego rozmowce'''  
+	guiclass.staticon.set_blinking(False)
 	model = widget.get_model()
 	text = model[row][4]
 	guiclass.window.set_gravity(gtk.gdk.GRAVITY_SOUTH_EAST)
@@ -105,7 +106,7 @@ def get_show(show):
 
 def is_typing(guiclass,nick):
 	show=gtk.gdk.pixbuf_new_from_file("icons/typing.png")
-
+	guiclass.staticon.set_blinking(True) 
 	cats = list()
 	item = guiclass.listmodel.get_iter_first ()
 	while ( item != None ):
@@ -123,7 +124,6 @@ def is_typing(guiclass,nick):
 	pshow=guiclass.listmodel.get_value(item,2)
 	guiclass.listmodel.set_value(item,3,pshow)
 	guiclass.listmodel.set_value(item,2,show)
-
 def show_back(guiclass,item):
 	if item[3]!=None:
 		item[2]=item[3]

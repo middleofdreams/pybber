@@ -44,6 +44,9 @@ def assignwidgets(self):
 		self.statuslist.append(["Chcę pogadać",gtk.gdk.pixbuf_new_from_file("icons/chat.png")])
 		self.statuslist.append(["Niewidoczny",gtk.gdk.pixbuf_new_from_file("icons/invisible.png")])
 		
+		self.contactpopup=self.wTree.get_widget("menu4")
+		self.iconpopup=self.wTree.get_widget("menu5")
+		
 		#wyswietlanie statusow
 		cell = gtk.CellRendererText()
 		cell2=gtk.CellRendererPixbuf()
@@ -79,7 +82,8 @@ def assignwidgets(self):
 		"add":self.add,
 		"delete":self.delete,
 		"edit":self.edit,
-		"cancel":self.cancel
+		"cancel":self.cancel,
+		#"popup":self.popup
 		}
 		
 			#---------Skroty klawiszowe--------------------------------------
@@ -110,5 +114,9 @@ def createstatusicon(mainclass):
 		mainclass.staticon.set_blinking(False) 
 		mainclass.staticon.set_tooltip("Pybber")
 		mainclass.staticon.connect("activate", mainclass.activate) 
-		#mainclass.staticon.connect("popup_menu", mainclass.popup, mainclass.menu1) 
+		mainclass.staticon.connect("popup_menu",mainclass.iconmenu, mainclass.iconpopup)
+		
 		mainclass.staticon.set_visible(True)
+		
+def contactmenuactivate(self):
+		self.list.connect("button_press_event", self.contactmenu, self.contactpopup) 
