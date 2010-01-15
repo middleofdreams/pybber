@@ -91,3 +91,28 @@ def activate(self,widget):
 		self.window.show()
 		self.window.move(self.pos[0],self.pos[1])
 		self.window.present()
+
+def iconmenu(self,widget, button, time, test = None):
+	if button == 3:
+		if test:
+			print "A"
+			self.iconpopup.show_all()
+			self.iconpopup.popup(None, None, None, 3, time)
+			
+
+
+def contactmenu(self, treeview, event):
+	if event.button == 3:
+		x = int(event.x)
+		y = int(event.y)
+		time = event.time
+		pthinfo = treeview.get_path_at_pos(x, y)
+		if pthinfo is not None:
+			path, col, cellx, celly = pthinfo
+			treeview.grab_focus()
+			treeview.set_cursor( path, col, 0)
+			self.contactpopup.popup( None, None, None, 3, time)
+			return True
+			#self.contactpopup.show_all()
+			#self.contactpopup.popup( None, None, None, 3, time)
+         

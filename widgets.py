@@ -83,6 +83,7 @@ def assignwidgets(self):
 		"delete":self.delete,
 		"edit":self.edit,
 		"cancel":self.cancel,
+		"contactpopup": self.contactmenu
 		#"popup":self.popup
 		}
 		

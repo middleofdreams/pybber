@@ -494,8 +494,6 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <signal name="button_press_event" handler="contactpopup"/>
-                    <signal name="event" handler="listevent"/>
-                    <signal name="popup_menu" handler="popup-menu"/>
                   </widget>
                 </child>
               </widget>
@@ -988,7 +986,7 @@ Niewidoczny</property>
         <property name="visible">True</property>
         <property name="label" translatable="yes">edytuj u&#x17C;ytkownika</property>
         <property name="use_underline">True</property>
-        <signal name="activate_item" handler="edituser"/>
+        <signal name="activate" handler="edituser"/>
       </widget>
     </child>
     <child>
