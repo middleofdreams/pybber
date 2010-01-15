@@ -7,6 +7,7 @@ import webkit
 from settings import *
 
 def assignwidgets(self):
+		self.window.set_icon_from_file("icons/pybber.png")
 		self.menu=self.wTree.get_widget("menubar1")
 		self.list=self.wTree.get_widget("treeview1")
 		self.statusbar=self.wTree.get_widget("combobox1")
@@ -57,7 +58,7 @@ def assignwidgets(self):
 		#sygnaly
 		dic={
 		"send": self.send,
-		"chdesc": self.chdesc,
+		"chdesc": self.chstatus,
 		"chstatus": self.chstatus,
 		"reconnect": self.reconnect,
 		"reconnect2": self.reconnect2,

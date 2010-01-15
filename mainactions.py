@@ -33,7 +33,8 @@ def send(self,*widget):
 	sendmsg(self)
 def chdesc(self,*widget):
 	desc=self.desc.get_text()
-	self.connection.set_desc(desc)
+	index=self.statusbar.get_active()
+	self.connection.set_status(index,desc)
 def chstatus(self,widget):
 	desc=self.desc.get_text()
 	index=self.statusbar.get_active()
@@ -65,8 +66,9 @@ def savesettings(self,widget):
 		
 def closesettings(self,widget):
 	self.wTree.get_widget('frame1').hide()
+	self.window.resize(300,self.window.get_size()[1])
 def opensettings(self,widget):
 	self.wTree.get_widget('frame1').show()
 	self.wTree.get_widget('combobox2').set_active(self.settings.show)
 	self.wTree.get_widget('entry8').set_text(self.settings.status)
-			
+	self.wTree.get_widget('entry11').set_text(self.settings.me)		

@@ -796,11 +796,14 @@
                                 <property name="visible">True</property>
                                 <child>
                                   <widget class="GtkLabel" id="label9">
+                                    <property name="width_request">140</property>
                                     <property name="visible">True</property>
                                     <property name="label" translatable="yes">Pocz&#x105;tkowy opis:</property>
                                     <property name="width_chars">16</property>
                                   </widget>
                                   <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
                                     <property name="position">0</property>
                                   </packing>
                                 </child>
@@ -812,6 +815,8 @@
                                     <property name="invisible_char">&#x25CF;</property>
                                   </widget>
                                   <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
                                     <property name="position">1</property>
                                   </packing>
                                 </child>
@@ -827,11 +832,14 @@
                                 <property name="visible">True</property>
                                 <child>
                                   <widget class="GtkLabel" id="label10">
+                                    <property name="width_request">140</property>
                                     <property name="visible">True</property>
                                     <property name="label" translatable="yes">Pocz&#x105;tkowy status</property>
                                     <property name="width_chars">16</property>
                                   </widget>
                                   <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
                                     <property name="position">0</property>
                                   </packing>
                                 </child>
@@ -847,6 +855,8 @@ Chc&#x119; pogada&#x107;
 Niewidoczny</property>
                                   </widget>
                                   <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
                                     <property name="position">1</property>
                                   </packing>
                                 </child>
@@ -857,8 +867,44 @@ Niewidoczny</property>
                                 <property name="position">1</property>
                               </packing>
                             </child>
+                            <child>
+                              <widget class="GtkHBox" id="hbox7">
+                                <property name="visible">True</property>
+                                <child>
+                                  <widget class="GtkLabel" id="label12">
+                                    <property name="width_request">140</property>
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">W&#x142;asny alias</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkEntry" id="entry11">
+                                    <property name="width_request">120</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="invisible_char">&#x25CF;</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
                           </widget>
                           <packing>
+                            <property name="expand">False</property>
                             <property name="position">1</property>
                           </packing>
                         </child>

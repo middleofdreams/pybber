@@ -75,6 +75,11 @@ class settings():
 		d['status']=mainclass.wTree.get_widget('entry8').get_text()
 		self.show=show
 		self.status=d['status']
+		me=mainclass.wTree.get_widget('entry11').get_text()
+		if me=="":
+			me="Me"
+		self.me=me
+		d['me']=me
 		d.close()	
 		print self.show
 		

@@ -12,7 +12,6 @@ def deluser(self, *widget):
 	index=self.list.get_selection()
 	index=index.get_selected()[1]
 	index=self.listmodel.get_value(index,4)
-	print index
 	self.deljid.set_text(index)
 	
 def edituser(self, *widget):
@@ -21,13 +20,11 @@ def edituser(self, *widget):
 	index=self.list.get_selection()
 	index=index.get_selected()[1]
 	index=self.listmodel.get_value(index,4)
-	print index
 	self.editjid.set_text(index)
 def authorize(self, *widget):
 	index=self.list.get_selection()
 	index=index.get_selected()[1]
 	index=self.listmodel.get_value(index,4)
-	print index
 	self.connection.roster.Authorize(index)
 	self.connection.roster.Subscribe(index)
 		

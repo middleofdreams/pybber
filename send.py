@@ -10,7 +10,7 @@ def sendmsg(guiclass):
   if msg!="":
 	  guiclass.connection.send(msg)
 		
-	  savechat(guiclass,guiclass.recipent,"<font color=red>Me</font>",msg)
+	  savechat(guiclass,guiclass.recipent,"<font color=red>"+guiclass.settings.me+"</font>",msg)
 	  loadchat(guiclass,guiclass.recipent)
 	  #n=guiclass.chat.append(["-= Me : "+msg])
 	  #update(guiclass,n)

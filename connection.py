@@ -185,8 +185,9 @@ class connection(threading.Thread):
 		
 		if text!=None:
 			user=user.getStripped()
-			
-			savechat(self.gui,user,user,text)
+			name=self.roster.getName(user)
+			if name=="": name=user
+			savechat(self.gui,user,name,text)
 			#wypisywanie tresci w oknie
 			if user==self.gui.recipent:
 				loadchat(self.gui,user)
