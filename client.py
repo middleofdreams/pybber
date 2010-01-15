@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import pygtk,gtk,gtk.glade,xmpp,sys,pango
-from connection import connection
+from connection import *
 import keys
 import send
 
@@ -21,6 +21,11 @@ class okno:
 		#wyświetlamy głowne okno
 		if (self.window):
 			self.window.connect("destroy",self.close)
+		mainh=self.window.get_size()[1]
+		self.window.resize(300,mainh)
+		self.window.set_default_size(300, mainh)
+		self.window.move(int(gtk.gdk.screen_width()*0.7),int(gtk.gdk.screen_height()*0.2))
+		
 		#po zamknięciu okna - kończymy program
 		
 		self.window.set_title("Pybber")

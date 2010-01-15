@@ -1,17 +1,23 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from listmanage import *
-import gtk,sys
+import gtk,sys,time
 from send import *
 def show_hide(self, *widget):  #hide chat
-	if self.recipent !="":
-		self.leftwindow.hide()
-		self.recipent=""
-		mainh=self.window.get_size()[1]
-		self.window.resize(300,mainh)	
-	else :
-		self.leftwindow.show() #show chat
-		
+	
+	mainh=self.window.get_size()[1]	
+	
+	x,y=self.window.get_position()
+	x=(x+400)
+	self.recipent=""
+	self.window.set_title("Pybber")
+	self.window.set_gravity(gtk.gdk.GRAVITY_SOUTH_EAST)
+	self.leftwindow.hide()
+	#self.window.reshow_with_initial_size()
+	self.window.resize(300,mainh)
+	#self.window.move(x,y)
+
+
 		
 def clear(self, *widget):
 	if self.recipent in self.messages:
@@ -65,9 +71,12 @@ def savesettings(self,widget):
 	self.settings.save(self)
 		
 def closesettings(self,widget):
+	self.window.set_gravity(gtk.gdk.GRAVITY_SOUTH_WEST)
 	self.wTree.get_widget('frame1').hide()
-	self.window.resize(300,self.window.get_size()[1])
+	mainh=self.window.get_size()[1]	
+	self.window.resize(300,mainh)
 def opensettings(self,widget):
+	self.window.set_gravity(gtk.gdk.GRAVITY_SOUTH_WEST)
 	self.wTree.get_widget('frame1').show()
 	self.wTree.get_widget('combobox2').set_active(self.settings.show)
 	self.wTree.get_widget('entry8').set_text(self.settings.status)
