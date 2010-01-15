@@ -36,6 +36,7 @@ class okno:
 		self.messages={}
 		self.recipent=""
 		assignwidgets(self)
+		createstatusicon(self)
 		self.connection=connection(self)
 
 		self.list.set_reorderable(True)

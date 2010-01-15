@@ -102,3 +102,13 @@ def assignwidgets(self):
 		self.hidebtn=self.wTree.get_widget("button9")
 	#------------------------------------------elementy menu Kontakty
 		self.list.set_reorderable(True)
+
+def createstatusicon(mainclass):	
+ 
+		mainclass.staticon = gtk.StatusIcon() 
+		mainclass.staticon.set_from_file("icons/pybber.png") 
+		mainclass.staticon.set_blinking(False) 
+		mainclass.staticon.set_tooltip("Pybber")
+		mainclass.staticon.connect("activate", mainclass.activate) 
+		#mainclass.staticon.connect("popup_menu", mainclass.popup, mainclass.menu1) 
+		mainclass.staticon.set_visible(True)

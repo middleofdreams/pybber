@@ -5,6 +5,7 @@
   <widget class="GtkWindow" id="window1">
     <property name="default_width">400</property>
     <property name="default_height">500</property>
+    <property name="deletable">False</property>
     <signal name="drag_drop" handler="resize"/>
     <signal name="drag_end" handler="resize"/>
     <child>

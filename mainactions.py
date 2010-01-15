@@ -80,4 +80,11 @@ def opensettings(self,widget):
 	self.wTree.get_widget('frame1').show()
 	self.wTree.get_widget('combobox2').set_active(self.settings.show)
 	self.wTree.get_widget('entry8').set_text(self.settings.status)
-	self.wTree.get_widget('entry11').set_text(self.settings.me)		
+	self.wTree.get_widget('entry11').set_text(self.settings.me)
+def activate(self,widget):
+	if self.window.is_active():
+			self.pos=self.window.get_position()
+			self.window.hide()
+	else:
+		self.window.show()
+		self.window.move(self.pos[0],self.pos[1])
