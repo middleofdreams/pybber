@@ -3,8 +3,11 @@
 import pygtk,gtk,gobject,time
 
 def savechat(guiclass,recipent,user,chat):
+	if user==None or user=="None": user=recipent
 	text="<b>-= <font color=blue>"+user+"</font></b>: "+chat
-	
+	text=text.replace(chr(13),"<br/>")
+	text=text.replace("\n","<br/>")
+
 	if recipent in guiclass.messages: 
 		guiclass.messages[recipent]=guiclass.messages[recipent]+"<br/>"+text
 	else : guiclass.messages[recipent]=text

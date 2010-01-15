@@ -145,7 +145,7 @@ class connection(threading.Thread):
 
 	def send(self,msg):
 		'''wysyla wiadomosc'''
-		self.cl.send(xmpp.Message(self.gui.recipent,msg))
+		self.cl.send(xmpp.Message(self.gui.recipent,msg,typ='chat'))
 		
 	def set_desc(self,desc):
 		'''ustawia opis'''

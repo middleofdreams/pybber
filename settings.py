@@ -31,7 +31,7 @@ class settings():
 			os.makedirs(workpath)
 		d = gdbm.open(prefs, 'c')
 		if d.firstkey()==None:
-			d['show']=0
+			d['show']=''
 			d['status']="Pybber"
 			d['me']="Me"
 		d.close()

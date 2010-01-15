@@ -22,7 +22,7 @@ class okno:
 		if (self.window):
 			self.window.connect("destroy",self.close)
 		mainh=self.window.get_size()[1]
-		self.window.resize(300,mainh)
+		self.window.resize(300	,mainh)
 		self.window.set_default_size(300, mainh)
 		self.window.move(int(gtk.gdk.screen_width()*0.7),int(gtk.gdk.screen_height()*0.2))
 		
