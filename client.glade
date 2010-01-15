@@ -7,6 +7,7 @@
     <property name="default_height">500</property>
     <property name="deletable">False</property>
     <signal name="drag_drop" handler="resize"/>
+    <signal name="event" handler="windowevent"/>
     <signal name="drag_end" handler="resize"/>
     <child>
       <widget class="GtkHBox" id="hbox1">
@@ -492,6 +493,9 @@
                   <widget class="GtkTreeView" id="treeview1">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <signal name="button_press_event" handler="contactpopup"/>
+                    <signal name="event" handler="listevent"/>
+                    <signal name="popup_menu" handler="popup-menu"/>
                   </widget>
                 </child>
               </widget>
@@ -974,6 +978,57 @@ Niewidoczny</property>
             <property name="position">2</property>
           </packing>
         </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="GtkMenu" id="menu4">
+    <property name="visible">True</property>
+    <child>
+      <widget class="GtkMenuItem" id="menuitem3">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">edytuj u&#x17C;ytkownika</property>
+        <property name="use_underline">True</property>
+        <signal name="activate_item" handler="edituser"/>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkMenuItem" id="menuitem5">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">usu&#x144; u&#x17C;ytkownika</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="deluser"/>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkMenuItem" id="menuitem7">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">autoryzuj</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="authorize"/>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkMenuItem" id="menuitem6">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">archiwum</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="archive"/>
+      </widget>
+    </child>
+  </widget>
+  <widget class="GtkMenu" id="menu5">
+    <property name="visible">True</property>
+    <child>
+      <widget class="GtkSeparatorMenuItem" id="menuitem9">
+        <property name="visible">True</property>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkMenuItem" id="menuitem8">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">Zako&#x144;cz</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="close"/>
       </widget>
     </child>
   </widget>

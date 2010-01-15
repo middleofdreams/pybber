@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from list import *
 
 def adduser(self, *widget):
 	self.list.hide()
@@ -88,4 +89,4 @@ def cancel(self, *widget):
 	self.list.show()				
 	self.addform.hide()
 	self.delform.hide()
-	self.editform.hide()
+	self.editform.hide()	
