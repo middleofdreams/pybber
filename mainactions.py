@@ -62,7 +62,10 @@ def close(self,*widget):
 	self.connection=None
 	gtk.main_quit()
 	sys.exit(0)
-	
+def icohide(self, event,widget):
+	self.window.hide()
+	return True
+	window.connect('delete-event', hide_window)
 def loadFinished(self,a,b):
 	pos=self.chatwindow.get_vadjustment()
 	newpos=pos.get_upper()

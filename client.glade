@@ -9,6 +9,7 @@
     <signal name="drag_drop" handler="resize"/>
     <signal name="event" handler="windowevent"/>
     <signal name="drag_end" handler="resize"/>
+    <signal name="hide" handler="hide"/>
     <child>
       <widget class="GtkHBox" id="hbox1">
         <property name="visible">True</property>
