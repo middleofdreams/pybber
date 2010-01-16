@@ -191,10 +191,8 @@ class connection(threading.Thread):
 			#wypisywanie tresci w oknie
 			if user==self.gui.recipent:
 				loadchat(self.gui,user)
-				#n=self.chat.append(["-= "+user+": "+text])
-				#update(self.gui,n)
 			else: is_typing(self.gui,user)
-				
+			
 
 	#funkcje sledzace wiadomosci:
 	def StepOn(self, conn):

@@ -3,6 +3,7 @@
 from listmanage import *
 import gtk,sys,time
 from send import *
+from connection import *
 def show_hide(self, *widget):  #hide chat
 	
 	mainh=self.window.get_size()[1]	
@@ -29,7 +30,8 @@ def logon(self,*widget):
 	pwd=self.passwd.get_text()
 	self.connection.connect_init(self,jid,pwd)
 	self.settings.saveacc(self)
-	self.loginbox.hide()		
+	self.loginbox.hide()
+	self.jidlabel.set_label(jid)	
 #------------------------------------------------
 def changedata(self, *widget):
 	self.toolong.hide()
@@ -86,12 +88,15 @@ def activate(self,widget):
 		self.window.present()
 		self.pos=self.window.get_position()
 		self.window.hide()
+		print self.pos
 	else:
 		
 		self.window.show()
 		self.window.move(self.pos[0],self.pos[1])
 		self.window.present()
+		
 
+	
 def iconmenu(self,widget, button, time, test = None):
 	if button == 3:
 		if test:
