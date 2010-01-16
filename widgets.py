@@ -96,7 +96,10 @@ def assignwidgets(self):
 		}
 		
 			#---------Skroty klawiszowe--------------------------------------
-		
+		self.window.connect('state-changed',self.focus)
+		#self.window.connect('key-press-event',self.focus)
+		#self.window.connect('key-release-event',self.focus)
+		#self.window.connect('button-press-event',self.focus)
 		self.message.connect("key_press_event", keys.message,self)
 		self.desc.connect("key_press_event", keys.status,self)
 		self.list.connect("key_press_event", keys.list,self)

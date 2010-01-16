@@ -198,11 +198,12 @@ class connection(threading.Thread):
 			else:
 				is_typing(self.gui,user)
 				
-		#if not self.gui.message.grab_focus():
-		
-		#	self.gui.staticon.set_blinking(True)
-		#else:
-		#	self.gui.staticon.set_blinking(False)
+		if not self.gui.window.is_active():
+			self.gui.window.set_urgency_hint(True)
+			self.gui.staticon.set_blinking(True)
+		else:
+			self.gui.staticon.set_blinking(False)
+			self.gui.window.set_urgency_hint(False)
 	#funkcje sledzace wiadomosci:
 	def StepOn(self, conn):
 		try:

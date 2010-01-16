@@ -157,4 +157,8 @@ def contactmenu(self, treeview, event):
 			
 def link(self,widget,frame,request,navigation_action,policy):
 	commands.getoutput("kfmclient openURL "+request.get_uri())
+	
+def focus(self):
+	self.staticon.set_blinking(False)
+	self.window.set_urgency_hint(False)
          
