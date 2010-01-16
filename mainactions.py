@@ -4,6 +4,8 @@ from listmanage import *
 import gtk,sys,time
 from send import *
 from connection import *
+import commands
+
 def show_hide(self, *widget):  #hide chat
 	
 	mainh=self.window.get_size()[1]	
@@ -122,4 +124,7 @@ def contactmenu(self, treeview, event):
 			return True
 			#self.contactpopup.show_all()
 			#self.contactpopup.popup( None, None, None, 3, time)
+			
+def link(self,widget,frame,request,navigation_action,policy):
+	commands.getoutput("kfmclient openURL "+request.get_uri())
          

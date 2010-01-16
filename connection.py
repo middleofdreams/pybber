@@ -182,7 +182,8 @@ class connection(threading.Thread):
 		user=mess.getFrom()
 		
 		#pobranie usera i tresci nadchodzacej rozmowy
-		
+		time=mess.getTimestamp()
+		print time
 		if text!=None:
 			user=user.getStripped()
 			name=self.roster.getName(user)
