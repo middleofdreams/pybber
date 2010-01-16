@@ -129,7 +129,7 @@ def is_typing(guiclass,nick):
 	#w najgorszym wypadku dodac kolejna kolumne gdzie bedzie tylko 
 	#true/false gdy pisze lub nie
 	print guiclass.listmodel.get_value(item,3)
-	if guiclass.listmodel.get_value(item,3)!=None:
+	if guiclass.listmodel.get_value(item,3)==None:
 		guiclass.listmodel.set_value(item,3,pshow)
 	guiclass.listmodel.set_value(item,2,show)
 def show_back(guiclass,item):
