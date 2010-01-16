@@ -9,7 +9,6 @@ import send
 from chatwindow import *
 from widgets import *
 
-
 class okno:
 	from mainactions import *
 	def __init__(self):
@@ -25,7 +24,6 @@ class okno:
 		self.window.resize(300	,mainh)
 		self.window.set_default_size(300, mainh)
 		self.window.move(int(gtk.gdk.screen_width()*0.7),int(gtk.gdk.screen_height()*0.2))
-		
 		#po zamknięciu okna - kończymy program
 		
 		self.window.set_title("Pybber")
@@ -38,7 +36,8 @@ class okno:
 		assignwidgets(self)
 		createstatusicon(self)
 		self.connection=connection(self)
-
+		
+		
 		self.list.set_reorderable(True)
 		
 		self.statusentry.hide()

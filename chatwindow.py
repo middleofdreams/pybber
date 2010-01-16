@@ -13,8 +13,6 @@ def savechat(guiclass,recipent,user,chat):
 	else : guiclass.messages[recipent]=text
 
 def loadchat(guiclass,recipent):
-	
-
 	if recipent in guiclass.messages:
 		html=guiclass.messages[recipent]
 	else: html=""
@@ -22,7 +20,7 @@ def loadchat(guiclass,recipent):
 		
 def copyfromchat(guiclass):
 	guiclass.chat.copy_clipboard()
-
+	
 
 def intolink(urlstr):
 	pat1 = re.compile(r"(^|[\n ])(([\w]+?://[\w\#$%&~.\-;:=,?@\[\]+]*)(/[\w\#$%&~/.\-;:=,?@\[\]+]*)?)", re.IGNORECASE | re.DOTALL)

@@ -118,15 +118,15 @@ def opensettings(self,widget):
 def activate(self,widget):
 	if self.window.is_active():
 		self.window.present()
-		self.pos=self.window.get_position()
+		self.posx=self.window.get_position()[0]
+		self.posy=self.window.get_position()[1]
 		self.window.hide()
 	else:
-		
 		self.window.show()
-		self.window.move(self.pos[0],self.pos[1])
+		self.window.move(self.posx,self.posy)
 		self.window.present()
+		self.staticon.set_blinking(False)
 		
-
 	
 def iconmenu(self,widget, button, time, test = None):
 	if button == 3:
@@ -134,8 +134,11 @@ def iconmenu(self,widget, button, time, test = None):
 			print "A"
 			self.iconpopup.show_all()
 			self.iconpopup.popup(None, None, None, 3, time)
-			
-
+		
+def chatfocus(self, *widget):
+	if self.window.get_default_widget()==None:
+		print self.window.get_default_widget()
+		self.staticon.set_blinking(False)
 
 def contactmenu(self, treeview, event):
 	if event.button == 3:
@@ -147,10 +150,10 @@ def contactmenu(self, treeview, event):
 			path, col, cellx, celly = pthinfo
 			treeview.grab_focus()
 			treeview.set_cursor( path, col, 0)
+			self.staticon.set_blinking(False)
 			self.contactpopup.popup( None, None, None, 3, time)
 			return True
-			#self.contactpopup.show_all()
-			#self.contactpopup.popup( None, None, None, 3, time)
+			
 			
 def link(self,widget,frame,request,navigation_action,policy):
 	commands.getoutput("kfmclient openURL "+request.get_uri())

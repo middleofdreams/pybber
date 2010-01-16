@@ -90,7 +90,9 @@ def assignwidgets(self):
 		"set_dnd":self.set_dnd,
 		"set_chat":self.set_chat,
 		"set_invisible":self.set_invisible,
-		"activate":self.activate
+		"activate":self.activate,
+		"chatfocus":self.chatfocus,
+		
 		}
 		
 			#---------Skroty klawiszowe--------------------------------------
@@ -128,3 +130,4 @@ def createstatusicon(mainclass):
 		
 def contactmenuactivate(self):
 		self.list.connect("button_press_event", self.contactmenu, self.contactpopup) 
+		self.window.connect("button_press_event", self.chatfocus)
