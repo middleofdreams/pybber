@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 import pygtk,gtk,xmpp
 from chatwindow import *
-	
+from connection import *
 def on_activated(widget, row, col,guiclass):
 	'''zmienia aktualnego rozmowce'''  
 	guiclass.staticon.set_blinking(False)

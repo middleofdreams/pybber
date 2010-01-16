@@ -40,10 +40,6 @@ class connection(threading.Thread):
 		
 		threading.Thread(target=self.connectbar,args=()).start()
 		
-		#todo - dane do polaczenia pobrac z kreatora       !!!
-		#jid = 'pybberclient@gmail.com' 
-		#pwd   = 'pybberjabber'
-		
 		jid=xmpp.protocol.JID(self.jid) 
 		
 		# testowe polaczenie:
@@ -191,10 +187,13 @@ class connection(threading.Thread):
 			#wypisywanie tresci w oknie
 			if user==self.gui.recipent:
 				loadchat(self.gui,user)
-			else: is_typing(self.gui,user)
-		if not self.gui.window.is_active:
+			else:
+				is_typing(self.gui,user)
+				
+		if not self.gui.message.grab_focus():
 			self.gui.staticon.set_blinking(True)
-
+		else:
+			self.gui.staticon.set_blinking(False)
 	#funkcje sledzace wiadomosci:
 	def StepOn(self, conn):
 		try:
