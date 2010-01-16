@@ -9,10 +9,11 @@ def sendmsg(guiclass):
   guiclass.message.set_text("")
  # msg=str("ME:"+msg)
   if msg!="":
-	  guiclass.connection.send(msg)
+	  ts=guiclass.connection.send(msg)
 	  guiclass.staticon.set_blinking(False)
-	
-	  savechat(guiclass,guiclass.recipent,"<font color=red>"+guiclass.settings.me+"</font>",msg)
+	  time=messtime(ts)
+	  day=messday(ts)
+	  savechat(guiclass,guiclass.recipent,"<font color=red>"+guiclass.settings.me+"</font>",msg,time,day)
 	  loadchat(guiclass,guiclass.recipent)
 	  #n=guiclass.chat.append(["-= Me : "+msg])
 	  #update(guiclass,n)

@@ -141,8 +141,10 @@ class connection(threading.Thread):
 
 	def send(self,msg):
 		'''wysyla wiadomosc'''
-		self.cl.send(xmpp.Message(self.gui.recipent,msg,typ='chat'))
-		
+		mess=xmpp.Message(self.gui.recipent,msg,typ='chat')
+		mess.setTimestamp()
+		self.cl.send(mess)
+		return mess.getTimestamp()
 	def set_desc(self,desc):
 		'''ustawia opis'''
 		self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status=desc))
@@ -178,12 +180,19 @@ class connection(threading.Thread):
 		user=mess.getFrom()
 		
 		#pobranie usera i tresci nadchodzacej rozmowy
-
+		ts=mess.getTimestamp()
+		if ts==None:
+			ts=mess.setTimestamp()
+			ts=mess.getTimestamp()
+	
+		
 		if text!=None:
+			time=messtime(ts)
+			day=messday(ts)
 			user=user.getStripped()
 			name=self.roster.getName(user)
 			if name=="": name=user
-			savechat(self.gui,user,name,text)
+			savechat(self.gui,user,name,text,time,day)
 			#wypisywanie tresci w oknie
 			if user==self.gui.recipent:
 				loadchat(self.gui,user)

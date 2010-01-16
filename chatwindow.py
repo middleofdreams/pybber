@@ -2,9 +2,9 @@
 #!/usr/bin/env python
 import pygtk,gtk,gobject,time,re
 
-def savechat(guiclass,recipent,user,chat):
+def savechat(guiclass,recipent,user,chat,time,day):
 	if user==None or user=="None": user=recipent
-	text="<b>-= <font color=blue>"+user+"</font></b>: "+chat
+	text="- <i>("+time+")</i><b> <font color=blue>"+user+"</font></b>: "+chat
 	text=text.replace(chr(13),"<br/>")
 	text=text.replace("\n","<br/>")
 	text=intolink(text)
@@ -29,3 +29,14 @@ def intolink(urlstr):
 	urlstr = pat2.sub(r'\1<a href="http://\2" target="_blank" title="\2">\3</a>', urlstr)
 	
 	return urlstr
+def messtime(ts):
+	tp=time.mktime(time.strptime(ts,'%Y%m%dT%H:%M:%S'))+3600
+	if time.localtime()[-1]: tp+=3600
+	tp=time.localtime(tp)	
+	tm=time.strftime("%H:%M:%S",tp)
+	return tm
+def messday(ts):
+	tp=time.mktime(time.strptime(ts,'%Y%m%dT%H:%M:%S'))+3600
+	if time.localtime()[-1]: tp+=3600
+	tp=time.localtime(tp)
+	day=time.strftime("%d",tp)

@@ -132,6 +132,7 @@ def is_typing(guiclass,nick):
 	if guiclass.listmodel.get_value(item,3)==None:
 		guiclass.listmodel.set_value(item,3,pshow)
 	guiclass.listmodel.set_value(item,2,show)
+	
 def show_back(guiclass,item):
 	if item[3]!=None:
 		item[2]=item[3]

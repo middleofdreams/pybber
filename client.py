@@ -42,11 +42,10 @@ class okno:
 		
 		self.statusentry.hide()
 		self.statusbar.hide()
-		self.pos=self.window.get_position()
+		self.posx,self.posy=self.window.get_position()
 
 	
 	
-				
 
 if __name__ == "__main__":
 	gtk.gdk.threads_init()
