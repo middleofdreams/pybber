@@ -6,8 +6,10 @@ from chatwindow import *
 def on_activated(widget, row, col,guiclass):
 	'''zmienia aktualnego rozmowce'''  
 	guiclass.staticon.set_blinking(False)
+	
 	model = widget.get_model()
 	text = model[row][4]
+	show_back(guiclass,model[row])
 	guiclass.window.set_gravity(gtk.gdk.GRAVITY_SOUTH_EAST)
 
 	if guiclass.window.get_title()=="Pybber":
@@ -116,16 +118,21 @@ def is_typing(guiclass,nick):
 	if not nick in cats:
 		guiclass.listmodel.append([nick,status,show,nick])
 	else:
-	#jesli tak - aktualizuj wpis
+	#jesli tak - aktualizuj wpisj
 		item = guiclass.listmodel.get_iter_first ()
 		while ( guiclass.listmodel.get_value(item,4)!=nick):
 			cats.append (guiclass.listmodel.get_value (item, 4))
 			item = guiclass.listmodel.iter_next(item)
 	pshow=guiclass.listmodel.get_value(item,2)
-	guiclass.listmodel.set_value(item,3,pshow)
+	#tu gdzies trzeba sprawdzic czy juz ma zamieniona ikonke...
+	#w najgorszym wypadku dodac kolejna kolumne gdzie bedzie tylko 
+	#true/false gdy pisze lub nie
+	print guiclass.listmodel.get_value(item,3)
+	if guiclass.listmodel.get_value(item,3)!=None:
+		guiclass.listmodel.set_value(item,3,pshow)
 	guiclass.listmodel.set_value(item,2,show)
 def show_back(guiclass,item):
 	if item[3]!=None:
 		item[2]=item[3]
-		
+
 		item[3]=None
