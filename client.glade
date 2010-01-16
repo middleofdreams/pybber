@@ -63,9 +63,9 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">&#x2022;</property>
-                    <accelerator key="v" signal="paste-clipboard" modifiers="GDK_CONTROL_MASK"/>
-                    <accelerator key="x" signal="cut-clipboard" modifiers="GDK_CONTROL_MASK"/>
                     <accelerator key="c" signal="copy-clipboard" modifiers="GDK_CONTROL_MASK"/>
+                    <accelerator key="x" signal="cut-clipboard" modifiers="GDK_CONTROL_MASK"/>
+                    <accelerator key="v" signal="paste-clipboard" modifiers="GDK_CONTROL_MASK"/>
                   </widget>
                   <packing>
                     <property name="position">0</property>
@@ -1032,6 +1032,7 @@ Niewidoczny</property>
         <property name="visible">True</property>
         <property name="label" translatable="yes">Poka&#x17C; okno</property>
         <property name="use_underline">True</property>
+        <signal name="activate" handler="activate"/>
       </widget>
     </child>
     <child>
@@ -1060,6 +1061,7 @@ Niewidoczny</property>
         <property name="visible">True</property>
         <property name="label" translatable="yes">Zmie&#x144; status na Wr&#xF3;c&#x119; p&#xF3;&#x17A;niej</property>
         <property name="use_underline">True</property>
+        <signal name="activate" handler="set_xa"/>
       </widget>
     </child>
     <child>
@@ -1067,6 +1069,7 @@ Niewidoczny</property>
         <property name="visible">True</property>
         <property name="label" translatable="yes">Zmie&#x144; status na Nie przeszkadza&#x107;</property>
         <property name="use_underline">True</property>
+        <signal name="activate" handler="set_dnd"/>
       </widget>
     </child>
     <child>
@@ -1074,6 +1077,7 @@ Niewidoczny</property>
         <property name="visible">True</property>
         <property name="label" translatable="yes">Zmie&#x144; status na Chc&#x119; pogada&#x107;</property>
         <property name="use_underline">True</property>
+        <signal name="activate" handler="set_chat"/>
       </widget>
     </child>
     <child>
@@ -1081,6 +1085,7 @@ Niewidoczny</property>
         <property name="visible">True</property>
         <property name="label" translatable="yes">Zmie&#x144; status na Niewidoczny</property>
         <property name="use_underline">True</property>
+        <signal name="activate" handler="set_invisible"/>
       </widget>
     </child>
     <child>

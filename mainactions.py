@@ -26,6 +26,32 @@ def clear(self, *widget):
 	if self.recipent in self.messages:
 		self.messages[self.recipent]=""
 		loadchat(self,self.recipent)	
+def set_online(self,widget):
+	desc=self.desc.get_text()
+	self.connection.set_status(0,desc)
+	self.statusbar.set_active(0)
+def set_away(self,widget):
+	desc=self.desc.get_text()
+	self.connection.set_status(1,desc)
+	self.statusbar.set_active(1)
+def set_xa(self,widget):
+	desc=self.desc.get_text()
+	self.connection.set_status(2,desc)
+	self.statusbar.set_active(2)
+def set_dnd(self,widget):
+	desc=self.desc.get_text()
+	self.connection.set_status(3,desc)
+	self.statusbar.set_active(3)
+def set_chat(self,widget):
+	desc=self.desc.get_text()
+	self.connection.set_status(4,desc)
+	self.statusbar.set_active(4)
+def set_invisible(self,widget):
+	desc=self.desc.get_text()
+	self.connection.set_status(5,desc)
+	self.statusbar.set_active(5)
+	
+
 def logon(self,*widget):
 	
 	jid=self.login.get_text()
@@ -65,6 +91,7 @@ def close(self,*widget):
 	gtk.main_quit()
 	sys.exit(0)
 def icohide(self, event,widget):
+	self.show_hide()
 	self.window.hide()
 	return True
 	window.connect('delete-event', hide_window)
