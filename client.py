@@ -15,6 +15,7 @@ class okno:
 		self.gladefile = "client.glade"
 		self.wTree = gtk.glade.XML(self.gladefile) 
 		# pobieramy główne okno
+		
 		self.window = self.wTree.get_widget("window1")
 		self.window.show()
 		#wyświetlamy głowne okno

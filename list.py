@@ -48,7 +48,6 @@ def update_list(guiclass,sess,pres):
 	jid=pres.getFrom()
 	nick=pres.getFrom().getStripped()
 	
-	
 	status=guiclass.connection.roster.getStatus(jid.__str__())	
 	priority= guiclass.connection.roster.getPriority(jid.__str__())
 	
@@ -57,7 +56,8 @@ def update_list(guiclass,sess,pres):
 		show='offline'
 	else:	
 		show=guiclass.connection.roster.getShow(jid.__str__())		
-	
+	print show
+
 	#przypisanie kontaktow do tymczasowej listy
 	cats = list ()
 	item = guiclass.listmodel.get_iter_first ()
@@ -104,6 +104,8 @@ def get_show(show):
 		show=gtk.gdk.pixbuf_new_from_file("icons/extended-away.png")
 	if show=='offline':
 		show=gtk.gdk.pixbuf_new_from_file("icons/offline.png")
+	if show=='unavailable':
+		show=gtk.gdk.pixbuf_new_from_file("icons/offline.png")
 	return show
 
 def is_typing(guiclass,nick):
@@ -130,8 +132,8 @@ def is_typing(guiclass,nick):
 	#true/false gdy pisze lub nie
 	print guiclass.listmodel.get_value(item,3)
 	if guiclass.listmodel.get_value(item,3)==None:
-		guiclass.listmodel.set_value(item,3,pshow)
-	guiclass.listmodel.set_value(item,2,show)
+		gobject.idle_add(guiclass.listmodel.set_value,item,3,pshow)
+	gobject.idle_add(guiclass.listmodel.set_value,item,2,show)
 	
 def show_back(guiclass,item):
 	if item[3]!=None:

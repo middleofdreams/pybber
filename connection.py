@@ -187,22 +187,22 @@ class connection(threading.Thread):
 	
 		
 		if text!=None:
-			time=messtime(ts)
-			day=messday(ts)
+			time,day=messtime(ts)
 			user=user.getStripped()
 			name=self.roster.getName(user)
 			if name=="": name=user
 			savechat(self.gui,user,name,text,time,day)
 			#wypisywanie tresci w oknie
 			if user==self.gui.recipent:
-				loadchat(self.gui,user)
+				gobject.idle_add(loadchat,self.gui,user)
 			else:
 				is_typing(self.gui,user)
 				
-		if not self.gui.message.grab_focus():
-			self.gui.staticon.set_blinking(True)
-		else:
-			self.gui.staticon.set_blinking(False)
+		#if not self.gui.message.grab_focus():
+		
+		#	self.gui.staticon.set_blinking(True)
+		#else:
+		#	self.gui.staticon.set_blinking(False)
 	#funkcje sledzace wiadomosci:
 	def StepOn(self, conn):
 		try:

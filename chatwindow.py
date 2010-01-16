@@ -34,9 +34,7 @@ def messtime(ts):
 	if time.localtime()[-1]: tp+=3600
 	tp=time.localtime(tp)	
 	tm=time.strftime("%H:%M:%S",tp)
-	return tm
-def messday(ts):
-	tp=time.mktime(time.strptime(ts,'%Y%m%dT%H:%M:%S'))+3600
-	if time.localtime()[-1]: tp+=3600
-	tp=time.localtime(tp)
 	day=time.strftime("%d",tp)
+	return tm,day
+
+	
