@@ -20,7 +20,7 @@ class okno:
 		self.window.show()
 		#wyświetlamy głowne okno
 		if (self.window):
-			self.window.connect("destroy",self.close)
+			self.window.connect('delete-event', self.icohide)
 		mainh=self.window.get_size()[1]
 		self.window.resize(300	,mainh)
 		self.window.set_default_size(300, mainh)
@@ -43,7 +43,7 @@ class okno:
 		
 		self.statusentry.hide()
 		self.statusbar.hide()
-		print self.settings.status
+		self.pos=self.window.get_position()
 
 	
 	

@@ -9,6 +9,7 @@
     <signal name="drag_drop" handler="resize"/>
     <signal name="event" handler="windowevent"/>
     <signal name="drag_end" handler="resize"/>
+    <signal name="hide" handler="hide"/>
     <child>
       <widget class="GtkHBox" id="hbox1">
         <property name="visible">True</property>
@@ -678,7 +679,14 @@
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <widget class="GtkLabel" id="label13">
+                    <property name="visible">True</property>
+                    <property name="xalign">0.47999998927116394</property>
+                    <property name="label" translatable="yes"> </property>
+                  </widget>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </widget>
               <packing>
@@ -1019,6 +1027,62 @@ Niewidoczny</property>
   </widget>
   <widget class="GtkMenu" id="menu5">
     <property name="visible">True</property>
+    <child>
+      <widget class="GtkMenuItem" id="menuitem10">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">Poka&#x17C; okno</property>
+        <property name="use_underline">True</property>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkSeparatorMenuItem" id="menuitem17">
+        <property name="visible">True</property>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkMenuItem" id="menuitem11">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">Zmie&#x144; status na Dost&#x119;pny</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="set_online"/>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkMenuItem" id="menuitem12">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">Zmie&#x144; status na  Zaraz Wracam</property>
+        <property name="use_underline">True</property>
+        <signal name="activate" handler="set_away"/>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkMenuItem" id="menuitem13">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">Zmie&#x144; status na Wr&#xF3;c&#x119; p&#xF3;&#x17A;niej</property>
+        <property name="use_underline">True</property>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkMenuItem" id="menuitem14">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">Zmie&#x144; status na Nie przeszkadza&#x107;</property>
+        <property name="use_underline">True</property>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkMenuItem" id="menuitem15">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">Zmie&#x144; status na Chc&#x119; pogada&#x107;</property>
+        <property name="use_underline">True</property>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkMenuItem" id="menuitem16">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">Zmie&#x144; status na Niewidoczny</property>
+        <property name="use_underline">True</property>
+      </widget>
+    </child>
     <child>
       <widget class="GtkSeparatorMenuItem" id="menuitem9">
         <property name="visible">True</property>
