@@ -43,7 +43,7 @@ class okno:
 		
 		self.statusentry.hide()
 		self.statusbar.hide()
-		
+		print self.settings.status
 
 	
 	

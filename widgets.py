@@ -103,7 +103,7 @@ def assignwidgets(self):
 		self.settings=settings()
 		self.settings.loadprefs(self)
 		self.leftwindow=self.wTree.get_widget("vbox3")
-		
+		self.chat.connect("key_press_event", keys.chat,self)
 		self.hidebtn=self.wTree.get_widget("button9")
 	#------------------------------------------elementy menu Kontakty
 		self.list.set_reorderable(True)
