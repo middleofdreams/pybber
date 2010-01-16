@@ -87,12 +87,10 @@ def opensettings(self,widget):
 	self.wTree.get_widget('entry8').set_text(self.settings.status)
 	self.wTree.get_widget('entry11').set_text(self.settings.me)
 def activate(self,widget):
-	print self.window.visible
 	if self.window.is_active():
 		self.window.present()
 		self.pos=self.window.get_position()
 		self.window.hide()
-		print self.pos
 	else:
 		
 		self.window.show()

@@ -19,5 +19,4 @@ def loadchat(guiclass,recipent):
 	gobject.idle_add(guiclass.chat.load_html_string ,"<font size=-3>"+html, "file:///")
 		
 def copyfromchat(guiclass):
-	print "aaa"
 	guiclass.chat.copy_clipboard()
