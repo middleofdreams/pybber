@@ -84,6 +84,13 @@ def assignwidgets(self):
 		"edit":self.edit,
 		"cancel":self.cancel,
 		"contactpopup": self.contactmenu,
+		"set_online":self.set_online,
+		"set_away":self.set_away,
+		"set_xa":self.set_xa,
+		"set_dnd":self.set_dnd,
+		"set_chat":self.set_chat,
+		"set_invisible":self.set_invisible,
+		"activate":self.activate
 		}
 		
 			#---------Skroty klawiszowe--------------------------------------

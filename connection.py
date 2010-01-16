@@ -192,7 +192,8 @@ class connection(threading.Thread):
 			if user==self.gui.recipent:
 				loadchat(self.gui,user)
 			else: is_typing(self.gui,user)
-			
+		if not self.gui.window.is_active:
+			self.gui.staticon.set_blinking(True)
 
 	#funkcje sledzace wiadomosci:
 	def StepOn(self, conn):
