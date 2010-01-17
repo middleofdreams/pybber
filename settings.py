@@ -75,7 +75,7 @@ class settings():
 		self.status=d['status']
 		me=mainclass.wTree.get_widget('entry11').get_text()
 		if me=="":
-			me="Me"
+			me=self.login
 		self.me=me
 		d['me']=me
 		d.close()	
