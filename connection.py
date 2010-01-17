@@ -216,7 +216,7 @@ class connection(threading.Thread):
 			if not self.gui.window.is_active():
 				self.gui.window.set_urgency_hint(True)
 				self.gui.staticon.set_blinking(True)
-				self.gui.notification(user,text)
+				gobject.idle_add(self.gui.notification,user,text)
 			else:
 				self.gui.staticon.set_blinking(False)
 				self.gui.window.set_urgency_hint(False)
