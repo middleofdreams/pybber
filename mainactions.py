@@ -93,8 +93,6 @@ def close(self,*widget):
 	sys.exit(0)
 
 def icohide(self, event,widget):
-	self.window.present()
-	self.pos=self.window.get_position()
 	self.window.hide()
 	return True
 	window.connect('delete-event', hide_window)
@@ -126,18 +124,13 @@ def activate(self,widget):
 		self.window.present()
 		self.window.show()
 		self.staticon.set_blinking(False)
-		self.window.move(self.pos[0], self.pos[1])
+		
 			
 	if self.window.is_active():
 		self.window.present()
-		self.pos=self.window.get_position()
-		self.window.move(self.pos[0], self.pos[1])
 		self.window.hide()
 		
-#def deactivate(self,widget):
-#	if not self.window.is_active():
-#		self.posx=self.window.get_position()[0]
-#		self.posy=self.window.get_position()[1]
+
 def iconmenu(self,widget, button, time, test = None):
 	if button == 3:
 		if test:
