@@ -130,7 +130,7 @@ def is_typing(guiclass,nick):
 	#tu gdzies trzeba sprawdzic czy juz ma zamieniona ikonke...
 	#w najgorszym wypadku dodac kolejna kolumne gdzie bedzie tylko 
 	#true/false gdy pisze lub nie
-	print guiclass.listmodel.get_value(item,3)
+	#print guiclass.listmodel.get_value(item,3)
 	if guiclass.listmodel.get_value(item,3)==None:
 		gobject.idle_add(guiclass.listmodel.set_value,item,3,pshow)
 	gobject.idle_add(guiclass.listmodel.set_value,item,2,show)

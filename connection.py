@@ -66,8 +66,7 @@ class connection(threading.Thread):
 			self.statusbar.set_sensitive(1)
 			#handler do odbierania wiadomosci
 			
-			self.cl.RegisterHandler('message',self.messageCB)
-			
+		
 			
 			#ustawienie poczatkowego statusu
 			self.cl.sendInitPresence()
@@ -79,6 +78,10 @@ class connection(threading.Thread):
 			self.toolong.hide()
 			self.not_connected.hide()
 			self.cl.RegisterHandler('presence',self.presenceCB)
+			self.cl.RegisterHandler('message',self.messageCB)
+			self.cl.UnregisterDisconnectHandler(self.cl.DisconnectHandler)
+			self.cl.RegisterDisconnectHandler(self.disconnected)
+
 			self.set_status(self.gui.settings.show,self.gui.settings.status)
 			self.gui.statusbar.set_active(self.gui.settings.show)
 			#to rowniez do odbierania wiadomosci
@@ -184,7 +187,7 @@ class connection(threading.Thread):
 		if ts==None:
 			ts=mess.setTimestamp()
 			ts=mess.getTimestamp()
-	
+			print mess.attrs
 		
 		if text!=None:
 			time,day=messtime(ts)
@@ -204,16 +207,25 @@ class connection(threading.Thread):
 		else:
 			self.gui.staticon.set_blinking(False)
 			self.gui.window.set_urgency_hint(False)
+
 	#funkcje sledzace wiadomosci:
 	def StepOn(self, conn):
 		try:
 			conn.Process(1)
-		except KeyboardInterrupt: return 0
+			if not self.cl.isConnected():
+				self.disconnected()
+		except KeyboardInterrupt: 
+			return 0
 		return 1
+		
 
 	def GoOn(self,conn):
 		while self.StepOn(conn): pass
-		
+		print "aa"
 	#funkcja sledzaca aktywnosc userow	
 	def presenceCB(self, sess,pres):
 		update_list(self.gui,sess,pres)
+		
+	def disconnected(self):
+		self.gui.listmodel.clear()
+		self.connect_init(self.gui,self.gui.settings.jid,self.gui.settings.pwd)

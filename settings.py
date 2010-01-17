@@ -2,17 +2,15 @@
 
 import os,sys
 import gdbm,gtk,pango
-
-
 dir=os.path.abspath(os.path.dirname(sys.argv[0]))+"/data"
 workpath=os.environ['HOME']+"/.pybber"
 prefs=workpath+"/prefs.db"
 
 
 class settings():
-	def __init__(self):
+	def __init__(self,):
 		self.tryfiles()
-			
+		
 	def openwindow(self,mainclass):
 		#if not mainclass.notifies:
 		#	mainclass.wTree.get_widget("label9").set_sensitive(False)
