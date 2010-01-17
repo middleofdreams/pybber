@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
 import pygtk,gtk,gobject,time,re
-
+from archive import *
 def savechat(guiclass,recipent,user,chat,time,day):
 	if user==None or user=="None": user=recipent
 	text="<i>("+time+")</i><b> <font color=blue>"+user+"</font></b>: "+chat
 	text=text.replace(chr(13),"<br/>")
 	text=text.replace("\n","<br/>")
 	text=intolink(text)
+	print day
 	if recipent in guiclass.messages: 
 		guiclass.messages[recipent]=guiclass.messages[recipent]+"<br/>"+text
 	else : guiclass.messages[recipent]=text
-
+	archive_append(chat,recipent,user,time,day)
 def loadchat(guiclass,recipent):
 	if recipent in guiclass.messages:
 		html=guiclass.messages[recipent]
@@ -34,7 +35,7 @@ def messtime(ts):
 	if time.localtime()[-1]: tp+=3600
 	tp=time.localtime(tp)	
 	tm=time.strftime("%H:%M:%S",tp)
-	day=time.strftime("%d",tp)
+	day=time.strftime("%d %m %Y",tp)
 	return tm,day
 
 	
