@@ -43,6 +43,7 @@ class okno:
 		
 		self.statusentry.hide()
 		self.statusbar.hide()
+		self.hidden=False
 		self.posx,self.posy=self.window.get_position()
 
 	
