@@ -92,7 +92,7 @@ def assignwidgets(self):
 		"set_invisible":self.set_invisible,
 		"activate":self.activate,
 		"chatfocus":self.chatfocus,
-		
+		#"deactivate":self.deactivate,
 		}
 		
 			#---------Skroty klawiszowe--------------------------------------
