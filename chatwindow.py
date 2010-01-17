@@ -5,7 +5,6 @@ import pygtk,gtk,gobject,time,re
 def savechat(guiclass,recipent,user,chat,time,day):
 	if user==None or user=="None": user=recipent
 	text="<i>("+time+")</i><b> <font color=blue>"+user+"</font></b>: "+chat
-	text="<b> <font color=blue>"+user+"</font></b>: "+chat
 	text=text.replace(chr(13),"<br/>")
 	text=text.replace("\n","<br/>")
 	text=intolink(text)
