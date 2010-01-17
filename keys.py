@@ -4,7 +4,7 @@ def message(widget, event, klasa):
 	if event.type == gtk.gdk.KEY_PRESS:
 		if gtk.gdk.keyval_name(event.keyval)== 'Return' :
 			print event.state
-			if event.state==gtk.gdk.SHIFT_MASK:
+			if event.state==gtk.gdk.SHIFT_MASK | gtk.gdk.MOD2_MASK or event.state==gtk.gdk.SHIFT_MASK:
 				buffer=klasa.message.get_buffer()
 				buffer.insert_at_cursor(chr(13))
 				#buffer.place_cursor(buffer.get_end_iter())
