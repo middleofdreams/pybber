@@ -109,7 +109,7 @@ def get_show(show):
 
 def is_typing(guiclass,nick):
 	show=gtk.gdk.pixbuf_new_from_file("icons/typing.png")
-	guiclass.staticon.set_blinking(True) 
+	guiclass.staticon.set_blinking(True) 	
 	
 	cats = list()
 	item = guiclass.listmodel.get_iter_first ()
@@ -118,6 +118,7 @@ def is_typing(guiclass,nick):
 		item = guiclass.listmodel.iter_next(item)
 	#sprawdzenie czy kontakt znajduje sie na liscie	
 	if not nick in cats:
+		status=guiclass.connection.roster.getStatus(nick)
 		guiclass.listmodel.append([nick,status,show,nick])
 	else:
 	#jesli tak - aktualizuj wpisj

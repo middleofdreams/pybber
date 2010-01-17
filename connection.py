@@ -77,15 +77,26 @@ class connection(threading.Thread):
 			#chowa ewentualne komunikaty
 			self.toolong.hide()
 			self.not_connected.hide()
-			self.cl.RegisterHandler('presence',self.presenceCB)
-			self.cl.RegisterHandler('message',self.messageCB)
+			
+			
 			self.cl.UnregisterDisconnectHandler(self.cl.DisconnectHandler)
 			self.cl.RegisterDisconnectHandler(self.disconnected)
 
 			self.set_status(self.gui.settings.show,self.gui.settings.status)
 			self.gui.statusbar.set_active(self.gui.settings.show)
+			time.sleep(0.2)
+			self.cl.RegisterHandler('presence',self.presenceCB)
+			self.cl.RegisterHandler('message',self.messageCB)
+			####wykrywanie rozlaczenia
+			self.disconnecttry=0
+			threading.Thread(target=self.is_connected,args=()).start()	
+			threading.Thread(target=self.is_connected,args=()).start()	
+			#########################################################
+			
+			
 			#to rowniez do odbierania wiadomosci
 			self.GoOn(self.cl)
+
 		
 #---------Pasek postepu i sprawdzenie czasu polaczenia------------------		
 	def connectbar(self):
@@ -215,9 +226,6 @@ class connection(threading.Thread):
 			
 		except KeyboardInterrupt: 
 			return 0
-		print self.cl.isConnected()
-		if not self.cl.isConnected():
-				self.disconnected()
 		return 1
 		
 
@@ -230,4 +238,18 @@ class connection(threading.Thread):
 		
 	def disconnected(self):
 		self.gui.listmodel.clear()
-		self.connect_init(self.gui,self.gui.settings.jid,self.gui.settings.pwd)
+		self.active=False
+		self.connect_init(self.gui,self.gui.settings.login,self.gui.settings.pwd)
+
+
+	def is_connected(self):
+		while self.active:
+			time.sleep(5)
+			jid=xmpp.protocol.JID(self.jid) 
+			cl=xmpp.Client(jid.getDomain(),debug=[])
+			if cl.connect() == "":
+				self.disconnecttry=self.disconnecttry+1
+			else: 
+				if self.disconnecttry>0: self.disconnecttry=self.disconnecttry-1
+				cl.disconnect()
+			if self.disconnecttry>3: self.disconnected()
