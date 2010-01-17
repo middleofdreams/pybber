@@ -245,11 +245,9 @@ class connection(threading.Thread):
 	def is_connected(self):
 		while self.active:
 			time.sleep(5)
-			jid=xmpp.protocol.JID(self.jid) 
-			cl=xmpp.Client(jid.getDomain(),debug=[])
-			if cl.connect() == "":
+			 #self.cl.Roster.getRawRoster()
+			if self.cl.Roster.getRoster() == "":
 				self.disconnecttry=self.disconnecttry+1
 			else: 
 				if self.disconnecttry>0: self.disconnecttry=self.disconnecttry-1
-				cl.disconnect()
 			if self.disconnecttry>3: self.disconnected()
