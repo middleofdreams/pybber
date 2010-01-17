@@ -212,10 +212,12 @@ class connection(threading.Thread):
 	def StepOn(self, conn):
 		try:
 			conn.Process(1)
-			if not self.cl.isConnected():
-				self.disconnected()
+			
 		except KeyboardInterrupt: 
 			return 0
+		print self.cl.isConnected()
+		if not self.cl.isConnected():
+				self.disconnected()
 		return 1
 		
 
