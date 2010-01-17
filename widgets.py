@@ -114,7 +114,8 @@ def assignwidgets(self):
 		self.hidebtn=self.wTree.get_widget("button9")
 	#------------------------------------------elementy menu Kontakty
 		self.list.set_reorderable(True)
-
+		self.window.connect("drag-end", self.resize)
+		self.window.connect("drag-drop", self.resize)
 def createstatusicon(mainclass):	
  
 		mainclass.staticon = gtk.StatusIcon() 

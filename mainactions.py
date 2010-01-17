@@ -83,7 +83,7 @@ def reconnect2(self,widget):
 	self.connection.reconnect2()
 
 def resize(self,widget):
-	pass
+	self.posx,self.posy=self.window.get_position()
 	#  self.renderer.props.wrap_width = int(self.column.get_width())-int(10)
 
 def close(self,*widget):
@@ -128,11 +128,10 @@ def activate(self,widget):
 		self.staticon.set_blinking(False)
 		if self.hidden:
 			self.window.move(self.posx,self.posy)
-			
+		self.hidden=False
 	if self.window.is_active():
 		self.window.present()
 		self.posx,self.posy=self.window.get_position()
-
 		self.window.hide()
 		self.hidden=True
 

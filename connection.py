@@ -159,6 +159,7 @@ class connection(threading.Thread):
 		mess.setTimestamp()
 		self.cl.send(mess)
 		return mess.getTimestamp()
+		
 	def set_desc(self,desc):
 		'''ustawia opis'''
 		self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status=desc))

@@ -24,7 +24,7 @@ def on_activated(widget, row, col,guiclass):
 	loadchat(guiclass,text)
 	show_back(guiclass,model[row])
 	guiclass.message.grab_focus()
-
+	guiclass.posx,guiclass.posy=guiclass.window.get_position()
 	 
 def create_empty_list(guiclass):
 	'''tworzy pusta liste'''

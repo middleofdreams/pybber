@@ -30,25 +30,16 @@ class okno:
 		self.window.set_title("Pybber")
 		
 		#pobranie obiektow z glade i przypisywanie ich do zmiennych:
-		
-
 		self.messages={}
 		self.recipent=""
 		assignwidgets(self)
 		createstatusicon(self)
 		self.connection=connection(self)
-		
-		
 		self.list.set_reorderable(True)
-		
 		self.statusentry.hide()
 		self.statusbar.hide()
 		self.hidden=False
 		self.posx,self.posy=self.window.get_position()
-
-	
-	
-
 if __name__ == "__main__":
 	gtk.gdk.threads_init()
 	klasa=okno()
