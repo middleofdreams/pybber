@@ -26,3 +26,13 @@ def archive_append(chat,recipent,user,time,day):
 	f = open(filepath, "a")
 	f.write("<i>("+time+")</i><b> <font color=blue>"+user+"</font></b>: "+chat+"<br/>")	   
 	
+def load_last(gui,recipent,day):
+	day=day.replace(" ","-")
+	filepath=path+"/"+day+".html"
+	try:
+		f = open(filepath, "r")
+		text=f.read()
+		text=text.split("<b/>")
+		i=10
+		
+		while 
