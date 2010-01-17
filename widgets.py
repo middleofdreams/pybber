@@ -12,7 +12,7 @@ def assignwidgets(self):
 		self.list=self.wTree.get_widget("treeview1")
 		self.statusbar=self.wTree.get_widget("combobox1")
 		self.button=self.wTree.get_widget("button1")
-		self.message=self.wTree.get_widget("entry1")
+		self.message=self.wTree.get_widget("textview1")
 		#self.chatwindow=self.wTree.get_widget("treeview2")
 		self.progress=self.wTree.get_widget("progressbar1")
 		self.desc=self.wTree.get_widget("entry2")
@@ -97,6 +97,7 @@ def assignwidgets(self):
 		
 			#---------Skroty klawiszowe--------------------------------------
 		self.message.connect("key_press_event", keys.message,self)
+		self.message.get_buffer().connect_after("insert-text", keys.msgbuffer)
 		self.desc.connect("key_press_event", keys.status,self)
 		self.list.connect("key_press_event", keys.list,self)
 	#---Stworzenie modelu dla wyswietlania rozmow----------------------

@@ -29,10 +29,10 @@ def archive_append(chat,recipent,user,time,day):
 def load_last(gui,recipent,day):
 	day=day.replace(" ","-")
 	filepath=path+"/"+day+".html"
-	try:
-		f = open(filepath, "r")
-		text=f.read()
-		text=text.split("<b/>")
-		i=10
+	#try:
+	#	f = open(filepath, "r")
+	#	text=f.read()
+	#	text=text.split("<b/>")
+	#	i=10
 		
-		while 
+		#while 

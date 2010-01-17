@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
-import pygtk,gtk,xmpp
+import pygtk,gtk,xmpp,time
 from chatwindow import *
 from connection import *
 def on_activated(widget, row, col,guiclass):
@@ -42,7 +42,7 @@ def create_empty_list(guiclass):
 	
 def update_list(guiclass,sess,pres):
 	'''aktualizuje zmieniajace sie wpisy'''
-	
+	guiclass.staticon.set_blinking(True)
 	#sprawdzanie kto sie zmienil 
 	jid=pres.getFrom()
 	nick=pres.getFrom().getStripped()
@@ -77,8 +77,8 @@ def update_list(guiclass,sess,pres):
 			guiclass.listmodel.set_value(item,3,get_show(show))
 		else:
 			guiclass.listmodel.set_value(item,2,get_show(show))
-
-
+	#time.sleep(1)
+	guiclass.staticon.set_blinking(False)
 def get_all(guiclass,list):	
 	'''pobiera wszystkie kontakty z rostera'''
 	for i in list:		
@@ -108,6 +108,7 @@ def get_show(show):
 	return show
 
 def is_typing(guiclass,nick):
+	
 	show=gtk.gdk.pixbuf_new_from_file("icons/typing.png")
 	guiclass.staticon.set_blinking(True) 	
 	
@@ -123,6 +124,7 @@ def is_typing(guiclass,nick):
 	else:
 	#jesli tak - aktualizuj wpisj
 		item = guiclass.listmodel.get_iter_first ()
+		
 		while ( guiclass.listmodel.get_value(item,4)!=nick):
 			cats.append (guiclass.listmodel.get_value (item, 4))
 			item = guiclass.listmodel.iter_next(item)
@@ -134,7 +136,7 @@ def is_typing(guiclass,nick):
 	if guiclass.listmodel.get_value(item,3)==None:
 		gobject.idle_add(guiclass.listmodel.set_value,item,3,pshow)
 	gobject.idle_add(guiclass.listmodel.set_value,item,2,show)
-	
+
 def show_back(guiclass,item):
 	if item[3]!=None:
 		item[2]=item[3]

@@ -5,11 +5,11 @@
   <widget class="GtkWindow" id="window1">
     <property name="default_width">400</property>
     <property name="default_height">500</property>
-    <signal name="event" handler="windowevent"/>
-    <signal name="hide" handler="hide"/>
     <signal name="notify" handler="chatfocus"/>
-    <signal name="drag_end" handler="resize"/>
     <signal name="drag_drop" handler="resize"/>
+    <signal name="event" handler="windowevent"/>
+    <signal name="drag_end" handler="resize"/>
+    <signal name="hide" handler="hide"/>
     <signal name="selection_get" handler="chatfocus"/>
     <child>
       <widget class="GtkHBox" id="hbox1">
@@ -73,15 +73,16 @@
                   <widget class="GtkHBox" id="hbox2">
                     <property name="visible">True</property>
                     <child>
-                      <widget class="GtkEntry" id="entry1">
+                      <widget class="GtkTextView" id="textview1">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="invisible_char">&#x25CF;</property>
-                        <signal name="grab_focus" handler="chatfocus"/>
+                        <property name="pixels_above_lines">1</property>
+                        <property name="pixels_below_lines">1</property>
+                        <property name="wrap_mode">word</property>
                         <signal name="focus" handler="chatfocus"/>
                         <signal name="event" handler="chatfocus"/>
+                        <signal name="grab_focus" handler="chatfocus"/>
                         <accelerator key="c" signal="copy-clipboard" modifiers="GDK_CONTROL_MASK"/>
-                        <accelerator key="x" signal="cut-clipboard" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="v" signal="paste-clipboard" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                       <packing>

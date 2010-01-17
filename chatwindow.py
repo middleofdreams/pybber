@@ -8,7 +8,6 @@ def savechat(guiclass,recipent,user,chat,time,day):
 	text=text.replace(chr(13),"<br/>")
 	text=text.replace("\n","<br/>")
 	text=intolink(text)
-	print day
 	if recipent in guiclass.messages: 
 		guiclass.messages[recipent]=guiclass.messages[recipent]+"<br/>"+text
 	else : guiclass.messages[recipent]=text
