@@ -6,7 +6,6 @@ from connection import *
 def on_activated(widget, row, col,guiclass):
 	'''zmienia aktualnego rozmowce'''  
 	guiclass.staticon.set_blinking(False)
-	
 	model = widget.get_model()
 	text = model[row][4]
 	show_back(guiclass,model[row])
