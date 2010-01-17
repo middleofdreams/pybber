@@ -55,7 +55,7 @@ def update_list(guiclass,sess,pres):
 		show='offline'
 	else:	
 		show=guiclass.connection.roster.getShow(jid.__str__())		
-	print show
+	#print show
 
 	#przypisanie kontaktow do tymczasowej listy
 	cats = list ()

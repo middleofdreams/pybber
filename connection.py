@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
-import pygtk,gtk,xmpp,threading,time,gobject,sys,thread
+import pygtk,gtk,xmpp,threading,time,gobject,sys,thread,pynotify
 from chatwindow import *
 from list import *
 #----------klasa do zarzadzania polaczeniem-------------------------#
@@ -129,6 +129,7 @@ class connection(threading.Thread):
 		if(not self.ifrun and self.i<1 and not self.stop):
 			#ustaw zmienna odpowiadajaca za aktywne polaczenie
 			self.active=True
+			self.gui.staticon.set_from_file("icons/pybber.png") 
 			
 		#jesli polaczenie bylo 'przerwane'
 		if self.stop:
@@ -216,6 +217,7 @@ class connection(threading.Thread):
 			if not self.gui.window.is_active():
 				self.gui.window.set_urgency_hint(True)
 				self.gui.staticon.set_blinking(True)
+				self.gui.notification()
 			else:
 				self.gui.staticon.set_blinking(False)
 				self.gui.window.set_urgency_hint(False)
@@ -232,7 +234,7 @@ class connection(threading.Thread):
 
 	def GoOn(self,conn):
 		while self.StepOn(conn): pass
-		print "aa"
+		#print "aa"
 	#funkcja sledzaca aktywnosc userow	
 	def presenceCB(self, sess,pres):
 		update_list(self.gui,sess,pres)

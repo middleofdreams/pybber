@@ -17,10 +17,21 @@ def show_hide(self, *widget):  #hide chat
 	self.window.resize(300,mainh)
 	self.window.present()
 	self.pos=self.window.get_position()	
+	
 def clear(self, *widget):
 	if self.recipent in self.messages:
 		self.messages[self.recipent]=""
 		loadchat(self,self.recipent)	
+		
+def notification(self):
+	self.title="Nowa wiadomość od... "
+	self.body=self.recipent
+	body=self.body
+	self.n = pynotify.Notification(self.title, body)  
+	self.n.attach_to_status_icon(self.staticon)
+	pynotify.init("Some Application or Title")
+	self.n.show()
+	
 def set_online(self,widget):
 	desc=self.desc.get_text()
 	self.connection.set_status(0,desc)
@@ -54,7 +65,8 @@ def logon(self,*widget):
 	self.settings.saveacc(self)
 	self.loginbox.hide()
 	self.jidlabel.set_label(jid)	
-
+	self.staticon.set_from_file("icons/disconnected.png") 
+	
 def changedata(self, *widget):
 	self.toolong.hide()
 	self.loginbox.show()

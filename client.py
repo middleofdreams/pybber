@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import pygtk,gtk,gtk.glade,xmpp,sys,pango,os,time
+import pygtk,gtk,gtk.glade,xmpp,sys,pango,os,time,pynotify
 from connection import *
 import keys
 import send
