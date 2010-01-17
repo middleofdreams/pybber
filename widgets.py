@@ -12,7 +12,7 @@ def assignwidgets(self):
 		self.list=self.wTree.get_widget("treeview1")
 		self.statusbar=self.wTree.get_widget("combobox1")
 		self.button=self.wTree.get_widget("button1")
-		self.message=self.wTree.get_widget("entry1")
+		self.message=self.wTree.get_widget("textview1")
 		#self.chatwindow=self.wTree.get_widget("treeview2")
 		self.progress=self.wTree.get_widget("progressbar1")
 		self.desc=self.wTree.get_widget("entry2")

@@ -3,7 +3,12 @@ from chatwindow import copyfromchat
 def message(widget, event, klasa):
 	if event.type == gtk.gdk.KEY_PRESS:
 		if gtk.gdk.keyval_name(event.keyval)== 'Return' :
-			klasa.send()
+			if event.state==gtk.gdk.SHIFT_MASK:
+				buffer=klasa.message.get_buffer()
+				buffer.insert(buffer.get_end_iter(),chr(13))
+				buffer.place_cursor(buffer.get_end_iter())
+			else:
+				klasa.send()
 	
 def status(widget, event, klasa):
 	if event.type == gtk.gdk.KEY_PRESS:
