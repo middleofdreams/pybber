@@ -200,7 +200,6 @@ class connection(threading.Thread):
 		if ts==None:
 			ts=mess.setTimestamp()
 			ts=mess.getTimestamp()
-			print mess.attrs
 		
 		if text!=None:
 			time,day=messtime(ts)
@@ -217,7 +216,7 @@ class connection(threading.Thread):
 			if not self.gui.window.is_active():
 				self.gui.window.set_urgency_hint(True)
 				self.gui.staticon.set_blinking(True)
-				self.gui.notification()
+				self.gui.notification(user,text)
 			else:
 				self.gui.staticon.set_blinking(False)
 				self.gui.window.set_urgency_hint(False)

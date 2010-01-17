@@ -23,13 +23,13 @@ def clear(self, *widget):
 		self.messages[self.recipent]=""
 		loadchat(self,self.recipent)	
 		
-def notification(self):
-	self.title="Nowa wiadomość od... "
-	self.body=self.recipent
-	body=self.body
-	self.n = pynotify.Notification(self.title, body)  
-	self.n.attach_to_status_icon(self.staticon)
-	pynotify.init("Some Application or Title")
+def notification(self,user,text):
+	title="Nowa wiadomość od "+user
+	try:
+		self.n.update(title=title,body=text)
+	except:
+		self.n = pynotify.Notification(title, text)  
+		self.n.attach_to_status_icon(self.staticon)
 	self.n.show()
 	
 def set_online(self,widget):

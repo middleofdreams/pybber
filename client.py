@@ -40,6 +40,9 @@ class okno:
 		self.statusbar.hide()
 		self.hidden=False
 		self.posx,self.posy=self.window.get_position()
+		pynotify.init("Pybber")
+		
+		
 if __name__ == "__main__":
 	gtk.gdk.threads_init()
 	klasa=okno()
