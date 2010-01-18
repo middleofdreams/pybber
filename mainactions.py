@@ -176,5 +176,11 @@ def link(self,widget,frame,request,navigation_action,policy):
 	commands.getoutput("kfmclient openURL "+request.get_uri())
 	
 
-	
+def archive(self, *widget):
+	self.archivewindow.show()
          
+def closearchive(self, *widget):
+	self.window.set_gravity(gtk.gdk.GRAVITY_SOUTH_EAST)
+	self.archivewindow.hide()
+	mainh=self.window.get_size()[1]
+	self.window.resize(300,mainh)

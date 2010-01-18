@@ -5,15 +5,55 @@
   <widget class="GtkWindow" id="window1">
     <property name="default_width">400</property>
     <property name="default_height">500</property>
-    <signal name="notify" handler="chatfocus"/>
     <signal name="drag_drop" handler="resize"/>
     <signal name="event" handler="windowevent"/>
-    <signal name="drag_end" handler="resize"/>
     <signal name="hide" handler="hide"/>
+    <signal name="drag_end" handler="resize"/>
+    <signal name="notify" handler="chatfocus"/>
     <signal name="selection_get" handler="chatfocus"/>
     <child>
       <widget class="GtkHBox" id="hbox1">
         <property name="visible">True</property>
+        <child>
+          <widget class="GtkVBox" id="vbox9">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <widget class="GtkScrolledWindow" id="scrolledwindow3">
+                <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">automatic</property>
+                <property name="vscrollbar_policy">automatic</property>
+                <child>
+                  <widget class="GtkTreeView" id="treeview2">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkButton" id="button18">
+                <property name="label" translatable="yes">zamknij</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="closearchive"/>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="pack_type">end</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="position">0</property>
+          </packing>
+        </child>
         <child>
           <widget class="GtkVBox" id="vbox3">
             <property name="width_request">400</property>
@@ -82,8 +122,8 @@
                         <signal name="focus" handler="chatfocus"/>
                         <signal name="event" handler="chatfocus"/>
                         <signal name="grab_focus" handler="chatfocus"/>
-                        <accelerator key="c" signal="copy-clipboard" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="v" signal="paste-clipboard" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="c" signal="copy-clipboard" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                       <packing>
                         <property name="position">0</property>
@@ -132,7 +172,7 @@
             </child>
           </widget>
           <packing>
-            <property name="position">0</property>
+            <property name="position">1</property>
           </packing>
         </child>
         <child>
@@ -794,7 +834,7 @@
             </child>
           </widget>
           <packing>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child>
@@ -1010,7 +1050,7 @@ Niewidoczny</property>
             </child>
           </widget>
           <packing>
-            <property name="position">2</property>
+            <property name="position">3</property>
           </packing>
         </child>
       </widget>
