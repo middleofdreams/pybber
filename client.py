@@ -41,7 +41,7 @@ class okno:
 		self.hidden=False
 		self.posx,self.posy=self.window.get_position()
 		pynotify.init("Pybber")
-		
+		self.archivewindow.hide()
 		
 if __name__ == "__main__":
 	gtk.gdk.threads_init()

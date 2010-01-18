@@ -13,7 +13,8 @@ def assignwidgets(self):
 		self.statusbar=self.wTree.get_widget("combobox1")
 		self.button=self.wTree.get_widget("button1")
 		self.message=self.wTree.get_widget("textview1")
-		#self.chatwindow=self.wTree.get_widget("treeview2")
+		self.archivelist=self.wTree.get_widget("treeview2")
+		self.archivewindow=self.wTree.get_widget("vbox9")
 		self.progress=self.wTree.get_widget("progressbar1")
 		self.desc=self.wTree.get_widget("entry2")
 		self.toolong=self.wTree.get_widget("vbox1")
@@ -92,7 +93,9 @@ def assignwidgets(self):
 		"set_invisible":self.set_invisible,
 		"activate":self.activate,
 		"chatfocus":self.chatfocus,
-		"notification":self.notification
+		"notification":self.notification,
+		"archive":self.archive,
+		"closearchive":self.closearchive
 			}
 		
 			#---------Skroty klawiszowe--------------------------------------
