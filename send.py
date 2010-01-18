@@ -19,6 +19,8 @@ def sendmsg(guiclass):
 		guiclass.staticon.set_blinking(False)
 		time,day=messtime(ts)
 		savechat(guiclass,guiclass.recipent,"<font color=red>"+guiclass.settings.me+"</font>",msg,time,day)
+		#updatechat(guiclass,guiclass.recipent,"<font color=red>"+guiclass.settings.me+"</font>",msg,time)
+
 		gobject.idle_add(loadchat,guiclass,guiclass.recipent)
 		#n=guiclass.chat.append(["-= Me : "+msg])
 		#update(guiclass,n)

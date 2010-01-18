@@ -12,12 +12,33 @@ def savechat(guiclass,recipent,user,chat,time,day):
 		guiclass.messages[recipent]=guiclass.messages[recipent]+"<br/>"+text
 	else : guiclass.messages[recipent]=text
 	archive_append(chat,recipent,user,time,day)
+
 def loadchat(guiclass,recipent):
 	if recipent in guiclass.messages:
 		html=guiclass.messages[recipent]
 	else: html=""
-	gobject.idle_add(guiclass.chat.load_html_string ,"<font size=-3>"+html, "file:///")
-		
+	guiclass.chat.load_html_string("", "file:///")
+	html="<font size=-3>"+html+"</font size=-3>"
+	gobject.idle_add(guiclass.chat.load_html_string,html, "file:///")
+	#guiclass.chat.execute_script("document.write('%s<br/>');" % html)
+
+
+def updatechat(guiclass,recipent,user,chat,time):
+	if user==None or user=="None": user=recipent
+	text="<i>("+time+")</i><b> <font color=blue>"+user+"</font></b>: "+chat
+	text=text.replace(chr(13),"<br/>")
+	text=text.replace("\n","<br/>")
+	text=intolink(text)
+	text="<font size=-3>"+text+"</font>"
+	#script="var newcontent = document.createElement('p'); \
+	#	newcontent.id = 'syndication'; \
+	#	newcontent.appendChild(document.createTextNode('%s<br/>')); \
+	#	var scr = document.getElementById('syndication'); \
+	#	scr.parentNode.insertAfter(newcontent, scr);" % text
+	#guiclass.chat.execute_script(script)
+	guiclass.chat.execute_script("document.writeln('%s<br/>');" % text)
+
+	
 def copyfromchat(guiclass):
 	guiclass.chat.copy_clipboard()
 	
