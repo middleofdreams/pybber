@@ -15,6 +15,7 @@ def assignwidgets(self):
 		self.message=self.wTree.get_widget("textview1")
 		self.archivelist=self.wTree.get_widget("treeview2")
 		self.archivewindow=self.wTree.get_widget("vbox9")
+		self.archivescroll=self.wTree.get_widget("scrolledwindow3")
 		self.progress=self.wTree.get_widget("progressbar1")
 		self.desc=self.wTree.get_widget("entry2")
 		self.toolong=self.wTree.get_widget("vbox1")
@@ -105,8 +106,6 @@ def assignwidgets(self):
 		col=gtk.TreeViewColumn("Rozmowy:",gtk.CellRendererText(), text=0)
 		self.archivelist.append_column(col)
 		print self.archivelist.get_columns()
-		self.archivelist.set_headers_visible(0)
-		model.append(['asdsads'])
 		self.archivelist.show()
 		
 			#---------Skroty klawiszowe--------------------------------------
