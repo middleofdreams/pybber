@@ -212,7 +212,7 @@ class connection(threading.Thread):
 				gobject.idle_add(loadchat,self.gui,user)
 			else:
 				is_typing(self.gui,user)
-				
+			
 			if not self.gui.window.is_active():
 				self.gui.window.set_urgency_hint(True)
 				self.gui.staticon.set_blinking(True)

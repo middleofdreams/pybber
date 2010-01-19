@@ -114,7 +114,7 @@ def icohide(self, event,widget):
 def loadFinished(self,a,b):
 	pos=self.chatwindow.get_vadjustment()
 	newpos=pos.get_upper()
-	pos.set_value(newpos)
+	pos.set_value(newpos+30)
 	self.chatwindow.set_vadjustment(pos)  
 	
 def savesettings(self,widget):
@@ -178,9 +178,11 @@ def link(self,widget,frame,request,navigation_action,policy):
 
 def archive(self, *widget):
 	self.archivewindow.show()
-         
+	self.archivelist.show()
+	self.archivescroll.show()
 def closearchive(self, *widget):
+	mainh=self.window.get_size()[1]
 	self.window.set_gravity(gtk.gdk.GRAVITY_SOUTH_EAST)
 	self.archivewindow.hide()
-	mainh=self.window.get_size()[1]
+	
 	self.window.resize(300,mainh)

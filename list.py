@@ -25,6 +25,8 @@ def on_activated(widget, row, col,guiclass):
 	show_back(guiclass,model[row])
 	guiclass.message.grab_focus()
 	guiclass.posx,guiclass.posy=guiclass.window.get_position()
+	guiclass.loadFinished('','')
+	
 	 
 def create_empty_list(guiclass):
 	'''tworzy pusta liste'''
