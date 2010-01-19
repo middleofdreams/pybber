@@ -5,6 +5,7 @@ import gtk,sys,time
 from send import *
 from connection import *
 import commands
+from archive import archive_loadlist
 
 def show_hide(self, *widget):  #hide chat
 	mainh=self.window.get_size()[1]	
@@ -178,6 +179,7 @@ def link(self,widget,frame,request,navigation_action,policy):
 
 def archive(self, *widget):
 	self.archivewindow.show()
+	archive_loadlist(self)
          
 def closearchive(self, *widget):
 	self.window.set_gravity(gtk.gdk.GRAVITY_SOUTH_EAST)

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import gtk
+import gtk,gobject
 import keys
 from list import *
 import webkit
@@ -98,6 +98,17 @@ def assignwidgets(self):
 		"closearchive":self.closearchive
 			}
 		
+		
+		
+		model=gtk.ListStore(gobject.TYPE_STRING)
+		self.archivelist.set_model(model)
+		col=gtk.TreeViewColumn("Rozmowy:",gtk.CellRendererText(), text=0)
+		self.archivelist.append_column(col)
+		print self.archivelist.get_columns()
+		self.archivelist.set_headers_visible(0)
+		model.append(['asdsads'])
+		self.archivelist.show()
+		
 			#---------Skroty klawiszowe--------------------------------------
 		self.message.connect("key_press_event", keys.message,self)
 		self.message.get_buffer().connect_after("insert-text", keys.msgbuffer)
@@ -121,6 +132,8 @@ def assignwidgets(self):
 		self.list.set_reorderable(True)
 		self.window.connect("drag-end", self.resize)
 		self.window.connect("drag-drop", self.resize)
+		
+		
 def createstatusicon(mainclass):	
  
 		mainclass.staticon = gtk.StatusIcon() 

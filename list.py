@@ -9,12 +9,15 @@ def on_activated(widget, row, col,guiclass):
 	model = widget.get_model()
 	text = model[row][4]
 	show_back(guiclass,model[row])
-	guiclass.window.set_gravity(gtk.gdk.GRAVITY_SOUTH_EAST)
 
 	if guiclass.window.get_title()=="Pybber":
+		guiclass.window.set_gravity(gtk.gdk.GRAVITY_SOUTH_EAST)
 		x1,y1=guiclass.window.get_size()
-	#	guiclass.window.move(x1-400,y1)
+		
 		guiclass.window.resize(x1+400,y1)
+		x1,y1=guiclass.window.get_position()
+		guiclass.window.move(x1-400,y1)
+		
 		guiclass.leftwindow.show()
 		
 		

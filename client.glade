@@ -5,11 +5,11 @@
   <widget class="GtkWindow" id="window1">
     <property name="default_width">400</property>
     <property name="default_height">500</property>
+    <signal name="notify" handler="chatfocus"/>
     <signal name="drag_drop" handler="resize"/>
     <signal name="event" handler="windowevent"/>
-    <signal name="hide" handler="hide"/>
     <signal name="drag_end" handler="resize"/>
-    <signal name="notify" handler="chatfocus"/>
+    <signal name="hide" handler="hide"/>
     <signal name="selection_get" handler="chatfocus"/>
     <child>
       <widget class="GtkHBox" id="hbox1">
@@ -26,6 +26,7 @@
                 <child>
                   <widget class="GtkTreeView" id="treeview2">
                     <property name="visible">True</property>
+                    <property name="app_paintable">True</property>
                     <property name="can_focus">True</property>
                   </widget>
                 </child>
@@ -122,8 +123,8 @@
                         <signal name="focus" handler="chatfocus"/>
                         <signal name="event" handler="chatfocus"/>
                         <signal name="grab_focus" handler="chatfocus"/>
-                        <accelerator key="v" signal="paste-clipboard" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="c" signal="copy-clipboard" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="v" signal="paste-clipboard" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                       <packing>
                         <property name="position">0</property>

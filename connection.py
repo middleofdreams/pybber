@@ -209,7 +209,7 @@ class connection(threading.Thread):
 			savechat(self.gui,user,name,text,time,day)
 			#wypisywanie tresci w oknie
 			if user==self.gui.recipent:
-				gobject.idle_add(loadchat,self.gui,recipent)
+				gobject.idle_add(loadchat,self.gui,user)
 				#gobject.idle_add(updatechat,self.gui,user,name,text,time)
 			else:
 				is_typing(self.gui,user)

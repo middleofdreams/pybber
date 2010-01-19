@@ -36,3 +36,14 @@ def load_last(gui,recipent,day):
 	#	i=10
 		
 		#while 
+def archive_loadlist(guiclass):
+	index=guiclass.list.get_selection()
+	index=index.get_selected()[1]
+	recipent=guiclass.listmodel.get_value(index,4)
+	path=workpath+"/"+recipent
+	days=os.listdir(path)
+	for day in days:
+		day=day.rstrip('.html')
+		print day
+		guiclass.archivelist.get_model().append([day])
+	
