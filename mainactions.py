@@ -117,8 +117,8 @@ def icohide(self, event,widget):
 
 def loadFinished(self,a,b):
 	pos=self.chatwindow.get_vadjustment()
-	newpos=pos.get_upper()
-	pos.set_value(newpos+30)
+	newpos=pos.get_upper()+pos.get_page_size()
+	pos.set_value(newpos)
 	self.chatwindow.set_vadjustment(pos)  
 	
 def savesettings(self,widget):
@@ -177,7 +177,7 @@ def contactmenu(self, treeview, event):
 			return True
 				
 def link(self,widget,frame,request,navigation_action,policy):
-	commands.getoutput("kfmclient openURL "+request.get_uri())
+	commands.getoutput("xdg-open "+request.get_uri())
 	
 
 def archive(self, *widget):

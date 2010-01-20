@@ -45,9 +45,10 @@ def load_last(recipent):
 				html=html+text[y]+"<br/>"
 		else: 
 			for i in text: html=html+i+"<br/>"
+		html=html.rstrip("<br/>")+"<hr>"
+
 	except:
 		html=""
-	html=html+"<hr><br/>"
 	return html
 		
 		#while 
