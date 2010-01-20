@@ -29,7 +29,11 @@ def on_activated(widget, row, col,guiclass):
 	guiclass.message.grab_focus()
 	guiclass.posx,guiclass.posy=guiclass.window.get_position()
 	guiclass.loadFinished('','')
-	
+	guiclass.wTree.get_widget("hbox2").show()
+	guiclass.archivewindow.hide()
+	guiclass.archivelist.hide()
+	guiclass.archivescroll.hide()
+
 	 
 def create_empty_list(guiclass):
 	'''tworzy pusta liste'''

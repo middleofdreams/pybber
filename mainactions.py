@@ -17,6 +17,9 @@ def show_hide(self, *widget):  #hide chat
 	self.leftwindow.hide()
 	self.window.resize(300,mainh)
 	self.window.present()
+	self.archivewindow.hide()
+	self.archivelist.hide()
+	self.archivescroll.hide()
 	self.pos=self.window.get_position()	
 	
 def clear(self, *widget):
@@ -182,9 +185,24 @@ def archive(self, *widget):
 	archive_loadlist(self)
 	self.archivelist.show()
 	self.archivescroll.show()
+	self.leftwindow.show()
+	
 def closearchive(self, *widget):
 	mainh=self.window.get_size()[1]
 	self.window.set_gravity(gtk.gdk.GRAVITY_SOUTH_EAST)
 	self.archivewindow.hide()
-	
-	self.window.resize(300,mainh)
+	self.window.set_title("Rozmowa z "+self.recipentname+" ("+self.recipent+")")
+	loadchat(self,self.recipent)
+	self.message.grab_focus()
+	self.posx,self.posy=self.window.get_position()
+	self.loadFinished('','')
+	self.wTree.get_widget("hbox2").show()
+	item = self.listmodel.get_iter_first ()
+	while ( item != None ):
+		if self.listmodel.get_value(item, 4)==self.archiveopen: 
+			close=item
+		item =self.listmodel.iter_next(item)
+	close=self.listmodel[close]
+	show_back(self,close)
+	self.archiveopen=""
+

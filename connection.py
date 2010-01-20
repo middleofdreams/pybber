@@ -208,7 +208,7 @@ class connection(threading.Thread):
 			if name=="": name=user
 			savechat(self.gui,user,name,text,time,day)
 			#wypisywanie tresci w oknie
-			if user==self.gui.recipent:
+			if user==self.gui.recipent and user!=self.gui.archiveopen:
 				gobject.idle_add(loadchat,self.gui,user)
 				#gobject.idle_add(updatechat,self.gui,user,name,text,time)
 			else:

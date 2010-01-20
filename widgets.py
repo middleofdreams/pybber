@@ -5,6 +5,7 @@ import keys
 from list import *
 import webkit
 from settings import *
+from archive import loadarchive
 
 def assignwidgets(self):
 		self.window.set_icon_from_file("icons/pybber.png")
@@ -101,13 +102,12 @@ def assignwidgets(self):
 		
 		
 		
-		model=gtk.ListStore(gobject.TYPE_STRING)
+		model=gtk.ListStore(gobject.TYPE_STRING,str)
 		self.archivelist.set_model(model)
 		col=gtk.TreeViewColumn("Rozmowy:",gtk.CellRendererText(), text=0)
 		self.archivelist.append_column(col)
-		print self.archivelist.get_columns()
-		self.archivelist.show()
-		
+		self.archivelist.connect("row-activated", loadarchive, self) 
+		self.archiveopen=""
 			#---------Skroty klawiszowe--------------------------------------
 		self.message.connect("key_press_event", keys.message,self)
 		self.message.get_buffer().connect_after("insert-text", keys.msgbuffer)

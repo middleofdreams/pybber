@@ -16,7 +16,9 @@ def savechat(guiclass,recipent,user,chat,time,day):
 def loadchat(guiclass,recipent):
 	if recipent in guiclass.messages:
 		html=guiclass.messages[recipent]
-	else: html=""
+	else: 
+		html=load_last(recipent)
+		guiclass.messages[recipent]=html
 	guiclass.chat.load_html_string("", "file:///")
 	html="<font size=-3>"+html+"</font size=-3>"
 	gobject.idle_add(guiclass.chat.load_html_string,html, "file:///")
