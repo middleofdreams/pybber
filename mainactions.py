@@ -115,11 +115,9 @@ def icohide(self, event,widget):
 	return True
 	window.connect('delete-event', hide_window)
 
-def loadFinished(self,a,b):
-	pos=self.chatwindow.get_vadjustment()
-	newpos=pos.get_upper()+pos.get_page_size()
-	pos.set_value(newpos)
-	self.chatwindow.set_vadjustment(pos)  
+def loadFinished(self,a,*b):
+	self.chat.execute_script("scroll();")
+
 	
 def savesettings(self,widget):
 	self.settings.save(self)

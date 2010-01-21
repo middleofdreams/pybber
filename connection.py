@@ -209,15 +209,14 @@ class connection(threading.Thread):
 			savechat(self.gui,user,name,text,time,day)
 			#wypisywanie tresci w oknie
 			if user==self.gui.recipent and user!=self.gui.archiveopen:
-				gobject.idle_add(loadchat,self.gui,user)
-				#gobject.idle_add(updatechat,self.gui,user,name,text,time)
+				#gobject.idle_add(loadchat,self.gui,user)
+				gobject.idle_add(updatechat,self.gui,user,name,text,time)
 			else:
 				is_typing(self.gui,user)
-			
 			if not self.gui.window.is_active():
-				self.gui.window.set_urgency_hint(True)
+				#self.gui.window.set_urgency_hint(True)
 				self.gui.staticon.set_blinking(True)
-				gobject.idle_add(self.gui.notification,user,text)
+				#gobject.idle_add(self.gui.notification,user,text)
 			else:
 				self.gui.staticon.set_blinking(False)
 				self.gui.window.set_urgency_hint(False)

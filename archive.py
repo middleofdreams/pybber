@@ -48,7 +48,13 @@ def load_last(recipent):
 		html=html.rstrip("<br/>")+"<hr>"
 
 	except:
+		
 		html=""
+	f=open('script.js','r')
+	script="<script type='text/javascript'>"+f.read()+"</script>"
+	f.close()
+	if not "<script" in html: 
+		html=script+html
 	return html
 		
 		#while 
