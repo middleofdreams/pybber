@@ -19,6 +19,11 @@ def savechat(guiclass,recipent,user,chat,time,day):
 def loadchat(guiclass,recipent):
 	if recipent in guiclass.messages:
 		html=guiclass.messages[recipent]
+		if not "<script" in html:
+			f=open('script.js','r')
+			script="<script type='text/javascript'>"+f.read()+"</script>"
+			f.close()
+			html=script+html
 	else: 
 		html=load_last(recipent)
 		guiclass.messages[recipent]=html

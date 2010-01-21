@@ -24,8 +24,7 @@ def on_activated(widget, row, col,guiclass):
 	guiclass.window.set_title("Rozmowa z "+model[row][0]+" ("+text+")")
 	guiclass.recipent=text
 	guiclass.recipentname=model[row][0]
-	loadchat(guiclass,text)
-	show_back(guiclass,model[row])
+	
 	guiclass.message.grab_focus()
 	guiclass.posx,guiclass.posy=guiclass.window.get_position()
 	
@@ -33,7 +32,7 @@ def on_activated(widget, row, col,guiclass):
 	guiclass.archivewindow.hide()
 	guiclass.archivelist.hide()
 	guiclass.archivescroll.hide()
-
+	loadchat(guiclass,text)
 	
 	 
 def create_empty_list(guiclass):
