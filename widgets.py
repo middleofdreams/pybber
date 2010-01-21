@@ -97,7 +97,9 @@ def assignwidgets(self):
 		"chatfocus":self.chatfocus,
 		"notification":self.notification,
 		"archive":self.archive,
-		"closearchive":self.closearchive
+		"closearchive":self.closearchive,
+		"zoomin":self.zoomin,
+		"zoomout":self.zoomout
 			}
 		
 		

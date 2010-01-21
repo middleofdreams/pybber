@@ -34,7 +34,7 @@ def on_activated(widget, row, col,guiclass):
 	guiclass.archivelist.hide()
 	guiclass.archivescroll.hide()
 
-
+	
 	 
 def create_empty_list(guiclass):
 	'''tworzy pusta liste'''

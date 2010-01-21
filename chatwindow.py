@@ -23,7 +23,7 @@ def loadchat(guiclass,recipent):
 		html=load_last(recipent)
 		guiclass.messages[recipent]=html
 	guiclass.chat.load_html_string("", "file:///")
-	html="<font size=-3>"+html+"</font size=-3>"
+	html="<font size=-3>"+html+"</font size=-3><br/>"
 	html=showimages(html)
 	gobject.idle_add(guiclass.chat.load_html_string,html, "file:///")
 	#guiclass.chat.execute_script("document.innerHTML = '%s<br/>');" % html)

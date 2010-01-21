@@ -204,3 +204,8 @@ def closearchive(self, *widget):
 	show_back(self,close)
 	self.archiveopen=""
 
+def zoomin(self,widget):
+	self.chat.zoom_in()
+	
+def zoomout(self,widget):
+	self.chat.zoom_out()

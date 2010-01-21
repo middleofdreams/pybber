@@ -37,7 +37,7 @@ class okno:
 		self.connection=connection(self)
 		self.list.set_reorderable(True)
 		self.statusentry.hide()
-		self.statusbar.hide()
+		self.statusbar.hide()	
 		self.hidden=False
 		self.posx,self.posy=self.window.get_position()
 		pynotify.init("Pybber")
