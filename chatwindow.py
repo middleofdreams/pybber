@@ -24,6 +24,7 @@ def loadchat(guiclass,recipent):
 		guiclass.messages[recipent]=html
 	guiclass.chat.load_html_string("", "file:///")
 	html="<font size=-3>"+html+"</font size=-3>"
+	html=showimages(html)
 	gobject.idle_add(guiclass.chat.load_html_string,html, "file:///")
 	#guiclass.chat.execute_script("document.innerHTML = '%s<br/>');" % html)
 
@@ -33,7 +34,7 @@ def updatechat(guiclass,recipent,user,chat,time):
 	text="<i>("+time+")</i><b> <font color=blue>"+user+"</font></b>: "+chat
 	text=striptags(text)
 	text=intolink(text)
-
+	text=showimages(text)
 	guiclass.chat.execute_script("appendtext('"+text+"');")
 
 def copyfromchat(guiclass):
@@ -65,9 +66,11 @@ def striptags(text):
 	return text
 
 
-def loadFinished(self,*a,**b):
-	pos=self.chatwindow.get_vadjustment()	
-	newpos=pos.get_upper()-pos.get_page_size()	
-	pos.set_value(newpos)
-	#pos.clamp_page(pos.get_upper(), pos.get_lower())
-	self.chatwindow.set_vadjustment(pos) 
+def showimages(text):
+	text=text.replace("[img:","<img src=\"")
+	text=text.replace(".bmp]",".bmp\">")
+	text=text.replace(".jpg]",".jpg\">")
+	text=text.replace(".png]",".png\">")
+	text=text.replace(".jpeg]",".jpeg\">")
+	text=text.replace(".gif]",".gif\">")
+	return text
