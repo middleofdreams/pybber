@@ -13,7 +13,7 @@ def savechat(guiclass,recipent,user,chat,time,day):
 		guiclass.messages[recipent]=guiclass.messages[recipent]+"<br/>"+text
 	else :
 		
-		 guiclass.messages[recipent]=text 
+		 guiclass.messages[recipent]=load_last(recipent)+text 
 	archive_append(chat,recipent,user,time,day)
 
 def loadchat(guiclass,recipent):
