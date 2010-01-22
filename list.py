@@ -3,8 +3,9 @@
 import pygtk,gtk,xmpp,time
 from chatwindow import *
 from connection import *
-def on_activated(widget, row, col,guiclass):
+def on_activated(widget, row, col,guiclass,vars):
 	'''zmienia aktualnego rozmowce'''  
+	print vars
 	guiclass.staticon.set_blinking(False)
 	model = widget.get_model()
 	text = model[row][4]
@@ -32,10 +33,10 @@ def on_activated(widget, row, col,guiclass):
 	guiclass.archivewindow.hide()
 	guiclass.archivelist.hide()
 	guiclass.archivescroll.hide()
-	loadchat(guiclass,text)
+	loadchat(guiclass,text,vars)
 	
 	 
-def create_empty_list(guiclass):
+def create_empty_list(guiclass,vars):
 	'''tworzy pusta liste'''
 	guiclass.listmodel=gtk.ListStore(str,str,gtk.gdk.Pixbuf,gtk.gdk.Pixbuf,str)
 	guiclass.list.set_model(guiclass.listmodel)
@@ -47,23 +48,23 @@ def create_empty_list(guiclass):
 	guiclass.list.append_column(guiclass.lcolumn)
 	guiclass.list.append_column(guiclass.lcolumn2)
 	guiclass.list.set_headers_visible(0)
-	guiclass.list.connect("row-activated", on_activated, guiclass)
+	guiclass.list.connect("row-activated", on_activated, guiclass,vars)
 	
-def update_list(guiclass,sess,pres):
+def update_list(guiclass,sess,pres,connection):
 	'''aktualizuje zmieniajace sie wpisy'''
 	guiclass.staticon.set_blinking(True)
 	#sprawdzanie kto sie zmienil 
 	jid=pres.getFrom()
 	nick=pres.getFrom().getStripped()
 	
-	status=guiclass.connection.roster.getStatus(jid.__str__())	
-	priority= guiclass.connection.roster.getPriority(jid.__str__())
+	status=connection.roster.getStatus(jid.__str__())	
+	priority= connection.roster.getPriority(jid.__str__())
 	
 	#sprawdzenie czy zalogowany
 	if priority==None:
 		show='offline'
 	else:	
-		show=guiclass.connection.roster.getShow(jid.__str__())		
+		show=connection.roster.getShow(jid.__str__())		
 	#print show
 
 	#przypisanie kontaktow do tymczasowej listy
@@ -88,12 +89,12 @@ def update_list(guiclass,sess,pres):
 			guiclass.listmodel.set_value(item,2,get_show(show))
 	#time.sleep(1)
 	guiclass.staticon.set_blinking(False)
-def get_all(guiclass,list):	
+def get_all(guiclass,list,connection):	
 	'''pobiera wszystkie kontakty z rostera'''
 	for i in list:		
-		status=guiclass.connection.roster.getStatus(str(xmpp.protocol.JID(jid=i)))	
-		show=guiclass.connection.roster.getShow(str(xmpp.protocol.JID(jid=i)))	
-		name=guiclass.connection.roster.getName(str(xmpp.protocol.JID(jid=i)))
+		status=connection.roster.getStatus(str(xmpp.protocol.JID(jid=i)))	
+		show=connection.roster.getShow(str(xmpp.protocol.JID(jid=i)))	
+		name=connection.roster.getName(str(xmpp.protocol.JID(jid=i)))
 		#domyslne oznaczanie kontaktow jako niedostepnych
 		if name==None: name=i
 		guiclass.listmodel.append([name,status,get_show('offline'),None,i])
@@ -128,7 +129,7 @@ def is_typing(guiclass,nick):
 		item = guiclass.listmodel.iter_next(item)
 	#sprawdzenie czy kontakt znajduje sie na liscie	
 	if not nick in cats:
-		status=guiclass.connection.roster.getStatus(nick)
+		status=connection.roster.getStatus(nick)
 		guiclass.listmodel.append([nick,status,show,nick])
 	else:
 	#jesli tak - aktualizuj wpisj

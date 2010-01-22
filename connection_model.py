@@ -1,29 +1,34 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
-import pygtk,gtk,xmpp,threading,time,gobject,sys,thread,pynotify
-from chatwindow import *
-from list import *
-#----------klasa do zarzadzania polaczeniem-------------------------#
 
-class connection(threading.Thread):
-	def __init__(self,guiclass,vars,settings):
-		
+import _importer
+from gtkmvc import ModelMT
+
+import pygtk,gtk,xmpp,threading,time,gobject,sys,thread,pynotify
+class ConnectionModel (ModelMT):
+	stop=False
+	active=False
+	connecting=True
+	i=0.00
+	__observables__ = ('stop','active','connecting','i')
+	
+	def __init__(self):
+		ModelMT.__init__(self)
 		#przypisanie paru zmiennych z glownej klasy
-		self.gui=guiclass
-		self.vars=vars
-		self.settings=settings
+		#self.gui=guiclass
+		#self.vars=vars
+		#self.settings=settings
 	
         #pare zmiennych
 		self.i=0.00 #licznik czasu polaczenie
-		self.active=False #okresla czy jest nawiazane aktywne polaczenie
-		self.stop=False #okresla czy polaczenie jest 'przerywane'
+		#self.active=False #okresla czy jest nawiazane aktywne polaczenie
+		#self.stop=False #okresla czy polaczenie jest 'przerywane'
 	def connect_init(self,jid,pwd):
 		self.jid=jid
 		self.pwd=pwd
 		#rozpoczecie watku polaczenia
 	#	print jid
 	#	print pwd
-		threading.Thread.__init__(self)
 		threading.Thread(target=self.connecting,args=()).start()
 		
 #-------lączenie z serwerem-----------------------------------------#
@@ -49,15 +54,15 @@ class connection(threading.Thread):
 		#jesli polaczy sie w czasie krotszym niz pare sekund przyjmij
 		#jako glowne polaczenie:
 		if not self.active:	
-			self.gui.loginbox.hide()
+			#self.gui.loginbox.hide()
 			self.cl=cl
 			#wylaczenie progressbara
 			self.ifrun=False
 			self.active=True
-			self.gui.desc.show()
-			self.gui.statusbar.show()
-			self.gui.desc.set_sensitive(1)
-			self.gui.statusbar.set_sensitive(1)
+			#self.gui.desc.show()
+			#self.gui.statusbar.show()
+			#self.gui.desc.set_sensitive(1)
+			#self.gui.statusbar.set_sensitive(1)
 			#handler do odbierania wiadomosci
 			
 		
@@ -97,33 +102,31 @@ class connection(threading.Thread):
 		
 		#reset zmiennej stop
 		self.stop=False
-		
-		gobject.idle_add(self.gui.progress.show)
-
 		self.i=0.00
+		self.connecting=True
+
+		
 		#Dopoki nie polaczany i self.i mniejsze od 1 dodawaj do paska		
-		while(self.ifrun and self.i<1):
-			gobject.idle_add(self.gui.progress.set_fraction,self.i)
+		while(self.ifrun and self.i<1.000):
 
 			time.sleep(0.1)
 			self.i=self.i+0.005
 			
 			#wyswietlanie komunikatu o za dlugim polaczeniu:
-			if(str(self.i)=='0.15'):
-				self.gui.toolong.show()
+			
 				
 			#przerwanie petli po nacisnieciu przycisku z komunikatu
 			if self.stop:
 				break
 		
 		#ukrycie progressbara
-		gobject.idle_add(self.gui.progress.hide)
+		self.connecting=False
 		
 		#jesli polaczony w czasie krotszym niz 25s
 		if(not self.ifrun and self.i<1 and not self.stop):
 			#ustaw zmienna odpowiadajaca za aktywne polaczenie
 			self.active=True
-			self.gui.staticon.set_from_file("icons/pybber.png") 
+			
 			
 		#jesli polaczenie bylo 'przerwane'
 		if self.stop:
@@ -131,11 +134,11 @@ class connection(threading.Thread):
 			threading.Thread(target=self.connecting,args=()).start()	
 
 		#jesli minelo 25 i sie nie polaczyl i nie bylo reakcji usera
-		if(str(self.i)=='1.0'):
-			#wyswietl komunikat o bledzie
-				self.gui.toolong.hide()
-				if not self.active:
-					self.gui.not_connected.show()
+			if(str(self.i)=='1.0'):
+				#wyswietl komunikat o bledzie
+					self.gui.toolong.hide()
+					if not self.active:
+						self.gui.not_connected.show()
 		
 #----------funkcje dla komunikatow--------------------------------------
 	def reconnect(self):
@@ -247,3 +250,4 @@ class connection(threading.Thread):
 			else: 
 				if self.disconnecttry>0: self.disconnecttry=self.disconnecttry-1
 			if self.disconnecttry>3: self.disconnected()
+

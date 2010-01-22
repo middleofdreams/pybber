@@ -2,7 +2,7 @@
 <glade-interface>
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
-  <widget class="GtkWindow" id="window1">
+  <widget class="GtkWindow" id="window">
     <property name="default_width">400</property>
     <property name="default_height">500</property>
     <signal name="hide" handler="hide"/>
@@ -15,17 +15,17 @@
       <widget class="GtkHBox" id="hbox1">
         <property name="visible">True</property>
         <child>
-          <widget class="GtkVBox" id="vbox9">
+          <widget class="GtkVBox" id="archivewindow">
             <property name="visible">True</property>
             <property name="orientation">vertical</property>
             <child>
-              <widget class="GtkScrolledWindow" id="scrolledwindow3">
+              <widget class="GtkScrolledWindow" id="archivescroll">
                 <property name="width_request">100</property>
                 <property name="can_focus">True</property>
                 <property name="hscrollbar_policy">automatic</property>
                 <property name="vscrollbar_policy">automatic</property>
                 <child>
-                  <widget class="GtkTreeView" id="treeview2">
+                  <widget class="GtkTreeView" id="archivelist">
                     <property name="visible">True</property>
                     <property name="app_paintable">True</property>
                     <property name="can_focus">True</property>
@@ -37,7 +37,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkButton" id="button18">
+              <widget class="GtkButton" id="closearchive">
                 <property name="label" translatable="yes">zamknij</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -119,7 +119,7 @@
                   <widget class="GtkHBox" id="hbox2">
                     <property name="visible">True</property>
                     <child>
-                      <widget class="GtkTextView" id="textview1">
+                      <widget class="GtkTextView" id="message">
                         <property name="height_request">70</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -208,7 +208,7 @@
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkButton" id="button6">
+                              <widget class="GtkButton" id="clearmsg">
                                 <property name="label">czy&#x15B;&#x107;</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
@@ -259,7 +259,7 @@
             <property name="visible">True</property>
             <property name="orientation">vertical</property>
             <child>
-              <widget class="GtkMenuBar" id="menubar1">
+              <widget class="GtkMenuBar" id="menu">
                 <property name="width_request">0</property>
                 <property name="visible">True</property>
                 <child>
@@ -417,7 +417,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkTable" id="table1">
+              <widget class="GtkTable" id="addform">
                 <property name="n_rows">3</property>
                 <property name="n_columns">2</property>
                 <child>
@@ -437,7 +437,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkEntry" id="entry5">
+                  <widget class="GtkEntry" id="addjid">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">&#x2022;</property>
@@ -448,7 +448,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkEntry" id="entry6">
+                  <widget class="GtkEntry" id="setname">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">&#x2022;</property>
@@ -496,7 +496,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkTable" id="table2">
+              <widget class="GtkTable" id="delform">
                 <property name="n_rows">2</property>
                 <property name="n_columns">2</property>
                 <child>
@@ -506,7 +506,7 @@
                   </widget>
                 </child>
                 <child>
-                  <widget class="GtkEntry" id="entry7">
+                  <widget class="GtkEntry" id="deljid">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">&#x2022;</property>
@@ -552,7 +552,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkTable" id="table3">
+              <widget class="GtkTable" id="editform">
                 <property name="n_rows">3</property>
                 <property name="n_columns">2</property>
                 <child>
@@ -572,7 +572,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkEntry" id="entry9">
+                  <widget class="GtkEntry" id="editjid">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">&#x2022;</property>
@@ -583,7 +583,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkEntry" id="entry10">
+                  <widget class="GtkEntry" id="editname">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">&#x2022;</property>
@@ -637,7 +637,7 @@
                 <property name="hscrollbar_policy">automatic</property>
                 <property name="vscrollbar_policy">automatic</property>
                 <child>
-                  <widget class="GtkTreeView" id="treeview1">
+                  <widget class="GtkTreeView" id="list">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <signal name="button_press_event" handler="contactpopup"/>
@@ -650,7 +650,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkVBox" id="vbox1">
+              <widget class="GtkVBox" id="toolong">
                 <property name="orientation">vertical</property>
                 <child>
                   <widget class="GtkLabel" id="label1">
@@ -727,7 +727,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkVBox" id="vbox4">
+              <widget class="GtkVBox" id="not_connected">
                 <property name="orientation">vertical</property>
                 <child>
                   <widget class="GtkLabel" id="label2">
@@ -786,7 +786,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkProgressBar" id="progressbar1">
+              <widget class="GtkProgressBar" id="progress">
                 <property name="sensitive">False</property>
                 <property name="show_text">True</property>
                 <property name="text" translatable="yes">&#x142;&#x105;cz&#x119;...</property>
@@ -797,7 +797,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkComboBox" id="combobox1">
+              <widget class="GtkComboBox" id="statusbar">
                 <property name="sensitive">False</property>
                 <signal name="changed" handler="chstatus"/>
               </widget>
@@ -811,7 +811,7 @@
               <widget class="GtkHBox" id="hbox3">
                 <property name="visible">True</property>
                 <child>
-                  <widget class="GtkEntry" id="entry2">
+                  <widget class="GtkEntry" id="desc">
                     <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">&#x25CF;</property>
@@ -823,7 +823,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label13">
+                  <widget class="GtkLabel" id="jidlabel">
                     <property name="visible">True</property>
                     <property name="xalign">0.47999998927116394</property>
                     <property name="label" translatable="yes"> </property>
@@ -840,11 +840,11 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkVBox" id="vbox5">
+              <widget class="GtkVBox" id="loginbox">
                 <property name="visible">True</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <widget class="GtkEntry" id="entry4">
+                  <widget class="GtkEntry" id="login">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="tooltip" translatable="yes">haslo</property>
@@ -858,7 +858,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkEntry" id="entry3">
+                  <widget class="GtkEntry" id="passwd">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="tooltip" translatable="yes">login</property>
@@ -888,13 +888,13 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkButton" id="button5">
+                  <widget class="GtkButton" id="logonbtn">
                     <property name="label" translatable="yes">zaloguj...</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="xalign">0.33000001311302185</property>
-                    <signal name="clicked" handler="logon"/>
+                    <signal name="clicked" handler="on_logonbtn_clicked"/>
                   </widget>
                   <packing>
                     <property name="expand">False</property>

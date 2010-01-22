@@ -1,6 +1,7 @@
 import gtk
 from chatwindow import copyfromchat
-def message(widget, event, klasa):
+from send import *
+def message(widget, event, klasa,connection,setttings):
 	if event.type == gtk.gdk.KEY_PRESS:
 		if gtk.gdk.keyval_name(event.keyval)== 'Return' :
 			if event.state==gtk.gdk.SHIFT_MASK | gtk.gdk.MOD2_MASK or event.state==gtk.gdk.SHIFT_MASK:
@@ -8,12 +9,12 @@ def message(widget, event, klasa):
 				buffer.insert_at_cursor(chr(13))
 				#buffer.place_cursor(buffer.get_end_iter())
 			else:
-				klasa.send()
+				sendmsg(klasa,connection,settings)
 				
-def status(widget, event, klasa):
+def status(widget, event, handlers):
 	if event.type == gtk.gdk.KEY_PRESS:
 		if gtk.gdk.keyval_name(event.keyval)== 'Return' :
-			klasa.chdesc()
+			handlers.chdesc()
 
 def list(widget, event, klasa):
 	if event.type == gtk.gdk.KEY_PRESS:

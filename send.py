@@ -3,7 +3,7 @@
 import pygtk,gtk,xmpp,time,gobject
 from chatwindow import *
 
-def sendmsg(guiclass):
+def sendmsg(guiclass,connection,settings):
 	
 	buffer=guiclass.message.get_buffer()
 	start_iter=buffer.get_start_iter()
@@ -15,10 +15,10 @@ def sendmsg(guiclass):
 
 	# msg=str("ME:"+msg)
 	if msg!="":
-		ts=guiclass.connection.send(msg)
+		ts=connection.send(msg)
 		guiclass.staticon.set_blinking(False)
 		time,day=messtime(ts)
-		savechat(guiclass,guiclass.recipent,"<font color=red>"+guiclass.settings.me+"</font>",msg,time,day)
+		savechat(guiclass,connection.vars,guiclass.recipent,"<font color=red>"+settings.me+"</font>",msg,time,day)
 		updatechat(guiclass,guiclass.recipent,"<font color=red>"+guiclass.settings.me+"</font>",msg,time)
 
 		#gobject.idle_add(loadchat,guiclass,guiclass.recipent)

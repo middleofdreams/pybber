@@ -3,22 +3,22 @@
 import pygtk,gtk,gobject,time,re
 from archive import *
 
-def savechat(guiclass,recipent,user,chat,time,day):
+def savechat(guiclass,vars,recipent,user,chat,time,day):
 	if user==None or user=="None": user=recipent
 	text="<i>("+time+")</i><b> <font color=blue>"+user+"</font></b>: "+chat
 	text=text.replace(chr(13),"<br/>")
 	text=text.replace("\n","<br/>")
 	text=intolink(text)
-	if recipent in guiclass.messages: 
-		guiclass.messages[recipent]=guiclass.messages[recipent]+"<br/>"+text
+	if recipent in vars.messages: 
+		vars.messages[recipent]=vars.messages[recipent]+"<br/>"+text
 	else :
 		
-		 guiclass.messages[recipent]=load_last(recipent)+text 
+		 vars.messages[recipent]=load_last(recipent)+text 
 	archive_append(chat,recipent,user,time,day)
 
-def loadchat(guiclass,recipent):
-	if recipent in guiclass.messages:
-		html=guiclass.messages[recipent]
+def loadchat(guiclass,recipent,vars):
+	if recipent in vars.messages:
+		html=vars.messages[recipent]
 		if not "<script" in html:
 			f=open('script.js','r')
 			script="<script type='text/javascript'>"+f.read()+"</script>"
@@ -26,7 +26,7 @@ def loadchat(guiclass,recipent):
 			html=script+html
 	else: 
 		html=load_last(recipent)
-		guiclass.messages[recipent]=html
+		vars.messages[recipent]=html
 	guiclass.chat.load_html_string("", "file:///")
 	html="<font size=-3>"+html+"</font size=-3><br/>"
 	html=showimages(html)
