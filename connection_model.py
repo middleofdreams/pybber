@@ -2,7 +2,7 @@
 #!/usr/bin/env python
 
 import _importer
-from gtkmvc import ModelMT
+from gtkmvc import ModelMT,observable
 
 import pygtk,gtk,xmpp,threading,time,gobject,sys,thread,pynotify
 class ConnectionModel (ModelMT):
@@ -10,7 +10,11 @@ class ConnectionModel (ModelMT):
 	active=False
 	connecting=True
 	i=0.00
-	__observables__ = ('stop','active','connecting','i')
+	jid=""
+	newmessage=observable.Signal()
+	newpresence=observable.Signal()
+	__observables__ = ('stop','active','connecting','i','jid', \
+	'newmessage', 'newpresence')
 	
 	def __init__(self):
 		ModelMT.__init__(self)
@@ -56,6 +60,8 @@ class ConnectionModel (ModelMT):
 		if not self.active:	
 			#self.gui.loginbox.hide()
 			self.cl=cl
+			self.cl.sendInitPresence()
+			self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status=""))
 			#wylaczenie progressbara
 			self.ifrun=False
 			self.active=True
@@ -68,32 +74,26 @@ class ConnectionModel (ModelMT):
 		
 			
 			#ustawienie poczatkowego statusu
-			self.cl.sendInitPresence()
-			self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status=""))
-			self.gui.desc.set_text(self.settings.status)
-			self.gui.statusbar.set_active(0)
-			self.get_list()
-			#chowa ewentualne komunikaty
-			self.gui.toolong.hide()
-			self.gui.not_connected.hide()
 			
 			
-			self.cl.UnregisterDisconnectHandler(self.cl.DisconnectHandler)
-			self.cl.RegisterDisconnectHandler(self.disconnected)
+			
+			
+			#self.cl.UnregisterDisconnectHandler(self.cl.DisconnectHandler)
+			#self.cl.RegisterDisconnectHandler(self.disconnected)
 
-			self.set_status(self.settings.show,self.settings.status)
-			self.gui.statusbar.set_active(self.settings.show)
+			self.set_status(self.show,self.status)
 			time.sleep(0.2)
-			self.cl.RegisterHandler('presence',self.presenceCB)
 			self.cl.RegisterHandler('message',self.messageCB)
+
 			####wykrywanie rozlaczenia
 			self.disconnecttry=0
-			threading.Thread(target=self.is_connected,args=()).start()	
-			threading.Thread(target=self.is_connected,args=()).start()	
+			#threading.Thread(target=self.is_connected,args=()).start()	
+			#threading.Thread(target=self.is_connected,args=()).start()	
 			#########################################################
 			
 			
 			#to rowniez do odbierania wiadomosci
+			time.sleep(1)
 			self.GoOn(self.cl)
 
 		
@@ -133,27 +133,21 @@ class ConnectionModel (ModelMT):
 			#zrestartuj polaczenie
 			threading.Thread(target=self.connecting,args=()).start()	
 
-		#jesli minelo 25 i sie nie polaczyl i nie bylo reakcji usera
-			if(str(self.i)=='1.0'):
-				#wyswietl komunikat o bledzie
-					self.gui.toolong.hide()
-					if not self.active:
-						self.gui.not_connected.show()
 		
 #----------funkcje dla komunikatow--------------------------------------
 	def reconnect(self):
-		self.gui.stop=True
-		self.gui.toolong.hide()
-	def reconnect2(self):
-		self.gui.not_connected.hide()
+		self.stop=True
 		threading.Thread(target=self.connecting,args=()).start()	
+
+		
+
 
 
 #------funkcje do komunikacji z serwerem--------------------------------
 
-	def send(self,msg):
+	def send(self,msg,recipent):
 		'''wysyla wiadomosc'''
-		mess=xmpp.Message(self.gui.recipent,msg,typ='chat')
+		mess=xmpp.Message(recipent,msg,typ='chat')
 		mess.setTimestamp()
 		self.cl.send(mess)
 		return mess.getTimestamp()
@@ -182,9 +176,10 @@ class ConnectionModel (ModelMT):
 		'''pobiera liste kontaktow'''
 		self.roster=self.cl.Roster.getRoster()
 		items=self.roster.getItems()
-		
+		self.cl.RegisterHandler('presence',self.presenceCB)
+
 		# pobieranie WSZYSTKICH kontaktow z rostera	
-		get_all(self.gui,items,self)
+		return items
 		
 #------------Odbieranie wiadomosci:-------------------------------------
 
@@ -199,24 +194,25 @@ class ConnectionModel (ModelMT):
 			ts=mess.getTimestamp()
 		
 		if text!=None:
-			time,day=messtime(ts)
+			#time,day=messtime(ts)
 			user=user.getStripped()
 			name=self.roster.getName(user)
 			if name=="": name=user
-			savechat(self.gui,self.vars,user,name,text,time,day)
+			self.newmessage.emit([ts,user,name,text])
+			#savechat(self.gui,self.vars,user,name,text,time,day)
 			#wypisywanie tresci w oknie
-			if user==self.gui.recipent and user!=self.vars.archiveopen:
+			#if user==self.gui.recipent and user!=self.vars.archiveopen:
 				#gobject.idle_add(loadchat,self.gui,user)
-				gobject.idle_add(updatechat,self.gui,user,name,text,time)
-			else:
-				gobject.idle_add(is_typing,self.gui,user)
-			if not self.gui.window.is_active():
+			#	gobject.idle_add(updatechat,self.gui,user,name,text,time)
+			#else:
+			#	gobject.idle_add(is_typing,self.gui,user)
+			#if not self.gui.window.is_active():
 				#self.gui.window.set_urgency_hint(True)
-				gobject.idle_add(self.gui.staticon.set_blinking,True)
-				gobject.idle_add(self.gui.notification,user,text)
-			else:
-				self.gui.staticon.set_blinking(False)
-				self.gui.window.set_urgency_hint(False)
+			#	gobject.idle_add(self.gui.staticon.set_blinking,True)
+			#	gobject.idle_add(self.gui.notification,user,text)
+			#else:
+			#	self.gui.staticon.set_blinking(False)
+			#	self.gui.window.set_urgency_hint(False)
 
 	#funkcje sledzace wiadomosci:
 	def StepOn(self, conn):
@@ -233,7 +229,10 @@ class ConnectionModel (ModelMT):
 		#print "aa"
 	#funkcja sledzaca aktywnosc userow	
 	def presenceCB(self, sess,pres):
-		update_list(self.gui,sess,pres,self)
+		#print sess,pres
+		self.newpresence.emit([sess,pres])
+		#update_list(self.gui,sess,pres,self)
+		pass
 		
 	def disconnected(self):
 		self.gui.listmodel.clear()

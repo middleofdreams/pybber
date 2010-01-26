@@ -36,19 +36,18 @@ def on_activated(widget, row, col,guiclass,vars):
 	loadchat(guiclass,text,vars)
 	
 	 
-def create_empty_list(guiclass,vars):
+def create_empty_list(view):
 	'''tworzy pusta liste'''
-	guiclass.listmodel=gtk.ListStore(str,str,gtk.gdk.Pixbuf,gtk.gdk.Pixbuf,str)
-	guiclass.list.set_model(guiclass.listmodel)
-	guiclass.lrenderer=gtk.CellRendererText()
-	guiclass.lcolumn=gtk.TreeViewColumn("Kontakty:",guiclass.lrenderer, text=0)
-	guiclass.lcolumn2=gtk.TreeViewColumn("Opisy",guiclass.lrenderer, text=1)
-	guiclass.lcolumn3=gtk.TreeViewColumn("Statusy",gtk.CellRendererPixbuf(), pixbuf=2)
-	guiclass.list.append_column(guiclass.lcolumn3)
-	guiclass.list.append_column(guiclass.lcolumn)
-	guiclass.list.append_column(guiclass.lcolumn2)
-	guiclass.list.set_headers_visible(0)
-	guiclass.list.connect("row-activated", on_activated, guiclass,vars)
+	view['listmodel']=gtk.ListStore(str,str,gtk.gdk.Pixbuf,gtk.gdk.Pixbuf,str)
+	view['list'].set_model(view['listmodel'])
+	lrenderer=gtk.CellRendererText()
+	lcolumn=gtk.TreeViewColumn("Kontakty:",lrenderer, text=0)
+	lcolumn2=gtk.TreeViewColumn("Opisy",lrenderer, text=1)
+	lcolumn3=gtk.TreeViewColumn("Statusy",gtk.CellRendererPixbuf(), pixbuf=2)
+	view['list'].append_column(lcolumn3)
+	view['list'].append_column(lcolumn)
+	view['list'].append_column(lcolumn2)
+	view['list'].set_headers_visible(0)
 	
 def update_list(guiclass,sess,pres,connection):
 	'''aktualizuje zmieniajace sie wpisy'''
@@ -89,18 +88,19 @@ def update_list(guiclass,sess,pres,connection):
 			guiclass.listmodel.set_value(item,2,get_show(show))
 	#time.sleep(1)
 	guiclass.staticon.set_blinking(False)
-def get_all(guiclass,list,connection):	
+def get_all(list,widget,roster):	
 	'''pobiera wszystkie kontakty z rostera'''
 	for i in list:		
-		status=connection.roster.getStatus(str(xmpp.protocol.JID(jid=i)))	
-		show=connection.roster.getShow(str(xmpp.protocol.JID(jid=i)))	
-		name=connection.roster.getName(str(xmpp.protocol.JID(jid=i)))
+		status=roster.getStatus(str(xmpp.protocol.JID(jid=i)))	
+		show=roster.getShow(str(xmpp.protocol.JID(jid=i)))	
+		name=roster.getName(str(xmpp.protocol.JID(jid=i)))
 		#domyslne oznaczanie kontaktow jako niedostepnych
 		if name==None: name=i
-		guiclass.listmodel.append([name,status,get_show('offline'),None,i])
+		widget.append([name,status,get_show('offline'),None,i])
 		
 def get_show(show):
 	'''pobiera obrazek statusu'''
+	import gtk
 	if show==None:
 		show=gtk.gdk.pixbuf_new_from_file("icons/online.png")
 	if show=="dnd":

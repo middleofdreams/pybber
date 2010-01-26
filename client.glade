@@ -5,18 +5,18 @@
   <widget class="GtkWindow" id="window">
     <property name="default_width">400</property>
     <property name="default_height">500</property>
+    <signal name="selection_get" handler="chatfocus"/>
     <signal name="hide" handler="hide"/>
     <signal name="notify" handler="chatfocus"/>
     <signal name="drag_drop" handler="resize"/>
     <signal name="drag_end" handler="resize"/>
     <signal name="event" handler="windowevent"/>
-    <signal name="selection_get" handler="chatfocus"/>
+    <signal name="delete_event" handler="on_window_delete_event"/>
     <child>
       <widget class="GtkHBox" id="hbox1">
         <property name="visible">True</property>
         <child>
           <widget class="GtkVBox" id="archivewindow">
-            <property name="visible">True</property>
             <property name="orientation">vertical</property>
             <child>
               <widget class="GtkScrolledWindow" id="archivescroll">
@@ -57,14 +57,14 @@
           </packing>
         </child>
         <child>
-          <widget class="GtkVBox" id="vbox3">
+          <widget class="GtkVBox" id="leftwindow">
             <property name="width_request">400</property>
             <property name="orientation">vertical</property>
             <child>
               <widget class="GtkHBox" id="hbox4">
                 <property name="visible">True</property>
                 <child>
-                  <widget class="GtkScrolledWindow" id="scrolledwindow1">
+                  <widget class="GtkScrolledWindow" id="chatwindow">
                     <property name="width_request">402</property>
                     <property name="visible">True</property>
                     <property name="app_paintable">True</property>
@@ -127,11 +127,12 @@
                         <property name="pixels_above_lines">1</property>
                         <property name="pixels_below_lines">1</property>
                         <property name="wrap_mode">word</property>
+                        <signal name="key_press_event" handler="on_message_key_press_event"/>
                         <signal name="focus" handler="chatfocus"/>
                         <signal name="event" handler="chatfocus"/>
                         <signal name="grab_focus" handler="chatfocus"/>
-                        <accelerator key="v" signal="paste-clipboard" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="c" signal="copy-clipboard" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="v" signal="paste-clipboard" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                       <packing>
                         <property name="position">0</property>
@@ -213,7 +214,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
-                                <signal name="clicked" handler="clear"/>
+                                <signal name="clicked" handler="chat_clear"/>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
@@ -406,6 +407,7 @@
                     <property name="visible">True</property>
                     <property name="use_underline">True</property>
                     <property name="use_stock">True</property>
+                    <signal name="button_press_event" handler="close"/>
                     <signal name="activate" handler="close"/>
                   </widget>
                 </child>
@@ -749,7 +751,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <signal name="clicked" handler="reconnect2"/>
+                        <signal name="clicked" handler="reconnect"/>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
@@ -799,7 +801,7 @@
             <child>
               <widget class="GtkComboBox" id="statusbar">
                 <property name="sensitive">False</property>
-                <signal name="changed" handler="chstatus"/>
+                <signal name="changed" handler="on_statusbar_changed"/>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -815,6 +817,7 @@
                     <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
                     <property name="invisible_char">&#x25CF;</property>
+                    <signal name="key_press_event" handler="on_desc_key_press_event"/>
                   </widget>
                   <packing>
                     <property name="expand">False</property>

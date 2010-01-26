@@ -1,12 +1,16 @@
+
 function scroll(){
 	dh=document.body.scrollHeight; 
 	ch=document.body.clientHeight; 
 	if(dh>ch){ 
 	moveme=dh-ch
-	window.scrollTo(0,moveme+99);} }
+	window.scrollTo(0,moveme)
+
+	} }
 
 
 function appendtext(text){ 
+	
 	a=document.body.scrollHeight; 
 	b=document.body.clientHeight;
 	c = document.body.scrollTop;
@@ -18,3 +22,4 @@ function appendtext(text){
 
 	if (a-b==c){
 	 scroll()}}
+	 

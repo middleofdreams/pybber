@@ -11,7 +11,7 @@ def sendmsg(guiclass,connection,settings):
 	msg=buffer.get_text(start_iter, end_iter, include_hidden_chars=True)
 	buffer.set_text("")
 	msg=msg.replace("<","&lt;")
-	msg=msg.replace("<","&gt;")
+	msg=msg.replace(">","&gt;")
 
 	# msg=str("ME:"+msg)
 	if msg!="":

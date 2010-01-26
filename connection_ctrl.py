@@ -1,6 +1,6 @@
 import _importer
 from gtkmvc import Controller
-
+from gtkmvc.adapters import Adapter
 
 class ConnectionCtrl (Controller):
 	"""Handles signal processing, and keeps alignment of model and
@@ -9,8 +9,9 @@ class ConnectionCtrl (Controller):
 	def register_view(self, view):
 		# sets initial values for the view
 		return
-
-		
+	def register_adapters(self):
+		ad = Adapter(self.model, "jid")
+		ad.connect_widget(self.view["jidlabel"])
 	def property_connecting_value_change(self, model, old, new):
 		if new:
 			self.view['progress'].show()
@@ -39,5 +40,15 @@ class ConnectionCtrl (Controller):
 			self.view['statusbar'].show()
 			self.view['desc'].set_sensitive(1)
 			self.view['statusbar'].set_sensitive(1)
+			
+			self.view['desc'].set_text(model.status)
+			self.view['statusbar'].set_active(model.show)
+			items=model.get_list()
+			import list as clist
+			clist.create_empty_list(self.view)		
+			clist.get_all(items,self.view['listmodel'],self.model.roster)
+			#chowa ewentualne komunikaty
+			self.view['toolong'].hide()
+			self.view['not_connected'].hide()
 		return
 		pass # end of class
