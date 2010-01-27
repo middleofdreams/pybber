@@ -4,6 +4,7 @@ import _importer
 from gtkmvc import Controller
 from gtkmvc.adapters import Adapter
 from chathelpers import *
+from icon_view import IconView
 
 class MyCtrl (Controller):
 	"""Handles signal processing, and keeps alignment of model and
@@ -24,6 +25,7 @@ class MyCtrl (Controller):
 		self.model.connection.show=self.model.settings.show
 		view['list'].connect("row-activated", self.model.openchat)
 		view['message'].get_buffer().connect_after("insert-text", self.msgbuffer)
+		self.iconview=IconView
 		return
 		
 		
@@ -142,17 +144,7 @@ class MyCtrl (Controller):
 
 					#sendmsg(klasa,connection,settings)
 
-	def on_logonbtn_clicked(self,button):
-		''' przy zalogowaniu '''
-		jid=self.view['login'].get_text()
-		pwd=self.view['passwd'].get_text()
-		self.model.connection.connect_init(jid,pwd)
-		#self.settings.saveacc(self)
-		self.view['loginbox'].hide()
-		#self.view['jidlabel'].set_label(jid)	
-		
-		#self.staticon.set_from_file("icons/disconnected.png") 
-		return
+
 
 	def show_hide(self, *widget):  #hide chat
 		import gtk
@@ -170,24 +162,43 @@ class MyCtrl (Controller):
 			
 	def on_desc_key_press_event(self,widget,event):
 		import gtk
-		self.view.turn_desc_style(True)
+		key=event.keyval
+		print key
+		if (key>31 and key<128) or (key==8 or key==65288):
+			self.view.turn_desc_style(True)
 		if  gtk.gdk.keyval_name(event.keyval)== 'Return':
 			self.on_statusbar_changed()		
+			
+	def savesettings(self,widget):
+		self.model.settings.save(self.ui)
+			
+	def closesettings(self,widget):
+		mainh=self.view['window'].get_size()[1]	
+		self.view.closesettings(mainh)
+
+	def opensettings(self,widget):
+		self.view.opensettings(self.model.settings.get_all())
+		
+
 	def on_statusbar_changed(self,*args):	
 		desc=self.view['desc'].get_text()
 		index=self.view['statusbar'].get_active()
 		self.model.connection.set_status(index,desc)
 		self.view.turn_desc_style(False)
-	def changedata(self, *widget):
-		self.view.changedata()
+	def on_list_button_press_event(self, treeview, event):
+		if event.button == 3:
+			x = int(event.x)
+			y = int(event.y)
+			time = event.time
+			pthinfo = treeview.get_path_at_pos(x, y)
+			if pthinfo is not None:
+				path, col, cellx, celly = pthinfo
+				treeview.grab_focus()
+				treeview.set_cursor( path, col, 0)
+				#self.ui.staticon.set_blinking(False)
+				self.view['contactpopup'].popup( None, None, None, 3, time)
+				return True
 
-	def hidewarn(self,widget):
-		self.view.hidewarn()
-	def reconnect(self,widget):
-		self.model.connection.reconnect()
-		self.view.reconnect()
-	def reconnect2(self,widget):
-		self.connection.reconnect2()
 	def property_recipent_value_change(self, model, old, new):
 		if old=="": self.view.openchat()
 		try:

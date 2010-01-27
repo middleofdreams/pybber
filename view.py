@@ -4,6 +4,7 @@ from gtkmvc import View
 from listhelpers import get_show
 from webkit import WebView
 import gobject,gtk
+
 class MyView (View):
 
 	glade = "client.glade"
@@ -13,6 +14,8 @@ class MyView (View):
 		self['window'].show()
 		self.createchat()
 		self.hid=0
+		self.createicon()
+
 		
 	def openchat(self):
 		self['leftwindow'].show()
@@ -66,6 +69,7 @@ class MyView (View):
 		self['toolong'].hide()
 		self['loginbox'].show()
 		self['not_connected'].hide()
+		self['progress'].hide()
 	def hidewarn(self):
 		self['toolong'].hide()
 	def reconnect(self):
@@ -73,3 +77,32 @@ class MyView (View):
 		self['progress'].show()
 		self['progress'].set_fraction(0)
 		self['not_connected'].hide()
+	def closesettings(self,mainh):
+		self['window'].set_gravity(gtk.gdk.GRAVITY_SOUTH_WEST)
+		self['frame1'].hide()
+		self['window'].resize(300,mainh)
+	def opensettings(self,set):
+		self['window'].set_gravity(gtk.gdk.GRAVITY_SOUTH_WEST)
+		self['frame1'].show()
+		self['combobox2'].set_active(set['show'])
+		self['entry8'].set_text(set['status'])
+		self['entry11'].set_text(set['me'])
+	
+	def list_showform(self,form,prop=False,jid=None,name=None):
+		self['list'].hide()
+		self[form+'form'].show()	
+		if prop:
+			if jid!=None: self[form+'jid'].set_text(jid)
+			if name!=None: self[form+'name'].set_text(name)
+					
+	def list_hideform(self,form):
+		self[form+'form'].hide()
+		self['list'].show()
+		self[form+'jid'].set_text('')
+		try: self[form+'name'].set_text('')
+		except: pass
+	def createicon(self):
+		icon=gtk.status_icon_new_from_file("icons/pybber.png")
+		icon.set_blinking(False) 
+		icon.set_tooltip("Pybber")
+		icon.set_visible(True)

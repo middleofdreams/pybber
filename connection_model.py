@@ -8,12 +8,12 @@ import pygtk,gtk,xmpp,threading,time,gobject,sys,thread,pynotify
 class ConnectionModel (ModelMT):
 	stop=False
 	active=False
-	connecting=True
+	is_connecting=True
 	i=0.00
 	jid=""
 	newmessage=observable.Signal()
 	newpresence=observable.Signal()
-	__observables__ = ('stop','active','connecting','i','jid', \
+	__observables__ = ('stop','active','is_connecting','i','jid', \
 	'newmessage', 'newpresence')
 	
 	def __init__(self):
@@ -33,7 +33,8 @@ class ConnectionModel (ModelMT):
 		#rozpoczecie watku polaczenia
 	#	print jid
 	#	print pwd
-		threading.Thread(target=self.connecting,args=()).start()
+		self.th=threading.Thread(target=self.connecting,args=())
+		self.th.start()
 		
 #-------lączenie z serwerem-----------------------------------------#
 		
@@ -103,11 +104,12 @@ class ConnectionModel (ModelMT):
 		#reset zmiennej stop
 		self.stop=False
 		self.i=0.00
-		self.connecting=True
+		self.is_connecting=True
 
 		
 		#Dopoki nie polaczany i self.i mniejsze od 1 dodawaj do paska		
 		while(self.ifrun and self.i<1.000):
+
 
 			time.sleep(0.1)
 			self.i=self.i+0.005
@@ -117,11 +119,12 @@ class ConnectionModel (ModelMT):
 				
 			#przerwanie petli po nacisnieciu przycisku z komunikatu
 			if self.stop:
+				#threading.Thread(target=self.connecting,args=()).start()
 				break
-		
+			    
 		#ukrycie progressbara
-		self.connecting=False
 		
+		self.is_connecting=False
 		#jesli polaczony w czasie krotszym niz 25s
 		if(not self.ifrun and self.i<1 and not self.stop):
 			#ustaw zmienna odpowiadajaca za aktywne polaczenie
@@ -129,17 +132,18 @@ class ConnectionModel (ModelMT):
 			
 			
 		#jesli polaczenie bylo 'przerwane'
-		if self.stop:
-			#zrestartuj polaczenie
-			threading.Thread(target=self.connecting,args=()).start()	
-
+		
 		
 #----------funkcje dla komunikatow--------------------------------------
 	def reconnect(self):
 		self.stop=True
-		threading.Thread(target=self.connecting,args=()).start()	
+		#self.th.exit()
+		self.i=0
+		#del self.th
+		try:
+			self.connect_init(self.jid, self.pwd)
 
-		
+		except: pass
 
 
 

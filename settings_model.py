@@ -31,7 +31,11 @@ class SettingsModel(Model):
 
 		pass
 
-
+	def get_all(self):
+		settings={"me":self.me,
+				  "show":self.show,
+				  "status":self.status}
+		return settings
 	def tryfiles(self):
 		if not os.path.isdir(self.workpath):
 			os.makedirs(self.workpath)
