@@ -1,21 +1,7 @@
-Zrobione:
- 	-konczenie watku polaczenia przy zamknieciu gui
-	-kreator konta
-	-sprawdzenie czy nadchodzaca wiadomosc jest od danego kontaktu
-	-lista kontaktow...
-	-podkreslanie kontaktow od ktorych dostajemy wiadomosc	
-	-ustawienia nt poczatkowego statusu
-	-zarzadzanie lista kontaktow
-	-zarzadzanie autoryzacja
+Do 100% poprzedniej funkcjonalnosci brakuje:
+
+	- pynotify
 	
-Do zdrobienia:
-	- MOVE przy zmianie rozmiaru okna
-	-domyslny focus na entry
-	-powiadomienie o aktywnosci	
-	-Tray
-	-wlasne ikony
-	-emoticony
-	-menu
-	-skroty typu kopiuj wklej
-	-automatyczna zamiana linkow
-	-wycinanie groznych tagow (np <object> <script>)
+	- statusicon.blink 
+	
+	- pozycjonowanie
