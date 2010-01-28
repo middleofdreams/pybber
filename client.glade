@@ -5,13 +5,13 @@
   <widget class="GtkWindow" id="window">
     <property name="default_width">400</property>
     <property name="default_height">500</property>
-    <signal name="delete_event" handler="on_window_delete_event"/>
+    <signal name="hide" handler="hide"/>
     <signal name="notify" handler="chatfocus"/>
     <signal name="drag_drop" handler="resize"/>
     <signal name="event" handler="windowevent"/>
     <signal name="drag_end" handler="resize"/>
-    <signal name="hide" handler="hide"/>
     <signal name="selection_get" handler="chatfocus"/>
+    <signal name="delete_event" handler="on_window_delete_event"/>
     <child>
       <widget class="GtkHBox" id="hbox1">
         <property name="visible">True</property>
@@ -29,6 +29,7 @@
                     <property name="visible">True</property>
                     <property name="app_paintable">True</property>
                     <property name="can_focus">True</property>
+                    <signal name="row_activated" handler="loadarchive"/>
                   </widget>
                 </child>
               </widget>
@@ -131,8 +132,8 @@
                         <signal name="focus" handler="chatfocus"/>
                         <signal name="event" handler="chatfocus"/>
                         <signal name="grab_focus" handler="chatfocus"/>
-                        <accelerator key="c" signal="copy-clipboard" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="v" signal="paste-clipboard" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="c" signal="copy-clipboard" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                       <packing>
                         <property name="position">0</property>
@@ -1172,7 +1173,7 @@ Niewidoczny</property>
       </widget>
     </child>
   </widget>
-  <widget class="GtkMenu" id="menu5">
+  <widget class="GtkMenu" id="iconpopup">
     <property name="visible">True</property>
     <child>
       <widget class="GtkMenuItem" id="menuitem10">
@@ -1188,51 +1189,51 @@ Niewidoczny</property>
       </widget>
     </child>
     <child>
-      <widget class="GtkMenuItem" id="menuitem11">
+      <widget class="GtkMenuItem" id="popupstatus1">
         <property name="visible">True</property>
         <property name="label" translatable="yes">Zmie&#x144; status na Dost&#x119;pny</property>
         <property name="use_underline">True</property>
-        <signal name="activate" handler="set_online"/>
+        <signal name="activate" handler="set_status_from_icon" object="1"/>
       </widget>
     </child>
     <child>
-      <widget class="GtkMenuItem" id="menuitem12">
+      <widget class="GtkMenuItem" id="popupstatus2">
         <property name="visible">True</property>
         <property name="label" translatable="yes">Zmie&#x144; status na  Zaraz Wracam</property>
         <property name="use_underline">True</property>
-        <signal name="activate" handler="set_away"/>
+        <signal name="activate" handler="set_status_from_icon" object="2"/>
       </widget>
     </child>
     <child>
-      <widget class="GtkMenuItem" id="menuitem13">
+      <widget class="GtkMenuItem" id="popupstatus3">
         <property name="visible">True</property>
         <property name="label" translatable="yes">Zmie&#x144; status na Wr&#xF3;c&#x119; p&#xF3;&#x17A;niej</property>
         <property name="use_underline">True</property>
-        <signal name="activate" handler="set_xa"/>
+        <signal name="activate" handler="set_status_from_icon" object="3"/>
       </widget>
     </child>
     <child>
-      <widget class="GtkMenuItem" id="menuitem14">
+      <widget class="GtkMenuItem" id="popupstatus4">
         <property name="visible">True</property>
         <property name="label" translatable="yes">Zmie&#x144; status na Nie przeszkadza&#x107;</property>
         <property name="use_underline">True</property>
-        <signal name="activate" handler="set_dnd"/>
+        <signal name="activate" handler="set_status_from_icon" object="4"/>
       </widget>
     </child>
     <child>
-      <widget class="GtkMenuItem" id="menuitem15">
+      <widget class="GtkMenuItem" id="popupstatus5">
         <property name="visible">True</property>
         <property name="label" translatable="yes">Zmie&#x144; status na Chc&#x119; pogada&#x107;</property>
         <property name="use_underline">True</property>
-        <signal name="activate" handler="set_chat"/>
+        <signal name="activate" handler="set_status_from_icon" object="5"/>
       </widget>
     </child>
     <child>
-      <widget class="GtkMenuItem" id="menuitem16">
+      <widget class="GtkMenuItem" id="popupstatus6">
         <property name="visible">True</property>
         <property name="label" translatable="yes">Zmie&#x144; status na Niewidoczny</property>
         <property name="use_underline">True</property>
-        <signal name="activate" handler="set_invisible"/>
+        <signal name="activate" handler="set_status_from_icon" object="6"/>
       </widget>
     </child>
     <child>

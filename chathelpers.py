@@ -23,3 +23,12 @@ def messtime(ts):
 	tm=time.strftime("%H:%M:%S",tp)
 	day=time.strftime("%d %m %Y",tp)
 	return tm,day
+
+def showimages(text):
+	text=text.replace("[img:","<img src=\"")
+	text=text.replace(".bmp]",".bmp\">")
+	text=text.replace(".jpg]",".jpg\">")
+	text=text.replace(".png]",".png\">")
+	text=text.replace(".jpeg]",".jpeg\">")
+	text=text.replace(".gif]",".gif\">")
+	return text

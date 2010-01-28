@@ -11,6 +11,7 @@ class MyView (View):
 
 	def __init__(self):
 		View.__init__(self)
+		self['window'].set_title("Pybber")
 		self['window'].show()
 		self.createchat()
 		self.hid=0
@@ -106,3 +107,27 @@ class MyView (View):
 		icon.set_blinking(False) 
 		icon.set_tooltip("Pybber")
 		icon.set_visible(True)
+		self.icon=icon
+		
+	def archive_show(self):
+		self['archivewindow'].show()
+		self['archivelist'].show()
+		self['archivescroll'].show()
+		self['leftwindow'].show()
+		self['archivelist'].get_model().clear()
+		self['hbox3'].hide()
+	def archive_addtolist(self,day,recipent):
+		 self['archivelist'].get_model().append([day,recipent])
+	def archive_showchat(self,html):
+		self['chat'].load_html_string(html,"file:///")
+	def archive_create(self):
+		model=gtk.ListStore(gobject.TYPE_STRING,str)
+		self['archivelist'].set_model(model)
+		col=gtk.TreeViewColumn("Rozmowy:",gtk.CellRendererText(), text=0)
+		self['archivelist'].append_column(col)
+	def archive_close(self):
+		self['archivewindow'].hide()
+		self['archivelist'].hide()
+		self['archivescroll'].hide()
+		self['hbox3'].show()
+		

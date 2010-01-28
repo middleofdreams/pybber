@@ -18,3 +18,40 @@ def get_show(show):
 		show=gtk.gdk.pixbuf_new_from_file("icons/offline.png")
 	return show
 pass 
+
+def is_typing(widget,jid):
+	
+	show=gtk.gdk.pixbuf_new_from_file("icons/typing.png")
+
+	
+	cats = list()
+	item = widget.get_iter_first ()
+	while ( item != None ):
+		cats.append (widget.get_value (item, 4))
+		item = widget.iter_next(item)
+	#sprawdzenie czy kontakt znajduje sie na liscie	
+	if not jid in cats:
+		status=connection.roster.getStatus(jid)
+		widget.append([jid,status,show,jid])
+	else:
+	#jesli tak - aktualizuj wpisj
+		item = widget.get_iter_first ()
+		
+		while ( widget.get_value(item,4)!=jid):
+			cats.append (widget.get_value (item, 4))
+			item = widget.iter_next(item)
+	pshow=widget.get_value(item,2)
+	#tu gdzies trzeba sprawdzic czy juz ma zamieniona ikonke...
+	#w najgorszym wypadku dodac kolejna kolumne gdzie bedzie tylko 
+	#true/false gdy pisze lub nie
+	#print widget.get_value(item,3)
+	import gobject
+	if widget.get_value(item,3)==None:
+		gobject.idle_add(widget.set_value,item,3,pshow)
+	gobject.idle_add(widget.set_value,item,2,show)
+
+def show_back(item):
+	if item[3]!=None:
+		item[2]=item[3]
+
+		item[3]=None

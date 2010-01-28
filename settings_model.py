@@ -74,32 +74,22 @@ class SettingsModel(Model):
 			
 		d.close()	
 		
-	def save(self,mainclass):	
-		model = mainclass.wTree.get_widget('combobox2').get_model()
-		active = mainclass.wTree.get_widget('combobox2').get_active()
-		if active < 0:
-		  show=0
-		else:
-			show=active
-		d = gdbm.open(prefs, 'c')
+	def save(self,show,status,me):	
+		
+		d = gdbm.open(self.prefs, 'c')
 		d['show']=str(show)
-		d['status']=mainclass.wTree.get_widget('entry8').get_text()
+		d['status']=status
 		self.show=show
 		self.status=d['status']
-		me=mainclass.wTree.get_widget('entry11').get_text()
-		if me=="":
-			me=self.login
 		self.me=me
 		d['me']=me
 		d.close()	
-		print self.show
 		
-	def saveacc(self,mainclass):
-		d = gdbm.open(prefs, 'c')
-		d['login']=mainclass.login.get_text()
-		remember=mainclass.wTree.get_widget('checkbutton1').get_active()
+	def saveacc(self,remember,login,passwd):
+		d = gdbm.open(self.prefs, 'c')
+		d['login']=login
 		if remember:
-			d['pwd']=mainclass.passwd.get_text()
+			d['pwd']=passwd
 			d['remember']='True'
 		else:
 			d['pwd']=""

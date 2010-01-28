@@ -4,7 +4,8 @@ import _importer
 from gtkmvc import Controller
 from gtkmvc.adapters import Adapter
 from chathelpers import *
-from icon_view import IconView
+from listhelpers import *
+
 
 class MyCtrl (Controller):
 	"""Handles signal processing, and keeps alignment of model and
@@ -25,16 +26,29 @@ class MyCtrl (Controller):
 		self.model.connection.show=self.model.settings.show
 		view['list'].connect("row-activated", self.model.openchat)
 		view['message'].get_buffer().connect_after("insert-text", self.msgbuffer)
-		self.iconview=IconView
+
+		view.icon.connect("activate", self.iconactivate) 
+		view.icon.connect("popup_menu",self.iconmenu)
 		return
 		
-		
+	def on_logonbtn_clicked(self,button):
+		''' przy zalogowaniu '''
+		jid=self.view['login'].get_text()
+		pwd=self.view['passwd'].get_text()
+		self.model.connection.connect_init(jid,pwd)
+		remember=self.view['checkbutton1'].get_active()
+		self.model.settings.saveacc(remember,jid,pwd)
+		self.view['loginbox'].hide()	
 	def register_adapters(self):
 		ad = Adapter(self.model.settings, "login")
 		ad.connect_widget(self.view["login"])
 		ad = Adapter(self.model.settings, "pwd")
 		ad.connect_widget(self.view["passwd"])
-
+		 
+	def iconmenu(self,widget, button, time, test = None):
+		if button == 3:
+			self.view['iconpopup'].show_all()
+			self.view['iconpopup'].popup(None, None, None, 3, time)
 	
 	def property_newmessage_signal_emit(self, signal_name,args):
 		'''odbior wiadomosci'''
@@ -42,13 +56,16 @@ class MyCtrl (Controller):
 		chat=intolink(chat)
 		time,day=messtime(args[0])
 		text="<i>("+time+")</i><b> <font color=blue>"+args[2]+"</font></b>: "+chat
-
+		text=showimages(text)
 		if args[1]==self.model.recipent:
 			self.view.updatechat(unicode(text))
 		try:
 			self.model.messages[args[1]]+="<br/>"+text
 		except:
-			self.model.messages[args[1]]=text
+			html=self.model.archive.loadlast(args[1])
+			self.model.messages[args[1]]=html+text
+			is_typing(self.view['listmodel'],args[1])
+		self.model.archive.archive_append(args[1],text,day)
 
 
 			#text=intolink(text)
@@ -71,6 +88,9 @@ class MyCtrl (Controller):
 			show=self.model.connection.roster.getShow(jid.__str__())		
 		
 		chitem=""
+		import time
+		while self.view['listmodel']==None:
+			time.sleep(1)
 		item = self.view['listmodel'].get_iter_first ()
 		while ( item != None ):
 			if self.view['listmodel'].get_value (item, 4)==nick:
@@ -131,6 +151,7 @@ class MyCtrl (Controller):
 						time,day=messtime(ts)
 						msg=striptext(msg)
 						msg=intolink(msg)
+						msg=showimages(msg)
 						message="<i>("+time+")</i><b> <font color=red>" \
 							+self.model.settings.me+"</font></b>:"+msg
 						try:
@@ -141,6 +162,7 @@ class MyCtrl (Controller):
 						#time,day=messtime(ts)
 						#savechat(guiclass,connection.vars,guiclass.recipent,"<font color=red>"+settings.me+"</font>",msg,time,day)
 						self.view.updatechat(message)
+						self.model.archive.archive_append(self.model.recipent,message,day)
 
 					#sendmsg(klasa,connection,settings)
 
@@ -170,8 +192,19 @@ class MyCtrl (Controller):
 			self.on_statusbar_changed()		
 			
 	def savesettings(self,widget):
-		self.model.settings.save(self.ui)
-			
+		active = self.view['combobox2'].get_active()
+		if active < 0:
+		  show=0
+		else:
+			show=active
+		status=self.view['entry8'].get_text()
+		me=self.view['entry11'].get_text()
+		if me=="":
+			me=self.model.login
+		self.model.me=me
+		self.model.settings.save(show,status,me)
+		self.closesettings(widget)
+		
 	def closesettings(self,widget):
 		mainh=self.view['window'].get_size()[1]	
 		self.view.closesettings(mainh)
@@ -204,6 +237,42 @@ class MyCtrl (Controller):
 		try:
 			html=model.messages[new]
 		except:
-			html=""
+			html=self.model.archive.loadlast(new)
+			model.messages[new]=html
+			
 		self.view.loadchat(html)
-		pass # end of class
+		if new==self.model.recipentname or self.model.recipentname==None :
+			self.view['window'].set_title("Rozmowa z "+new)
+		else:
+			self.view['window'].set_title("Rozmowa z "+self.model.recipentname+" ("+new+")")
+		self.view.archive_close()
+	def iconactivate(self,widget):
+		window=self.view['window']
+		if not window.is_active():
+			window.present()
+			window.show()		
+			self.view.icon.set_blinking(False)
+			#if self.hidden:
+			#	window.move(self.posx,self.posy)
+			self.model.hidden=False
+		if window.is_active():
+			window.present()
+			#self.posx,self.posy=self.window.get_position()
+			window.hide()
+			self.hidden=True
+	
+	def set_status_from_icon(self,widget):
+		show=widget.name.lstrip("popupstatus")
+		show=int(show)-1
+		desc=self.view['desc'].get_text()
+		self.model.connection.set_status(show,desc)
+		self.view['statusbar'].set_active(show)
+		
+	def property_archiveclose_signal_emit(self, signalname,args):
+		self.model.recipent=self.model.archive.open
+		
+	def zoomin(self,widget):
+		self.view['chat'].zoom_in()
+ 
+	def zoomout(self,widget):
+		self.view['chat'].zoom_out()

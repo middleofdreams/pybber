@@ -21,17 +21,7 @@ class ConnectionCtrl (Controller):
 		self.model.is_connecting=False
 	def hidewarn(self,widget):
 		self.view.hidewarn()
-	def on_logonbtn_clicked(self,button):
-		''' przy zalogowaniu '''
-		jid=self.view['login'].get_text()
-		pwd=self.view['passwd'].get_text()
-		self.model.connect_init(jid,pwd)
-		#self.settings.saveacc(self)
-		self.view['loginbox'].hide()
-		#self.view['jidlabel'].set_label(jid)	
-		
-		#self.staticon.set_from_file("icons/disconnected.png") 
-		return
+	
 	def property_is_connecting_value_change(self, model, old, new):
 		print new
 		if new:
@@ -43,7 +33,6 @@ class ConnectionCtrl (Controller):
 	
 	def property_i_value_change(self, model, old, new):
 		self.view['progress'].show()
-		print new
 		if new<1.000:
 			self.view['progress'].set_fraction(new)
 		if(str(new)=='0.15'):
