@@ -5,13 +5,13 @@
   <widget class="GtkWindow" id="window">
     <property name="default_width">400</property>
     <property name="default_height">500</property>
-    <signal name="hide" handler="hide"/>
     <signal name="notify" handler="chatfocus"/>
     <signal name="drag_drop" handler="resize"/>
     <signal name="event" handler="windowevent"/>
+    <signal name="hide" handler="hide"/>
     <signal name="drag_end" handler="resize"/>
-    <signal name="selection_get" handler="chatfocus"/>
     <signal name="delete_event" handler="on_window_delete_event"/>
+    <signal name="selection_get" handler="chatfocus"/>
     <child>
       <widget class="GtkHBox" id="hbox1">
         <property name="visible">True</property>
@@ -1071,11 +1071,42 @@ Niewidoczny</property>
                         </child>
                       </widget>
                       <packing>
+                        <property name="expand">False</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <widget class="GtkHButtonBox" id="hbuttonbox4">
+                        <property name="visible">True</property>
+                        <property name="layout_style">spread</property>
+                        <child>
+                          <widget class="GtkLabel" id="label13">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">Styl rozmowy:</property>
+                          </widget>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkEntry" id="chatstyle">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="invisible_char">&#x25CF;</property>
+                          </widget>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="position">1</property>
+                      </packing>
                     </child>
                     <child>
                       <widget class="GtkHButtonBox" id="hbuttonbox3">
@@ -1111,6 +1142,8 @@ Niewidoczny</property>
                         </child>
                       </widget>
                       <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
                         <property name="position">2</property>
                       </packing>
                     </child>

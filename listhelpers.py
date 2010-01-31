@@ -50,8 +50,14 @@ def is_typing(widget,jid):
 		gobject.idle_add(widget.set_value,item,3,pshow)
 	gobject.idle_add(widget.set_value,item,2,show)
 
-def show_back(item):
-	if item[3]!=None:
-		item[2]=item[3]
+def show_back(recipent,model):
 
-		item[3]=None
+	if "@" in recipent:
+		iter=model.get_iter_first()
+		while model.get_value(iter,4)!=recipent or iter==None:
+			iter=model.iter_next(iter)
+		if iter!=None or iter!="":
+			oldstatus=model.get_value(iter,3)
+			if oldstatus!=None:
+				model.set_value(iter,2,oldstatus)
+				model.set_value(iter,3,None)

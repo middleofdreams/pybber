@@ -1,5 +1,6 @@
 import gtk,xmpp
 from listhelpers import *
+print "Aaaa"
 def create_empty_list(view):
     '''tworzy pusta liste'''
     view['listmodel']=gtk.ListStore(str,str,gtk.gdk.Pixbuf,gtk.gdk.Pixbuf,str)

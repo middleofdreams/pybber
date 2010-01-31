@@ -4,10 +4,7 @@ from gtkmvc import Model
 from connection_model import *
 from settings_model import *
 from archive_model import *
-class MyModel (Model):
-	"""Our model contains a numeric counter and a numeric value that
-	holds the value that the counter must be assigned to when we the
-	model is reset"""
+class MainModel (Model):
 	connection=ConnectionModel()
 	archive=ArchiveModel()
 	recipent=""
@@ -15,6 +12,7 @@ class MyModel (Model):
 	archiveopen=""
 	messages={}
 	hidden=False
+	messagetype={}
 	newmessage=connection.newmessage
 	newpresence=connection.newpresence
 	archiveclose=archive.archiveclose

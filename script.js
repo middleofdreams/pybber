@@ -17,7 +17,8 @@ function appendtext(text){
 	var body= document.getElementsByTagName('body')[0]; 
 	var newline= document.createElement('font'); 
 	newline.setAttribute('size','-3'); 
-	newline.innerHTML=text+'<br/>'; 
+	text=text.replace(/&#34;/g,"\"");
+	newline.innerHTML=text; 
 	body.appendChild(newline); 
 
 	if (a-b==c){

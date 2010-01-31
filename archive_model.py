@@ -11,25 +11,33 @@ class ArchiveModel (Model):
     __observables__ = ('open','archiveclose')
     def is_created(self,recipent,day):
         path=self.workpath+"/"+recipent
-        filepath=path+"/"+day+".html"
+        filepath=path+"/"+day
      
         if not os.path.isdir(self.workpath):
             os.makedirs(self.workpath)
         if not os.path.isdir(path):
             os.makedirs(path)
-            f = open(filepath, "w")
+            f = open(filepath+".html", "w")
             f.write("<html><title>Rozmowa z "+recipent+" z "+day+"</title><meta http-equiv='content-type' content='text/html; charset=UTF-8'></head><body>") 
-     
+            f.close()
+            f = open(filepath+".txt", "w")
+            f.close()
     def archive_append(self,recipent,message,day):
         day=day.replace(" ","-")
      
         self.is_created(recipent,day)
         path=self.workpath+"/"+recipent
-        filepath=path+"/"+day+".html"
+        filepath=path+"/"+day
         message="<font size=-3>"+message+"</font>"
-        f = open(filepath, "a")
+        f = open(filepath+".html", "a")
         f.write(message+"<br/>")       
-     
+        f.close()
+        import re
+        p = re.compile(r'<.*?>')
+        message= p.sub('|', message)
+        f = open(filepath+".txt", "a")
+        f.write(message+"\n")       
+        f.close()
     def loadlast(self,recipent):
         import datetime
         now=datetime.datetime.now()
@@ -41,9 +49,9 @@ class ArchiveModel (Model):
             text=f.read()
             text=text.split("<br/>")
             html=""
-            if len(text)>20:
-                i=len(text)-10
-                while not text[i].startswith("<font size=-3><i>("):
+            if len(text)>10:
+                i=len(text)-5
+                while not text[i].startswith("<font size=-3>"):
                     i=i-1
      
                 for y in range(i,len(text)):
@@ -55,6 +63,8 @@ class ArchiveModel (Model):
         except:
      
             html=""
+        from chathelpers import striptext
+        print html
         return html
      
             #while 

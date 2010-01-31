@@ -1,6 +1,7 @@
 import gtk
 from chatwindow import copyfromchat
 from send import *
+
 def message(widget, event, klasa,connection,setttings):
 	if event.type == gtk.gdk.KEY_PRESS:
 		if gtk.gdk.keyval_name(event.keyval)== 'Return' :

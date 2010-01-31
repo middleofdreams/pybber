@@ -5,7 +5,7 @@ from listhelpers import get_show
 from webkit import WebView
 import gobject,gtk
 
-class MyView (View):
+class MainView (View):
 
 	glade = "client.glade"
 
@@ -21,11 +21,20 @@ class MyView (View):
 	def openchat(self):
 		self['leftwindow'].show()
 		
-	def loadchat(self,html):
+	def loadchat(self,html,style):
+		css='<link rel=&#34;Stylesheet&#34; type=&#34;text/css&#34; href=&#34;chatstyles/'+style+'/main.css"&#34; /> '
+
 		if html!="":
+			if not "<link rel" in html:
+				html=css+html
+				print "aaa"
+				print html
 			self.hid=self['chat'].connect('load-finished',self.updatechat,html)
+		else:
+			if style!="default": 
+				self.hid=self['chat'].connect('load-finished',self.updatechat,css)
 		self['chat'].load_uri('file:///home/kuba/pybber/chat.html')
-		
+	
 	
 	def updatechat(self,html,*a,**b):
 		try:
@@ -88,7 +97,7 @@ class MyView (View):
 		self['combobox2'].set_active(set['show'])
 		self['entry8'].set_text(set['status'])
 		self['entry11'].set_text(set['me'])
-	
+		self['chatstyle'].set_text(set['style'])
 	def list_showform(self,form,prop=False,jid=None,name=None):
 		self['list'].hide()
 		self[form+'form'].show()	
@@ -108,7 +117,9 @@ class MyView (View):
 		icon.set_tooltip("Pybber")
 		icon.set_visible(True)
 		self.icon=icon
-		
+	def iconblink(self,blink=True):
+		self.icon.set_blinking(blink)
+	
 	def archive_show(self):
 		self['archivewindow'].show()
 		self['archivelist'].show()
@@ -130,4 +141,6 @@ class MyView (View):
 		self['archivelist'].hide()
 		self['archivescroll'].hide()
 		self['hbox3'].show()
-		
+	def message_newline(self):
+		buffer=self['message'].get_buffer()
+		buffer.insert_at_cursor(chr(13))	

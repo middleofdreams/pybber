@@ -1,0 +1,232 @@
+/* @author		Oskar Krawczyk (google me for more details)
+ * @thecompany	nouincolor.com
+ * @contact		oskar@nouincolor.com
+ * @copyright	if you use my stuff, big fellas in black choppers will hunt you down!
+ ==================================================================================== */
+
+body {
+	background: url(img/bg.jpg);
+	background-attachment: fixed;
+	margin: 0;
+	padding: 0;
+}
+
+* {
+	word-wrap: break-word;
+	word-break: break-word;
+}
+
+ul, ol, li, p {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+a {
+	color: #2E5DAC;
+}
+
+#Chat {
+	margin: 8px 8px 0;	
+}
+
+.msgContainer {
+	position: relative;
+	margin: 9px 0 0 0;
+}
+
+.msgPicture {
+	position: absolute;
+	top: 5px;
+	left: 0;
+	-webkit-border-radius: 5px;
+	/*-webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.65);*/
+	-webkit-background-size: 40px;
+	width: 40px;
+	height: 40px;
+	
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
+
+	.msgPicture img {
+
+	}
+
+.msgHead {
+	position: relative;
+	height: 19px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	text-shadow: 0px 1px 0px #fff;
+}
+
+	.msgHead li {
+		position: absolute;
+		top: 2px;
+	}
+	
+	.msgHead .msgName {
+		left: 0px;
+	}
+	
+	.msgHead .msgTime {
+		right: 10px;
+	}
+	
+
+.msgBody {
+	position: relative;
+	-webkit-border-radius: 8px;
+	-webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.65);
+	margin: 0 0 0 56px;
+}
+
+	.msgPeak {
+		position: absolute;
+		top: 12px;
+		left: -13px;
+		height: 28px;
+		width: 13px;		
+	}
+	
+	.following .msgPeak {
+		top: -12px;
+		left: 30px;
+		width: 26px;
+		height: 12px;
+	}
+
+.msgBodyInner {
+	position: relative;
+	background: url(img/sticky-line.png);
+	margin: 0 6px;
+	padding: 0 0 0 22px;
+	min-height: 50px;
+	overflow: hidden;
+	
+}
+	
+	.following .msgBodyInner {
+		min-height: 20px;
+		padding: 0 50px 0 22px;
+	}
+
+	.msgBodyInner .msgLines {
+		position: absolute;
+		top: 0;
+		left: 12px;
+		height: 100%;
+		width: 1px;
+	}
+
+.msgContent {
+	font-family: "Marker Felt" !important;
+	font-size: 13px;
+	line-height: 19px;
+	margin: 5px 0 0 0;
+	padding: 0 0 5px 0;
+}
+
+.msgContainer.following {
+	margin: 6px 0 0 0;
+}
+
+
+#insert {
+
+}
+
+.following {
+	position: relative;
+}
+
+	.following .timeStamp {
+		font-family: 'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
+		font-size: 11px;
+		font-weight: bold;
+		text-shadow: 0px 1px 0px #fff;
+		position: absolute;
+		top: 2px;
+		right: 10px;
+	}
+
+
+.incomming .msgHead,
+.incomming .timeStamp,
+.incomming .pointer {
+	color: #AC583C;
+}
+
+.incomming .msgBody {
+	background: #f7f57a url(img/sticky-base-yellow.png) 0 0 repeat-x;
+}
+
+.incomming .msgPeak {
+	background: url(img/sticky-peak-yellow.png);	
+}
+
+.incomming.following .msgPeak {
+	background: url(img/sticky-peak-yellow-top.png) !important;
+}
+
+.incomming .msgBodyInner .msgLines {
+	border-right: solid 1px #A37750;
+	border-left: solid 1px #A37750;
+}
+
+.incomming .msgContent {
+	color: #383A20;
+}
+
+.outgoing .msgHead,
+.outgoing .timeStamp,
+.outgoing .pointer {
+	color: #666;
+}
+
+.outgoing .msgBody {
+	background: #cdcdcd url(img/sticky-base-grey.png) 0 0 repeat-x;
+}
+
+.outgoing .msgPeak {
+	background: url(img/sticky-peak-grey.png);	
+}
+
+.outgoing.following .msgPeak {
+	background: url(img/sticky-peak-grey-top.png) !important;
+}
+
+.outgoing .msgBodyInner .msgLines {
+	border-right: solid 1px #666666;
+	border-left: solid 1px #666666;
+}
+
+.outgoing .msgContent {
+	color: #333;
+}
+
+.status .msgBody {
+	background: #FF6633 url(img/status.png) 0 0 repeat-x;
+}
+
+	.status .msgBody .msgBodyInner {
+		background: none;
+		min-height: 20px;
+	}
+	
+	.status .msgBody .msgContent {
+		font-family: 'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
+		font-size: 11px;
+		font-weight: bold;
+		color: #fff;
+		padding: 5px 0;
+		margin: 0;
+		text-shadow: 0px -1px 0px #FF0000;
+	}
+	
+	.status .msgBodyInner .msgLines {
+		border-right: solid 1px #993300;
+		border-left: solid 1px #993300;
+	}

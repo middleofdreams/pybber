@@ -7,7 +7,7 @@ from chathelpers import *
 from listhelpers import *
 
 
-class MyCtrl (Controller):
+class MainCtrl (Controller):
 	"""Handles signal processing, and keeps alignment of model and
 	view"""
 	def __init__(self, model, view):  
@@ -55,18 +55,31 @@ class MyCtrl (Controller):
 		chat=striptext(args[3])
 		chat=intolink(chat)
 		time,day=messtime(args[0])
-		text="<i>("+time+")</i><b> <font color=blue>"+args[2]+"</font></b>: "+chat
+		try:
+			last=self.model.messagetype[args[1]]
+		except:
+			last="outgoing"
+		self.model.messagetype[args[1]]="incoming"
+		style=self.model.settings.style
+
+		if last=="incoming":
+			text=set_style(time,args[2],chat,False,True,style=style)
+		else:
+			text=set_style(time,args[2],chat,False,style=style)
 		text=showimages(text)
 		if args[1]==self.model.recipent:
 			self.view.updatechat(unicode(text))
+			
+		else: is_typing(self.view['listmodel'],args[1])
 		try:
-			self.model.messages[args[1]]+="<br/>"+text
+			self.model.messages[args[1]]+=text
 		except:
 			html=self.model.archive.loadlast(args[1])
 			self.model.messages[args[1]]=html+text
-			is_typing(self.view['listmodel'],args[1])
+		
 		self.model.archive.archive_append(args[1],text,day)
-
+		if not self.view['window'].is_active():
+			self.view.iconblink()
 
 			#text=intolink(text)
 			#text=showimages(text)
@@ -142,20 +155,29 @@ class MyCtrl (Controller):
 					end_iter=buffer.get_end_iter()
 					msg=buffer.get_text(start_iter, end_iter, include_hidden_chars=True)
 					buffer.set_text("")
-					msg=msg.replace("<","&lt;")
-					msg=msg.replace(">","&gt;")
+					
 
 					# msg=str("ME:"+msg)
 					if msg!="":
 						ts=self.model.connection.send(msg,self.model.recipent)
+						msg=msg.replace("<","&lt;")
+						msg=msg.replace(">","&gt;")
 						time,day=messtime(ts)
 						msg=striptext(msg)
 						msg=intolink(msg)
 						msg=showimages(msg)
-						message="<i>("+time+")</i><b> <font color=red>" \
-							+self.model.settings.me+"</font></b>:"+msg
 						try:
-							self.model.messages[self.model.recipent]+="<br/>"+message
+							last=self.model.messagetype[self.model.recipent]
+						except:
+							last="incoming"
+						style=self.model.settings.style
+						self.model.messagetype[self.model.recipent]="outgoing"
+						if last=="outgoing":
+							message=set_style(time,self.model.settings.me,msg,continous=True,style=style)
+						else:
+							message=set_style(time,self.model.settings.me,msg,style=style)
+						try:
+							self.model.messages[self.model.recipent]+=message
 						except:
 							self.model.messages[self.model.recipent]=message
 						#guiclass.staticon.set_blinking(False)
@@ -180,7 +202,7 @@ class MyCtrl (Controller):
 		try:
 			self.model.messages[self.model.recipent]=""
 		except: pass
-		self.view.loadchat("")
+		self.view.loadchat("",style=self.model.settings.style)
 			
 	def on_desc_key_press_event(self,widget,event):
 		import gtk
@@ -201,8 +223,9 @@ class MyCtrl (Controller):
 		me=self.view['entry11'].get_text()
 		if me=="":
 			me=self.model.login
+		style=self.view['chatstyle'].get_text()
 		self.model.me=me
-		self.model.settings.save(show,status,me)
+		self.model.settings.save(show,status,me,style)
 		self.closesettings(widget)
 		
 	def closesettings(self,widget):
@@ -240,12 +263,16 @@ class MyCtrl (Controller):
 			html=self.model.archive.loadlast(new)
 			model.messages[new]=html
 			
-		self.view.loadchat(html)
+		self.view.loadchat(html,style=self.model.settings.style)
 		if new==self.model.recipentname or self.model.recipentname==None :
 			self.view['window'].set_title("Rozmowa z "+new)
 		else:
 			self.view['window'].set_title("Rozmowa z "+self.model.recipentname+" ("+new+")")
 		self.view.archive_close()
+		self.view.iconblink(False)
+		from listhelpers import show_back
+		show_back(new,self.view['listmodel'])
+		
 	def iconactivate(self,widget):
 		window=self.view['window']
 		if not window.is_active():
@@ -260,7 +287,8 @@ class MyCtrl (Controller):
 			#self.posx,self.posy=self.window.get_position()
 			window.hide()
 			self.hidden=True
-	
+	def windowevent(self,*args):
+		self.view.iconblink(False)
 	def set_status_from_icon(self,widget):
 		show=widget.name.lstrip("popupstatus")
 		show=int(show)-1
