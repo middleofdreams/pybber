@@ -38,10 +38,11 @@ def showimages(text):
 def set_style(time,who,message,outgoing=True,continous=False,style="default"):
 	if style=="default":
 		if outgoing:
-			text="<i>("+time+")</i><b> <font color=blue>"+who+"</font></b>: "+message
+			text="<i>("+time+")</i><b> <font color=blue>"+who+"</font></b>: "+message+"<br/>"
 		else:
 			text="<i>("+time+")</i><b> <font color=red>" \
-								+who+"</font></b>: "+message
+								+who+"</font></b>: "+message+"<br/>"
+			archive=text
 	else:
 		if outgoing:
 			if continous:
@@ -56,8 +57,8 @@ def set_style(time,who,message,outgoing=True,continous=False,style="default"):
 			f=open(apath)
 			archive=f.read()
 			f.close
-			text=text.replace("%userIconPath%","chatstyles/out_icon.png")
-			archive=archive.replace("%userIconPath%","chatstyles/out_icon.png")
+			text=text.replace("%userIconPath%","icons/out_icon.png")
+			archive=archive.replace("%userIconPath%","icons/out_icon.png")
 
 		else:  
 			if continous:
@@ -72,8 +73,8 @@ def set_style(time,who,message,outgoing=True,continous=False,style="default"):
 			f=open(apath)
 			archive=f.read()
 			f.close
-			text=text.replace("%userIconPath%","chatstyles/in_icon.png")
-			archive=archive.replace("%userIconPath%","chatstyles/in_icon.png")
+			text=text.replace("%userIconPath%","icons/in_icon.png")
+			archive=archive.replace("%userIconPath%","icons/in_icon.png")
 
 		
 		text=changetext(text,time,who,message)
@@ -96,10 +97,10 @@ def changetext(text,time,who,message):
 def set_archstyle(time,who,message,outgoing=True,continous=False,style="default"):
 	if style=="default":
 		if outgoing:
-			text="<i>("+time+")</i><b> <font color=blue>"+who+"</font></b>: "+message
+			text="<i>("+time+")</i><b> <font color=blue>"+who+"</font></b>: "+message+"<br/>"
 		else:
 			text="<i>("+time+")</i><b> <font color=red>" \
-								+who+"</font></b>: "+message
+								+who+"</font></b>: "+message+"<br/>"
 	else:
 		if outgoing:
 			if continous:

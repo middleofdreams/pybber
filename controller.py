@@ -75,7 +75,7 @@ class MainCtrl (Controller):
 			
 		else: 
 			is_typing(self.view['listmodel'],args[1])
-			self.view.notification(args[2],chat)
+			
 		try:
 			self.model.messages[args[1]]+=archive
 		except:
@@ -85,8 +85,9 @@ class MainCtrl (Controller):
 		self.model.archive.archive_append(time,args[2],chat,day,args[1],text)
 		#self.model.archive.archive_append(args[1],text,day)
 		if not self.view['window'].is_active():
+			
+			self.view.notification(args[2],chat)
 			self.view.iconblink()
-
 			#text=intolink(text)
 			#text=showimages(text)
 			
@@ -145,7 +146,8 @@ class MainCtrl (Controller):
 		
 			# gtk signals
 	def on_window_delete_event(self, window, event):
-		self.close()
+		window.hide()
+		self.hidden=True
 		return True
 		
 	def msgbuffer(self,text_buffer,position, text, lenght):

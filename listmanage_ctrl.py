@@ -41,7 +41,7 @@ class ListCtrl (Controller):
         additem=self.view['addjid'].get_text()
         name=self.view['addname'].get_text()
         if name=='' or name=="": name=additem
-        self.view['listmodel'].prepend([name,'',get_show('offline'),None,additem]) 
+        self.view['listmodel'].prepend([name,'',get_show('offline'),None,additem,0]) 
         self.model.connection.roster.setItem(additem, name=name, groups=[])
         self.model.connection.roster.Authorize(additem)
         self.model.connection.roster.Subscribe(additem)
@@ -91,7 +91,7 @@ class ListCtrl (Controller):
         self.view.list_hideform("edit")
         
     def cancel(self, *widget):    
-       self.view.list_hideform("del")
-       self.view.list_hideform("add")
-       self.view.list_hideform("edit") 
-       self.edit=""  
+        self.view.list_hideform("del")
+        self.view.list_hideform("add")
+        self.view.list_hideform("edit") 
+        self.edit=""  
