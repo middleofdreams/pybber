@@ -1,0 +1,8 @@
+.t-time {
+	opacity: 0;
+}
+
+.t-sender:hover + .t-time {
+	opacity: 0;
+}
+

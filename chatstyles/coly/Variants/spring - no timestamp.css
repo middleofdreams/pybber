@@ -1,0 +1,44 @@
+body {
+    background-color: #eeded6;
+    text-shadow: 0px 0px 1px #A18272;
+}
+a:link:before {
+	color: #ce4ea8;
+	font-weight: bold;
+}
+a:link:before:hover {
+	color: #ffa7e5;
+}
+a:link {
+    color: #231304;
+}
+a:link:hover {
+	color: #000;
+}
+.outgoing .t-sender{
+    color: #55300d;
+}
+.incoming .t-sender{
+	color: #ce4ea8;
+}
+.t-status {
+    color: #62411e;
+}
+.incoming .t-message {
+	color: #231304;
+}
+.outgoing .t-message {
+	color: #6d5947;
+}
+
+.t-time {
+	opacity: 0;
+}
+
+.t-sender:hover + .t-time {
+	opacity: 0;
+}
+
+.groupchat .t-name {
+	color: #D4CDB3;
+}

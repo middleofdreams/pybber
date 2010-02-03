@@ -1,0 +1,166 @@
+body {
+    background: #333 url(img/bg.png) repeat;
+    font-family: calibri, verdana;
+    text-shadow: 0px 0px 1px black;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link:before {
+	color: #f06;
+	content: "!";
+}
+
+a:link:before:hover {
+	color: #ff087b;
+}
+
+a:link {
+    color: #fff;
+	-webkit-transition-duration: 300ms;
+}
+
+a:link:hover {
+	color: #ccc;
+	-webkit-transition-duration: 300ms;
+}
+
+.t-sender {
+	font-family: monaco;
+	padding-right: 3px;
+	display: inline;
+	cursor: default;
+}
+
+.outgoing .t-sender{
+    color : #666;
+}
+
+.incoming .t-sender{
+	color: #0cf;
+}
+
+emoticon {
+   vertical-align:-33%;
+}
+
+.t-status {
+    color : #f06;
+    text-transform : uppercase;
+	position: relative;
+	margin-bottom: -3px;
+}
+
+input {
+	color: #f06;
+	height: 16px;
+	width: 150px;
+	overflow: ellipsis;
+    background : none;
+    border : none;
+}
+
+p.message {
+	display: inline;
+	line-height: 1px;	
+}
+
+.incoming .t-message {
+	color: #eeeeee;
+	
+	margin-left: -5px;
+}
+
+.outgoing .t-message {
+	color: #bbbbbb;
+	position: relative;
+	margin-left: -5px;
+}
+
+.incoming {
+	margin-bottom: 3px;
+}
+
+.outgoing {
+	margin-bottom: 3px;
+}
+
+.t-time {
+	position: absolute;
+	margin-top: -22px;
+	margin-left: 6px;
+	background: url("IMG/bubble.png") no-repeat;
+	height: 32px;
+	width: 57px;
+	opacity: 0;
+	z-index: -1;
+	-webkit-transition-duration: 500ms;
+	-webkit-transition-property: opacity, z-index;
+}
+
+.t-sender:hover + .t-time {
+	opacity: 1;
+	z-index: 999;
+}
+
+.t-time p {
+	color: #000000;
+	padding-left: 17px;
+	margin-top: 9px;
+	font-size: 11px;
+	font-family: helvetica, verdana;
+	text-shadow: none;
+}
+
+.t-name {
+	position: absolute;
+	right: 0;
+	display: none;
+}
+
+.groupchat .t-name {
+	display: block;
+	width: 30px;
+	height: 12px;
+	overflow: ellipsis;
+	color: #0B0B0B;
+}
+body {
+    background: #2a1e17 url(img/bg.png) repeat;
+    text-shadow: 0px 0px 1px black;
+}
+a:link:before {
+	color: #ffd800;
+	font-weight: bold;
+}
+a:link:before:hover {
+	color: #de04ff;
+}
+a:link {
+    color: #ffedde;
+}
+a:link:hover {
+	color: #fff;
+}
+.outgoing .t-sender{
+    color: #6c4432;
+}
+.incoming .t-sender{
+	color: #bf4a1c;
+}
+.t-status {
+    color: #ffff33;
+}
+.incoming .t-message {
+	color: #ffedde;
+	margin-top: 9px;
+}
+.outgoing .t-message {
+	color: #b69880;
+}
+
+.groupchat .t-name {
+	color: #0F0B05;
+}

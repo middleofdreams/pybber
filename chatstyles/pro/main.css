@@ -1,0 +1,233 @@
+a:link {
+	color: #003366;
+	text-decoration: underline;
+	font-size: 10px;
+}
+a:visited {
+	color: #003366;
+	font-size: 10px;
+}
+a:hover {
+	color: #003366;
+	font-size: 10px;
+}
+a:active {
+	color: #003366;
+	font-size: 10px;
+}
+.inName {
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-right-color: #7D8390;
+	border-left-color: #7D8390;
+	background-color: #959BA8;
+	background-image: url(Images/side.png);
+	background-repeat: repeat-y;
+	background-position: right;
+	vertical-align: middle;
+	margin-right: auto;
+	margin-left: auto;
+	padding-top: 1px;
+	left: 30px;
+	right: 20px;
+	padding-left: 30px;
+	padding-bottom: 2px;
+}
+.name {
+	font-family: "Lucida Grande";
+	font-size: 11px;
+	font-weight: bold;
+	color: #000000;
+	vertical-align: middle;
+}
+.timestamp {
+	font-family: "Lucida Grande";
+	font-size: 11px;
+	color: #454545;
+	vertical-align: middle;
+}
+.message {
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-right-color: #7D8390;
+	border-left-color: #7D8390;
+	background-color: #B2BBC9;
+	background-image: url(Images/side.png);
+	background-repeat: repeat-y;
+	background-position: right;
+	vertical-align: middle;
+	margin-right: auto;
+	margin-left: auto;
+	padding-top: 2px;
+	padding-left: 30px;
+	padding-right: 20px;
+	font-family: "Lucida Grande";
+	font-size: 11px;
+	color: #000000;
+	padding-bottom: 4px;
+	font-weight: normal;
+}
+.wid {
+	width: 95%;
+	margin-right: auto;
+	margin-left: auto;
+}
+.outName {
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-right-color: #7D8390;
+	border-left-color: #7D8390;
+	background-color: #8797B7;
+	background-image: url(Images/side.png);
+	background-repeat: repeat-y;
+	background-position: right;
+	vertical-align: middle;
+	margin-right: auto;
+	margin-left: auto;
+	padding-top: 1px;
+	padding-left: 30px;
+	padding-bottom: 2px;
+}
+body {
+	color: #333333;
+	background-color: #aaafbb;
+}
+.statusBar {
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-right-color: #7D8390;
+	border-left-color: #7D8390;
+	background-color: #959BA8;
+	text-indent: 30px;
+	background-image: url(Images/Info3.png);
+	background-repeat: no-repeat;
+	vertical-align: middle;
+	height: 17px;
+	margin-right: auto;
+	margin-left: auto;
+	background-position: right;
+}
+.footWid {
+	width: 95%;
+	margin-right: auto;
+	margin-left: auto;
+}
+.foot {
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-right-color: #7D8390;
+	border-left-color: #7D8390;
+	background-color: #B2BBC9;
+	background-image: url(Images/side.png);
+	background-repeat: repeat-y;
+	background-position: right;
+	vertical-align: middle;
+	margin-right: auto;
+	margin-left: auto;
+	font-family: "Lucida Grande";
+	font-size: 1px;
+	color: #000000;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #7D8390;
+}
+.timeFloat {
+	float: right;
+	margin-right: 12px;
+	position: relative;
+	height: 17px;
+	top: 0px;
+	right: 7px;
+}
+.infoHead {
+	font-family: "Lucida Grande";
+	font-size: 14px;
+	color: #000000;
+	text-align: left;
+}
+.infoHeadBox {
+	background-color: #B2BBC9;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-right-color: #7D8390;
+	border-bottom-color: #7D8390;
+	border-left-color: #7D8390;
+	position: relative;
+	top: -9px;
+	padding-top: 5px;
+}
+.fixed {
+	z-index: 100;
+	height: 70px;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	position: fixed;
+	width: 95%;
+	margin-right: auto;
+	margin-left: auto;
+}
+.infoHead2 {
+	font-family: "Lucida Grande";
+	font-size: 14px;
+	color: #000000;
+	vertical-align: middle;
+	text-align: center;
+}
+.headImBox {
+	border: 1px solid #7D8390;
+}
+.ConName {
+	font-size: 19px;
+}
+.ConConversee {
+	font-size: 11px;
+}
+.previouslyName {
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-right-color: #7D8390;
+	border-left-color: #7D8390;
+	background-color: #93B58E;
+	background-image: url(Images/side.png);
+	background-repeat: repeat-y;
+	background-position: right;
+	vertical-align: middle;
+	margin-right: auto;
+	margin-left: auto;
+	padding-top: 1px;
+	left: 30px;
+	right: 20px;
+	padding-left: 30px;
+	padding-bottom: 2px;
+}
+.messagePlus {
+	background-color: #B2BBC9;
+	vertical-align: middle;
+	padding-top: 2px;
+	font-family: "Lucida Grande";
+	font-size: 11px;
+	color: #000000;
+	padding-bottom: 0px;
+}
+.widPlus {
+	width: 100%;
+	margin-right: auto;
+	margin-left: auto;
+}

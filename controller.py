@@ -61,23 +61,26 @@ class MainCtrl (Controller):
 			last="outgoing"
 		self.model.messagetype[args[1]]="incoming"
 		style=self.model.settings.style
-
+		if args[2]==None: args[2]=args[1]
 		if last=="incoming":
-			text=set_style(time,args[2],chat,False,True,style=style)
+			continous=True
+			text,archive=set_style(time,args[2],chat,False,True,style=style)
 		else:
-			text=set_style(time,args[2],chat,False,style=style)
+			continous=False
+			text,archive=set_style(time,args[2],chat,False,style=style)
 		text=showimages(text)
 		if args[1]==self.model.recipent:
-			self.view.updatechat(unicode(text))
+			self.view.updatechat(unicode(text),continous=continous)
 			
 		else: is_typing(self.view['listmodel'],args[1])
 		try:
-			self.model.messages[args[1]]+=text
+			self.model.messages[args[1]]+=archive
 		except:
-			html=self.model.archive.loadlast(args[1])
-			self.model.messages[args[1]]=html+text
+			html=self.model.archive.loadlast(args[1],self.model.settings.style,self.model.settings.me)
+			self.model.messages[args[1]]=html+archive
 		
-		self.model.archive.archive_append(args[1],text,day)
+		self.model.archive.archive_append(time,args[2],chat,day,args[1],text)
+		#self.model.archive.archive_append(args[1],text,day)
 		if not self.view['window'].is_active():
 			self.view.iconblink()
 
@@ -110,10 +113,22 @@ class MainCtrl (Controller):
 				chitem=item
 			item = self.view['listmodel'].iter_next(item)
 		#sprawdzenie czy kontakt znajduje sie na liscie	
+		
 		if chitem=="":
-			self.view.appendtolist([nick,status,self.get_show(show),None,nick])
+			show,priority=self.get_show(show)
+			self.view.appendtolist([nick,status,show,None,nick,priority])
 		else:
 		#jesli tak - aktualizuj wpis
+		    nick=self.view['listmodel'].get_value(chitem,0)
+		    if "\n" in nick:
+		    	n=nick.split("\n")
+		    	if status!=None:
+		    		status=n[0]+"\n<i>"+status+"</i>"
+		    	else: status=nick
+		    else:
+		    	if status!=None:
+		    		status=nick+"\n<i>"+status+"</i>"
+		    	else: status=nick
 			self.view.updatelist(chitem,status,show)
 			#time.sleep(1)
 	
@@ -173,18 +188,20 @@ class MainCtrl (Controller):
 						style=self.model.settings.style
 						self.model.messagetype[self.model.recipent]="outgoing"
 						if last=="outgoing":
-							message=set_style(time,self.model.settings.me,msg,continous=True,style=style)
+							continous=True
+							message,archive=set_style(time,self.model.settings.me,msg,continous=True,style=style)
 						else:
-							message=set_style(time,self.model.settings.me,msg,style=style)
+							continous=False
+							message,archive=set_style(time,self.model.settings.me,msg,style=style)
 						try:
-							self.model.messages[self.model.recipent]+=message
+							self.model.messages[self.model.recipent]+=archive
 						except:
-							self.model.messages[self.model.recipent]=message
+							self.model.messages[self.model.recipent]=archive
 						#guiclass.staticon.set_blinking(False)
 						#time,day=messtime(ts)
 						#savechat(guiclass,connection.vars,guiclass.recipent,"<font color=red>"+settings.me+"</font>",msg,time,day)
-						self.view.updatechat(message)
-						self.model.archive.archive_append(self.model.recipent,message,day)
+						self.view.updatechat(message,continous=continous)
+						self.model.archive.archive_append(time,self.model.settings.me,msg,day,self.model.recipent,message,out=True)
 
 					#sendmsg(klasa,connection,settings)
 
@@ -202,7 +219,8 @@ class MainCtrl (Controller):
 		try:
 			self.model.messages[self.model.recipent]=""
 		except: pass
-		self.view.loadchat("",style=self.model.settings.style)
+		template=self.model.settings.style_template()
+		self.view.loadchat("",style=self.model.settings.style,template=template)
 			
 	def on_desc_key_press_event(self,widget,event):
 		import gtk
@@ -257,13 +275,15 @@ class MainCtrl (Controller):
 
 	def property_recipent_value_change(self, model, old, new):
 		if old=="": self.view.openchat()
+		self.model.messagetype[new]=""
 		try:
 			html=model.messages[new]
+			print html
 		except:
-			html=self.model.archive.loadlast(new)
+			html=self.model.archive.loadlast(new,self.model.settings.style,self.model.settings.me)
 			model.messages[new]=html
-			
-		self.view.loadchat(html,style=self.model.settings.style)
+		template=self.model.settings.style_template()
+		self.view.loadchat(html,style=self.model.settings.style,template=template)
 		if new==self.model.recipentname or self.model.recipentname==None :
 			self.view['window'].set_title("Rozmowa z "+new)
 		else:

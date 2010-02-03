@@ -1,0 +1,35 @@
+body {
+    background-color: #feebda;
+    text-shadow: 0px 0px 1px #cda87b;
+}
+a:link:before {
+	color: #eeaf62;
+}
+a:link:before:hover {
+	color: #eeaf62;
+}
+a:link {
+    color: #191300;
+}
+a:link:hover {
+	color: #000;
+}
+.outgoing .t-sender{
+    color: #554536;
+}
+.incoming .t-sender{
+	color: #eeaf62;
+}
+.t-status {
+    color: #6b622b;
+}
+.incoming .t-message {
+	color: #191300;
+}
+.outgoing .t-message {
+	color: #a69386;
+}
+
+.groupchat .t-name {
+	color: #D4CDB3;
+}

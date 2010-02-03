@@ -1,5 +1,5 @@
 
-import _importer
+import _importer,re
 from gtkmvc import Model
 from connection_model import *
 from settings_model import *
@@ -30,8 +30,15 @@ class MainModel (Model):
 
 	def openchat(self,widget, row, col):
 		model = widget.get_model()
-		self.recipentname=model[row][0]
+		nick=model[row][0]
+		if "\n" in nick:
+			n=nick.split("\n")
+			nick=n[0]
+		p = re.compile(r'<[^<]*?>')
+		nick=p.sub(' ', nick)
+		self.recipentname=nick
 		self.recipent= model[row][4]
+		
 		
 
 

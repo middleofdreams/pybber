@@ -102,3 +102,13 @@ class SettingsModel(Model):
 		d.close()	
 
 			
+	def style_template(self):
+		workpath=os.environ['HOME']+"/pybber"
+		stylepath=workpath+"/chatstyles/"+self.style+"/Template.html"
+		try:
+			f=open(stylepath)
+			f.close()
+			template=True
+		except:
+			template=False
+		return template

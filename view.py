@@ -4,7 +4,11 @@ from gtkmvc import View
 from listhelpers import get_show
 from webkit import WebView
 import gobject,gtk
+import sys, os
 
+         
+pathname = os.path.dirname(sys.argv[0])        
+path= os.path.abspath(pathname)
 class MainView (View):
 
 	glade = "client.glade"
@@ -21,7 +25,7 @@ class MainView (View):
 	def openchat(self):
 		self['leftwindow'].show()
 		
-	def loadchat(self,html,style):
+	def loadchat(self,html,style,template=False):
 		css='<link rel=&#34;Stylesheet&#34; type=&#34;text/css&#34; href=&#34;chatstyles/'+style+'/main.css"&#34; /> '
 
 		if html!="":
@@ -29,29 +33,38 @@ class MainView (View):
 				html=css+html
 				print "aaa"
 				print html
-			self.hid=self['chat'].connect('load-finished',self.updatechat,html)
+			self.hid=self['chat'].connect('load-finished',self.updatechat,html,False)
 		else:
 			if style!="default": 
 				self.hid=self['chat'].connect('load-finished',self.updatechat,css)
-		self['chat'].load_uri('file:///home/kuba/pybber/chat.html')
+		if not template:
+			self['chat'].load_uri('file://'+path+'/chat.html')
+		else:
+			self['chat'].load_uri('file://'+path+'/chatstyles/'+style+'/Template.html')
 	
 	
-	def updatechat(self,html,*a,**b):
+	def updatechat(self,html,a=None,html2=None,continous=False,):
+		if continous:
+			script="NextMessage"
+		else:
+			script="Message"
 		try:
-			gobject.idle_add(self['chat'].execute_script,"appendtext('"+html+"');")
+			gobject.idle_add(self['chat'].execute_script,"append"+script+"('"+html+"');")
 		except:
-			gobject.idle_add(self['chat'].execute_script,"appendtext('"+a[1]+"');")
+			gobject.idle_add(self['chat'].execute_script,"append"+script+"('"+html2+"');")
 		if self.hid>0:
 			self['chat'].disconnect(self.hid)
 			self.hid=0
 			
 	def updatelist(self,item,status,show):		
-		self['listmodel'].set_value(item,1,status)
+		self['listmodel'].set_value(item,0,status)
+		show,priority=get_show(show)
 		if self['listmodel'].get_value(item,3)!=None:
-			self['listmodel'].set_value(item,3,get_show(show))
+			self['listmodel'].set_value(item,3,show)
+			self['listmodel'].set_value(item,5,priority+20)
 		else:
-			self['listmodel'].set_value(item,2,get_show(show))
-	
+			self['listmodel'].set_value(item,2,show)
+			self['listmodel'].set_value(item,5,priority)
 	def createchat(self):
 		self['chat']=WebView()
 		self['chatwindow'].add(self['chat'])

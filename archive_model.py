@@ -22,9 +22,9 @@ class ArchiveModel (Model):
             f.close()
             f = open(filepath+".txt", "w")
             f.close()
-    def archive_append(self,recipent,message,day):
+    def archive_append(self,time,name,msg,day,recipent,message,out=False):
         day=day.replace(" ","-")
-     
+        if out: name="!ME!"
         self.is_created(recipent,day)
         path=self.workpath+"/"+recipent
         filepath=path+"/"+day
@@ -32,34 +32,41 @@ class ArchiveModel (Model):
         f = open(filepath+".html", "a")
         f.write(message+"<br/>")       
         f.close()
-        import re
-        p = re.compile(r'<.*?>')
-        message= p.sub('|', message)
+        text=time+"|"+name+"|"+msg
         f = open(filepath+".txt", "a")
-        f.write(message+"\n")       
+        f.write(text+"\n")       
         f.close()
-    def loadlast(self,recipent):
+    def loadlast(self,recipent,style,me):
         import datetime
         now=datetime.datetime.now()
         day=now.strftime("%d-%m-%Y")
         path=self.workpath+"/"+recipent
-        filepath=path+"/"+day+".html"
+        filepath=path+"/"+day+".txt"
         try:
             f = open(filepath, "r")
             text=f.read()
-            text=text.split("<br/>")
+            text=text.split("\n")
             html=""
-            if len(text)>10:
-                i=len(text)-5
-                while not text[i].startswith("<font size=-3>"):
-                    i=i-1
-     
-                for y in range(i,len(text)):
-                    html=html+text[y]+"<br/>"
-            else: 
-                for i in text: html=html+i+"<br/>"
-            html=html.rstrip("<br/>")+"<hr>"
-     
+            last=""
+            if len(text)>15:
+                i=len(text)-10
+            else:
+                i=len(text)
+            from chathelpers import set_archstyle
+            for y in range(i,len(text)-1):
+                line=text[y].split("|")
+                print line
+                if line[1]==last: continous=True
+                else: continous=False
+                last=line[1]
+                if line[1]=="!ME!":
+                    outgoing=True
+                    
+                    line[1]=me
+                    
+                else: outgoing=False
+                html=html+set_archstyle(line[0],line[1],line[2],outgoing=outgoing,continous=continous,style=style)
+
         except:
      
             html=""
