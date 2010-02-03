@@ -13,6 +13,7 @@ class MainModel (Model):
 	messages={}
 	hidden=False
 	messagetype={}
+	settingtooltip=False
 	newmessage=connection.newmessage
 	newpresence=connection.newpresence
 	archiveclose=archive.archiveclose

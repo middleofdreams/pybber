@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 import _importer
  
 from gtkmvc import View
 from listhelpers import get_show
 from webkit import WebView
 import gobject,gtk
-import sys, os
+import sys, os,pynotify
 
          
 pathname = os.path.dirname(sys.argv[0])        
@@ -157,3 +158,11 @@ class MainView (View):
 	def message_newline(self):
 		buffer=self['message'].get_buffer()
 		buffer.insert_at_cursor(chr(13))	
+	def notification(self,user,text):
+		title="Nowa wiadomość od "+user
+		try:
+			self.n.update(title=title,body=text)
+		except:
+			self.n = pynotify.Notification(title, text)  
+			#self.n.attach_to_status_icon(self.icon)
+		self.n.show()

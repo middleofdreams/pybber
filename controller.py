@@ -1,11 +1,11 @@
 
 
-import _importer
+import _importer,pynotify
 from gtkmvc import Controller
 from gtkmvc.adapters import Adapter
 from chathelpers import *
 from listhelpers import *
-
+import os,sys
 
 class MainCtrl (Controller):
 	"""Handles signal processing, and keeps alignment of model and
@@ -29,6 +29,7 @@ class MainCtrl (Controller):
 
 		view.icon.connect("activate", self.iconactivate) 
 		view.icon.connect("popup_menu",self.iconmenu)
+		pynotify.init("Pybber")
 		return
 		
 	def on_logonbtn_clicked(self,button):
@@ -72,7 +73,9 @@ class MainCtrl (Controller):
 		if args[1]==self.model.recipent:
 			self.view.updatechat(unicode(text),continous=continous)
 			
-		else: is_typing(self.view['listmodel'],args[1])
+		else: 
+			is_typing(self.view['listmodel'],args[1])
+			self.view.notification(args[2],chat)
 		try:
 			self.model.messages[args[1]]+=archive
 		except:
@@ -252,7 +255,14 @@ class MainCtrl (Controller):
 
 	def opensettings(self,widget):
 		self.view.opensettings(self.model.settings.get_all())
-		
+		pathname = os.path.dirname(sys.argv[0])        
+		path= os.path.abspath(pathname)
+		list=os.listdir(path+'/chatstyles/')
+		l=""
+		for i in list:
+			l=l+i+"\n"
+		l=l.rstrip("\n")
+		self.view['chatstyle'].set_tooltip_text(l)
 
 	def on_statusbar_changed(self,*args):	
 		desc=self.view['desc'].get_text()
@@ -324,3 +334,4 @@ class MainCtrl (Controller):
  
 	def zoomout(self,widget):
 		self.view['chat'].zoom_out()
+	

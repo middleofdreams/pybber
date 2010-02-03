@@ -5,13 +5,13 @@
   <widget class="GtkWindow" id="window">
     <property name="default_width">400</property>
     <property name="default_height">500</property>
+    <signal name="selection_get" handler="chatfocus"/>
+    <signal name="hide" handler="hide"/>
     <signal name="notify" handler="chatfocus"/>
     <signal name="drag_drop" handler="resize"/>
-    <signal name="event" handler="windowevent"/>
-    <signal name="hide" handler="hide"/>
     <signal name="drag_end" handler="resize"/>
+    <signal name="event" handler="windowevent"/>
     <signal name="delete_event" handler="on_window_delete_event"/>
-    <signal name="selection_get" handler="chatfocus"/>
     <child>
       <widget class="GtkHBox" id="hbox1">
         <property name="visible">True</property>
@@ -132,8 +132,8 @@
                         <signal name="focus" handler="chatfocus"/>
                         <signal name="event" handler="chatfocus"/>
                         <signal name="grab_focus" handler="chatfocus"/>
-                        <accelerator key="v" signal="paste-clipboard" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="c" signal="copy-clipboard" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="v" signal="paste-clipboard" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                       <packing>
                         <property name="position">0</property>
@@ -1095,6 +1095,10 @@ Niewidoczny</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="invisible_char">&#x25CF;</property>
+                            <signal name="move_cursor" handler="on_chatstyle_move_cursor"/>
+                            <signal name="motion_notify_event" handler="on_chatstyle_motion_notify_event"/>
+                            <signal name="changed" handler="on_chatstyle_changed"/>
+                            <signal name="show" handler="on_chatstyle_show"/>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
@@ -1107,6 +1111,25 @@ Niewidoczny</property>
                         <property name="expand">False</property>
                         <property name="position">1</property>
                       </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="stylelist">
+                        <property name="visible">True</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
                     </child>
                     <child>
                       <widget class="GtkHButtonBox" id="hbuttonbox3">
@@ -1144,7 +1167,7 @@ Niewidoczny</property>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">False</property>
-                        <property name="position">2</property>
+                        <property name="position">6</property>
                       </packing>
                     </child>
                   </widget>

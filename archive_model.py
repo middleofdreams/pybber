@@ -55,7 +55,6 @@ class ArchiveModel (Model):
             from chathelpers import set_archstyle
             for y in range(i,len(text)-1):
                 line=text[y].split("|")
-                print line
                 if line[1]==last: continous=True
                 else: continous=False
                 last=line[1]
@@ -71,7 +70,6 @@ class ArchiveModel (Model):
      
             html=""
         from chathelpers import striptext
-        print html
         return html
      
             #while 
