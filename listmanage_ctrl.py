@@ -100,3 +100,14 @@ class ListCtrl (Controller):
         self.view.list_hideform("add")
         self.view.list_hideform("edit") 
         self.edit=""  
+       
+    
+    
+    def expose(self,widget, ev):
+        IMG = 'image.png'
+        pixbuf = gtk.gdk.pixbuf_new_from_file(IMG)
+        widget.window.draw_pixbuf(widget.style.bg_gc[gtk.STATE_NORMAL], pixbuf, 0, 0, 0, 0)
+        if widget.get_child() != None:
+            widget.propagate_expose(widget.get_child(), ev)
+        return True
+
