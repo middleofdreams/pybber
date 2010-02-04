@@ -13,8 +13,9 @@ class ConnectionModel (ModelMT):
 	jid=""
 	newmessage=observable.Signal()
 	newpresence=observable.Signal()
+	composing=observable.Signal()
 	__observables__ = ('stop','active','is_connecting','i','jid', \
-	'newmessage', 'newpresence')
+	'newmessage', 'newpresence','composing')
 	
 	def __init__(self):
 		ModelMT.__init__(self)
@@ -85,7 +86,7 @@ class ConnectionModel (ModelMT):
 			self.set_status(self.show,self.status)
 			time.sleep(0.2)
 			self.cl.RegisterHandler('message',self.messageCB)
-
+			self.cl.RegisterHandler('',self.test)
 			####wykrywanie rozlaczenia
 			self.disconnecttry=0
 			#threading.Thread(target=self.is_connected,args=()).start()	
@@ -186,10 +187,26 @@ class ConnectionModel (ModelMT):
 		return items
 		
 #------------Odbieranie wiadomosci:-------------------------------------
-
+	def test(self,conn,iq):
+		print conn
+		print iq
 	def messageCB(self,conn,mess):
+		list=mess.getChildren()
 		text=mess.getBody()
 		user=mess.getFrom()
+		composing=False
+		paused=False
+		active=False
+		for i in list:
+			state=i.getName()
+			print state
+			if state=="composing":
+				composing=True
+			if state=="paused":
+				paused=True
+			if state=="active":
+				active=True
+			
 		
 		#pobranie usera i tresci nadchodzacej rozmowy
 		ts=mess.getTimestamp()
@@ -197,12 +214,19 @@ class ConnectionModel (ModelMT):
 			ts=mess.setTimestamp()
 			ts=mess.getTimestamp()
 		
+		user=user.getStripped()
+		name=self.roster.getName(user)
+		if name=="": name=user
 		if text!=None:
 			#time,day=messtime(ts)
-			user=user.getStripped()
-			name=self.roster.getName(user)
-			if name=="": name=user
+
 			self.newmessage.emit([ts,user,name,text])
+		if composing:
+			self.composing.emit([user,"composing"])
+		if paused:
+			self.composing.emit([user,"paused"])
+		if active:
+			self.composing.emit([user,"active"])
 			#savechat(self.gui,self.vars,user,name,text,time,day)
 			#wypisywanie tresci w oknie
 			#if user==self.gui.recipent and user!=self.vars.archiveopen:

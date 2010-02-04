@@ -16,9 +16,11 @@ class MainModel (Model):
 	settingtooltip=False
 	newmessage=connection.newmessage
 	newpresence=connection.newpresence
+	composing=connection.composing
 	archiveclose=archive.archiveclose
+	editmessage={}
 	__observables__ = ('recipent', 'archiveopen','messages', \
-	'newmessage', 'newpresence',"archiveclose")
+	'newmessage', 'newpresence',"archiveclose","composing")
     
 
 	def __init__(self):

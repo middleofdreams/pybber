@@ -152,27 +152,33 @@ class MainCtrl (Controller):
 		
 	def msgbuffer(self,text_buffer,position, text, lenght):
 		'''wpisywanie tekstu'''
+		start_iter, end_iter=text_buffer.get_bounds()
+		self.model.editmessage[self.model.recipent]=text_buffer.get_text(start_iter,end_iter)
+
 		if text == '\n' and position==text_buffer.get_start_iter:
 			text_buffer.set_text('')
 		if text =='\n':
 			text_buffer.backspace(position,True, True)
-		start_iter, end_iter=text_buffer.get_bounds()	
+			
 		if text_buffer.get_text(start_iter, end_iter)=="\n":
 			text_buffer.set_text('')
+			
 			
 	def on_message_key_press_event(self,widget, event):
 		'''wysylanie wiadomosci
 		TODO: SKROCIC JAKOS/PRZENIES GDZIES'''
 		import gtk
 		if event.type == gtk.gdk.KEY_PRESS:
+			buffer=self.view['message'].get_buffer()
+			start_iter=buffer.get_start_iter()
+			end_iter=buffer.get_end_iter()
 			if gtk.gdk.keyval_name(event.keyval)== 'Return' :
 				if event.state==gtk.gdk.SHIFT_MASK | gtk.gdk.MOD2_MASK or event.state==gtk.gdk.SHIFT_MASK:
 					self.view.message_newline()
 					#buffer.place_cursor(buffer.get_end_iter())
 				else:
-					buffer=self.view['message'].get_buffer()
-					start_iter=buffer.get_start_iter()
-					end_iter=buffer.get_end_iter()
+					self.model.editmessage[self.model.recipent]=""
+					
 					msg=buffer.get_text(start_iter, end_iter, include_hidden_chars=True)
 					buffer.set_text("")
 					
@@ -286,6 +292,10 @@ class MainCtrl (Controller):
 				return True
 
 	def property_recipent_value_change(self, model, old, new):
+		try:
+			self.view['message'].get_buffer().set_text(self.model.editmessage[new])
+		except:
+			self.view['message'].get_buffer().set_text("")
 		if old=="": self.view.openchat()
 		self.model.messagetype[new]=""
 		try:
@@ -336,4 +346,17 @@ class MainCtrl (Controller):
  
 	def zoomout(self,widget):
 		self.view['chat'].zoom_out()
+	def property_composing_signal_emit(self,signalname,args):
+		user,state=args
+		print user
+		if user==self.model.recipent:
+			if state=="composing":
+				self.view['state'].show()
+				self.view['state'].set_text("pisze...")
+			if state=="paused":
+				self.view['state'].show()
+				self.view['state'].set_text("przestal pisac")
+			if state=="active":
+				self.view['state'].hide()
+				self.view['state'].set_text("")
 	
