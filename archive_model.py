@@ -53,7 +53,7 @@ class ArchiveModel (Model):
             if len(text)>15:
                 i=len(text)-10
             else:
-                i=len(text)
+                i=0
             
             for y in range(i,len(text)-1):
                 line=text[y].split("|")
@@ -67,7 +67,6 @@ class ArchiveModel (Model):
                     
                 else: outgoing=False
                 html=html+set_archstyle(line[0],line[1],line[2],outgoing=outgoing,continous=continous,style=style)
-
         except:
      
             html=""
