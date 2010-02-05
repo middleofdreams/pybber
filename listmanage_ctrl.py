@@ -46,7 +46,7 @@ class ListCtrl (Controller):
         additem=self.view['addjid'].get_text()
         name=self.view['addname'].get_text()
         if name=='' or name=="": name=additem
-        self.view['listmodel'].prepend([name,'',get_show('offline'),None,additem,0]) 
+        self.view['listmodel'].prepend([name,'',get_show('offline')[0],None,additem,0]) 
         self.model.connection.roster.setItem(additem, name=name, groups=[])
         self.model.connection.roster.Authorize(additem)
         self.model.connection.roster.Subscribe(additem)
@@ -68,7 +68,7 @@ class ListCtrl (Controller):
         self.view.list_hideform("del")
     
     def edit(self, *widget):                #przycisk "edytuj" w formularzu
-        
+        #TODO: zrobic cos tam
         
         is_editable=False
         olditem=self.edited
@@ -102,12 +102,4 @@ class ListCtrl (Controller):
         self.edit=""  
        
     
-    
-    def expose(self,widget, ev):
-        IMG = 'image.png'
-        pixbuf = gtk.gdk.pixbuf_new_from_file(IMG)
-        widget.window.draw_pixbuf(widget.style.bg_gc[gtk.STATE_NORMAL], pixbuf, 0, 0, 0, 0)
-        if widget.get_child() != None:
-            widget.propagate_expose(widget.get_child(), ev)
-        return True
 

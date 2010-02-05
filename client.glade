@@ -5,13 +5,13 @@
   <widget class="GtkWindow" id="window">
     <property name="default_width">400</property>
     <property name="default_height">500</property>
-    <signal name="drag_drop" handler="resize"/>
     <signal name="event" handler="windowevent"/>
     <signal name="hide" handler="hide"/>
     <signal name="notify" handler="chatfocus"/>
+    <signal name="drag_drop" handler="resize"/>
     <signal name="drag_end" handler="resize"/>
-    <signal name="selection_get" handler="chatfocus"/>
     <signal name="delete_event" handler="on_window_delete_event"/>
+    <signal name="selection_get" handler="chatfocus"/>
     <child>
       <widget class="GtkHBox" id="hbox1">
         <property name="visible">True</property>
@@ -281,7 +281,7 @@
                             <child internal-child="image">
                               <widget class="GtkImage" id="image1">
                                 <property name="visible">True</property>
-                                <property name="stock">gtk-missing-image</property>
+                                <property name="stock">gtk-orientation-portrait</property>
                               </widget>
                             </child>
                           </widget>
@@ -295,7 +295,7 @@
                             <child internal-child="image">
                               <widget class="GtkImage" id="image2">
                                 <property name="visible">True</property>
-                                <property name="stock">gtk-missing-image</property>
+                                <property name="stock">gtk-delete</property>
                               </widget>
                             </child>
                           </widget>
@@ -309,7 +309,7 @@
                             <child internal-child="image">
                               <widget class="GtkImage" id="image3">
                                 <property name="visible">True</property>
-                                <property name="stock">gtk-missing-image</property>
+                                <property name="stock">gtk-edit</property>
                               </widget>
                             </child>
                           </widget>
@@ -323,7 +323,7 @@
                             <child internal-child="image">
                               <widget class="GtkImage" id="image4">
                                 <property name="visible">True</property>
-                                <property name="stock">gtk-missing-image</property>
+                                <property name="stock">gtk-dialog-authentication</property>
                               </widget>
                             </child>
                           </widget>
@@ -645,6 +645,7 @@
                     <property name="can_focus">True</property>
                     <signal name="button_press_event" handler="on_list_button_press_event"/>
                     <signal name="select_cursor_row" handler="on_click"/>
+                    <signal name="expose_event" handler="on_list_expose_event"/>
                   </widget>
                 </child>
               </widget>

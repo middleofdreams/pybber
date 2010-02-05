@@ -14,19 +14,18 @@ class ArchiveCtrl (Controller):
         recipent=self.view['listmodel'].get_value(index,4)
         days=self.model.get_list(recipent)
         for day in days:
-            day=day.rstrip('.html')
+            day=day.rstrip('.txt')
             self.view.archive_addtolist(day,recipent)
            
-        html=self.model.get_html(days[0],recipent)
+        html=self.model.get_html(days[0],recipent,"Ja")
         self.view.archive_showchat(html)   
         self.view['window'].set_title("Archiwum rozmowy z "+recipent)
-        print self.model.open
     def loadarchive(self,widget, row, col):
         model = widget.get_model()
         day = model[row][0]
-        day=day+".html"
+        day=day+".txt"
         recipent=model[row][1]
-        html=self.model.get_html(day,recipent)
+        html=self.model.get_html(day,recipent,"Ja")
         self.view.archive_showchat(html)
         
     def closearchive(self,widget):

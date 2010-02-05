@@ -144,7 +144,7 @@ class MainView (View):
 	def archive_addtolist(self,day,recipent):
 		 self['archivelist'].get_model().append([day,recipent])
 	def archive_showchat(self,html):
-		self['chat'].load_html_string(html,"file:///")
+		self['chat'].load_html_string(html,'file://'+path+'/chatstyles/gonedark/Template.html')
 	def archive_create(self):
 		model=gtk.ListStore(gobject.TYPE_STRING,str)
 		self['archivelist'].set_model(model)
@@ -157,7 +157,11 @@ class MainView (View):
 		self['hbox3'].show()
 	def message_newline(self):
 		buffer=self['message'].get_buffer()
-		buffer.insert_at_cursor(chr(13))	
+		buffer.insert_at_cursor(chr(13))
+	def create_empty_clist(self,items,roster):
+		import list as clist
+		clist.create_empty_list(self)
+		clist.get_all(items,self['listmodel'],roster)	
 	def notification(self,user,text):
 		title="Nowa wiadomość od "+user
 		try:

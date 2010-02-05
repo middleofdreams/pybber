@@ -159,7 +159,7 @@ class MainCtrl (Controller):
 			text_buffer.set_text('')
 		if text =='\n':
 			text_buffer.backspace(position,True, True)
-			
+		start_iter, end_iter=text_buffer.get_bounds()	
 		if text_buffer.get_text(start_iter, end_iter)=="\n":
 			text_buffer.set_text('')
 			
@@ -236,7 +236,6 @@ class MainCtrl (Controller):
 	def on_desc_key_press_event(self,widget,event):
 		import gtk
 		key=event.keyval
-		print key
 		if (key>31 and key<128) or (key==8 or key==65288):
 			self.view.turn_desc_style(True)
 		if  gtk.gdk.keyval_name(event.keyval)== 'Return':
@@ -300,7 +299,6 @@ class MainCtrl (Controller):
 		self.model.messagetype[new]=""
 		try:
 			html=model.messages[new]
-			print html
 		except:
 			html=self.model.archive.loadlast(new,self.model.settings.style,self.model.settings.me)
 			model.messages[new]=html
@@ -348,7 +346,6 @@ class MainCtrl (Controller):
 		self.view['chat'].zoom_out()
 	def property_composing_signal_emit(self,signalname,args):
 		user,state=args
-		print user
 		if user==self.model.recipent:
 			if state=="composing":
 				self.view['state'].show()

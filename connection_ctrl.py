@@ -57,11 +57,11 @@ class ConnectionCtrl (Controller):
 			self.view['desc'].set_text(model.status)
 			self.view['statusbar'].set_active(model.show)
 			items=model.get_list()
-			import list as clist
-			clist.create_empty_list(self.view)		
-			clist.get_all(items,self.view['listmodel'],self.model.roster)
+			self.view.create_empty_clist(items,self.model.roster)
+			
 			#chowa ewentualne komunikaty
 			self.view['toolong'].hide()
 			self.view['not_connected'].hide()
+			self.view['progress'].hide()
 		return
 		pass # end of class

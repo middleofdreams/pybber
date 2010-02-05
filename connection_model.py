@@ -63,7 +63,7 @@ class ConnectionModel (ModelMT):
 			#self.gui.loginbox.hide()
 			self.cl=cl
 			self.cl.sendInitPresence()
-			self.cl.send(xmpp.dispatcher.Presence(priority=5, show=None,status=""))
+			self.cl.send(xmpp.dispatcher.Presence(priority=5, show="unavailable",status=""))
 			#wylaczenie progressbara
 			self.ifrun=False
 			self.active=True
@@ -83,7 +83,7 @@ class ConnectionModel (ModelMT):
 			#self.cl.UnregisterDisconnectHandler(self.cl.DisconnectHandler)
 			#self.cl.RegisterDisconnectHandler(self.disconnected)
 
-			self.set_status(self.show,self.status)
+			
 			time.sleep(0.2)
 			self.cl.RegisterHandler('message',self.messageCB)
 			self.cl.RegisterHandler('',self.test)
@@ -96,6 +96,7 @@ class ConnectionModel (ModelMT):
 			
 			#to rowniez do odbierania wiadomosci
 			time.sleep(1)
+			self.set_status(self.show,self.status)
 			self.GoOn(self.cl)
 
 		
@@ -199,7 +200,6 @@ class ConnectionModel (ModelMT):
 		active=False
 		for i in list:
 			state=i.getName()
-			print state
 			if state=="composing":
 				composing=True
 			if state=="paused":
