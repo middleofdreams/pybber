@@ -117,10 +117,11 @@ class ArchiveModel (Model):
                     line[1]=me
                     
                 else: outgoing=False
-                html=html+set_archstyle(line[0],line[1],line[2],outgoing=outgoing,continous=continous,style="gonedark")
+                html=html+set_archstyle(line[0],line[1],line[2],outgoing=outgoing,continous=continous,style="default")
             #html=html.replace(chr(13),"<br/>")
            # html=html.replace("\n","<br/>")
             #if not "<font size=-3>"
+        html="<font size=-3>"+html
         return html
 
 

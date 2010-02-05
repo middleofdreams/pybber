@@ -144,7 +144,7 @@ class MainView (View):
 	def archive_addtolist(self,day,recipent):
 		 self['archivelist'].get_model().append([day,recipent])
 	def archive_showchat(self,html):
-		self['chat'].load_html_string(html,'file://'+path+'/chatstyles/gonedark/Template.html')
+		self['chat'].load_html_string(html,'file:///')
 	def archive_create(self):
 		model=gtk.ListStore(gobject.TYPE_STRING,str)
 		self['archivelist'].set_model(model)
