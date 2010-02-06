@@ -47,7 +47,6 @@ class ConnectionCtrl (Controller):
 		
 		
 	def property_active_value_change(self,model,old,new):
-		#self.gui.staticon.set_from_file("icons/pybber.png") 
 		if new:
 			self.view['desc'].show()
 			self.view['statusbar'].show()

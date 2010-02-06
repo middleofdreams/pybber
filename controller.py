@@ -5,7 +5,7 @@ from gtkmvc import Controller
 from gtkmvc.adapters import Adapter
 from chathelpers import *
 from listhelpers import *
-import os,sys
+import os,sys,re,gobject
 
 class MainCtrl (Controller):
 	"""Handles signal processing, and keeps alignment of model and
@@ -26,12 +26,23 @@ class MainCtrl (Controller):
 		self.model.connection.show=self.model.settings.show
 		view['list'].connect("row-activated", self.model.openchat)
 		view['message'].get_buffer().connect_after("insert-text", self.msgbuffer)
-
+		view['chat'].connect("key-release-event", self.chat_keypressed)
 		view.icon.connect("activate", self.iconactivate) 
 		view.icon.connect("popup_menu",self.iconmenu)
 		pynotify.init("Pybber")
 		return
 		
+	def chat_keypressed(self,widget, event):
+		print gtk.gdk.keyval_name(event.keyval)
+		if gtk.gdk.keyval_name(event.keyval) == 'x':
+			widget.copy_clipboard()
+		if gtk.gdk.keyval_name(event.keyval) == 'c':
+			widget.copy_clipboard()
+		if gtk.gdk.keyval_name(event.keyval) == 'v':
+			self.view['message'].grab_focus()
+			#self.view['message'].get_buffer().paste_clipboard()	
+		
+
 	def on_logonbtn_clicked(self,button):
 		''' przy zalogowaniu '''
 		jid=self.view['login'].get_text()
@@ -54,6 +65,8 @@ class MainCtrl (Controller):
 	def property_newmessage_signal_emit(self, signal_name,args):
 		'''odbior wiadomosci'''
 		chat=striptext(args[3])
+		chat=chat.replace("<","&lt;")
+		chat=chat.replace(">","&gt;")
 		chat=intolink(chat)
 		time,day=messtime(args[0])
 		try:
@@ -85,11 +98,13 @@ class MainCtrl (Controller):
 		self.model.archive.archive_append(time,args[2],chat,day,args[1],text)
 		#self.model.archive.archive_append(args[1],text,day)
 		if not self.view['window'].is_active():
-			
-			self.view.notification(args[2],chat)
 			self.view.iconblink()
 			#text=intolink(text)
 			#text=showimages(text)
+		if not self.view['window'].is_active() or self.model.recipent!=args[1]:
+			p = re.compile(r'<[^<]*?>')
+			chat=p.sub('', chat)
+			self.view.notification(args[2],chat)
 			
 		
 	def property_newpresence_signal_emit(self, signal_name,args):
@@ -110,7 +125,8 @@ class MainCtrl (Controller):
 		chitem=""
 		import time
 		while self.view['listmodel']==None:
-			time.sleep(1)
+			#time.sleep(1)
+			pass
 		item = self.view['listmodel'].get_iter_first ()
 		while ( item != None ):
 			if self.view['listmodel'].get_value (item, 4)==nick:
@@ -123,17 +139,24 @@ class MainCtrl (Controller):
 			self.view.appendtolist([nick,status,show,None,nick,priority])
 		else:
 		#jesli tak - aktualizuj wpis
-		    nick=self.view['listmodel'].get_value(chitem,0)
-		    if "\n" in nick:
-		    	n=nick.split("\n")
-		    	if status!=None:
-		    		status=n[0]+"\n<i>"+status+"</i>"
-		    	else: status=nick
-		    else:
-		    	if status!=None:
-		    		status=nick+"\n<i>"+status+"</i>"
-		    	else: status=nick
-			self.view.updatelist(chitem,status,show)
+			nick=self.view['listmodel'].get_value(chitem,0)
+			print "nick=%s \nstatus=%s"% (nick,status)
+			if "\n" in nick:
+				n=nick.split("\n")
+				print n
+				print n[0]
+				if status!="" and status!=None:
+					print "aaa"
+					status=n[0]+"\n<i>"+status+"</i>"
+				else: 
+					status=n[0]
+			else:
+				if status!="" and status!=None:
+					status=nick+"\n<i>"+status+"</i>"
+				else: status=nick
+				print "\n\nnewstatus=%s"%status
+			print "final status="+status
+			gobject.idle_add(self.view.updatelist,chitem,status,show)
 			#time.sleep(1)
 	
 	def close(self,*args):
@@ -162,7 +185,8 @@ class MainCtrl (Controller):
 		start_iter, end_iter=text_buffer.get_bounds()	
 		if text_buffer.get_text(start_iter, end_iter)=="\n":
 			text_buffer.set_text('')
-			
+	def on_button1_clicked(self,widget):
+		self.sendmsg()		
 			
 	def on_message_key_press_event(self,widget, event):
 		'''wysylanie wiadomosci
@@ -170,51 +194,56 @@ class MainCtrl (Controller):
 		import gtk
 		if event.type == gtk.gdk.KEY_PRESS:
 			buffer=self.view['message'].get_buffer()
-			start_iter=buffer.get_start_iter()
-			end_iter=buffer.get_end_iter()
+			
 			if gtk.gdk.keyval_name(event.keyval)== 'Return' :
 				if event.state==gtk.gdk.SHIFT_MASK | gtk.gdk.MOD2_MASK or event.state==gtk.gdk.SHIFT_MASK:
 					self.view.message_newline()
 					#buffer.place_cursor(buffer.get_end_iter())
-				else:
-					self.model.editmessage[self.model.recipent]=""
+				else: self.sendmsg()
 					
-					msg=buffer.get_text(start_iter, end_iter, include_hidden_chars=True)
-					buffer.set_text("")
-					
+	def sendmsg(self):
+		
+		buffer=self.view['message'].get_buffer()
+		start_iter=buffer.get_start_iter()
+		end_iter=buffer.get_end_iter()
+		self.model.editmessage[self.model.recipent]=""
+		
+		msg=buffer.get_text(start_iter, end_iter, include_hidden_chars=True)
+		buffer.set_text("")
+		
 
-					# msg=str("ME:"+msg)
-					if msg!="":
-						ts=self.model.connection.send(msg,self.model.recipent)
-						msg=msg.replace("<","&lt;")
-						msg=msg.replace(">","&gt;")
-						time,day=messtime(ts)
-						msg=striptext(msg)
-						msg=intolink(msg)
-						msg=showimages(msg)
-						try:
-							last=self.model.messagetype[self.model.recipent]
-						except:
-							last="incoming"
-						style=self.model.settings.style
-						self.model.messagetype[self.model.recipent]="outgoing"
-						if last=="outgoing":
-							continous=True
-							message,archive=set_style(time,self.model.settings.me,msg,continous=True,style=style)
-						else:
-							continous=False
-							message,archive=set_style(time,self.model.settings.me,msg,style=style)
-						try:
-							self.model.messages[self.model.recipent]+=archive
-						except:
-							self.model.messages[self.model.recipent]=archive
-						#guiclass.staticon.set_blinking(False)
-						#time,day=messtime(ts)
-						#savechat(guiclass,connection.vars,guiclass.recipent,"<font color=red>"+settings.me+"</font>",msg,time,day)
-						self.view.updatechat(message,continous=continous)
-						self.model.archive.archive_append(time,self.model.settings.me,msg,day,self.model.recipent,message,out=True)
+		# msg=str("ME:"+msg)
+		if msg!="":
+			ts=self.model.connection.send(msg,self.model.recipent)
+			msg=msg.replace("<","&lt;")
+			msg=msg.replace(">","&gt;")
+			time,day=messtime(ts)
+			msg=striptext(msg)
+			msg=intolink(msg)
+			msg=showimages(msg)
+			try:
+				last=self.model.messagetype[self.model.recipent]
+			except:
+				last="incoming"
+			style=self.model.settings.style
+			self.model.messagetype[self.model.recipent]="outgoing"
+			if last=="outgoing":
+				continous=True
+				message,archive=set_style(time,self.model.settings.me,msg,continous=True,style=style)
+			else:
+				continous=False
+				message,archive=set_style(time,self.model.settings.me,msg,style=style)
+			try:
+				self.model.messages[self.model.recipent]+=archive
+			except:
+				self.model.messages[self.model.recipent]=archive
+			#guiclass.staticon.set_blinking(False)
+			#time,day=messtime(ts)
+			#savechat(guiclass,connection.vars,guiclass.recipent,"<font color=red>"+settings.me+"</font>",msg,time,day)
+			self.view.updatechat(message,continous=continous)
+			self.model.archive.archive_append(time,self.model.settings.me,msg,day,self.model.recipent,message,out=True)
 
-					#sendmsg(klasa,connection,settings)
+		#sendmsg(klasa,connection,settings)
 
 
 

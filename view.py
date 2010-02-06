@@ -60,6 +60,7 @@ class MainView (View):
 	def updatelist(self,item,status,show):		
 		self['listmodel'].set_value(item,0,status)
 		show,priority=get_show(show)
+		print self['listmodel'].get_value(item,3)
 		if self['listmodel'].get_value(item,3)!=None:
 			self['listmodel'].set_value(item,3,show)
 			self['listmodel'].set_value(item,5,priority+20)
