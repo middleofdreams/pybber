@@ -716,8 +716,7 @@
                 <child>
                   <widget class="GtkLabel" id="label2">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">Nie udalo sie polaczyc lub po&#x142;&#x105;czenie
-zosta&#x142;o zerwane.</property>
+                    <property name="label" translatable="yes">Nie udalo sie polaczyc</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
