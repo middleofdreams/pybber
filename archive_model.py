@@ -78,15 +78,24 @@ class ArchiveModel (Model):
         path=self.workpath+"/"+recipent
         try:
             d=[]
-            days_showed=os.listdir(path)
+            days=os.listdir(path)
             for i in days:
                 if ".txt" in i:
-                    d.append(i)
-            days_showed=d
-                    
+					isplit=i.rstrip('.txt').split("-")
+					day=isplit[2]+"-"+isplit[1]+"-"+isplit[0]
+					d.append(day)
+            
+            d.sort(reverse=True)
+            days=[]
+            for i in d:
+				isplit=i.split("-")
+				day=isplit[2]+"-"+isplit[1]+"-"+isplit[0]+".txt"
+				days.append(day)        
+     
         except:
             days=['Brak rozmￃﾳw']
-        days.sort(reverse=True)
+       
+        
         self.open=recipent
         return days
     
