@@ -105,6 +105,7 @@ class MainCtrl (Controller):
 			p = re.compile(r'<[^<]*?>')
 			chat=p.sub('', chat)
 			self.view.notification(args[2],chat)
+			self.view.iconblink()
 			
 		
 	def property_newpresence_signal_emit(self, signal_name,args):
@@ -324,7 +325,13 @@ class MainCtrl (Controller):
 			self.view['message'].get_buffer().set_text(self.model.editmessage[new])
 		except:
 			self.view['message'].get_buffer().set_text("")
-		if old=="": self.view.openchat()
+		if old=="": 
+			self.view.openchat()
+			posx,posy=self.view['window'].get_position()
+			posx=posx-400
+			self.view['window'].move(posx,posy)
+			sizex,sizey=self.view['window'].get_size()
+			self.model.pos.set_pos(posx,posy)
 		self.model.messagetype[new]=""
 		try:
 			html=model.messages[new]
@@ -345,19 +352,27 @@ class MainCtrl (Controller):
 	def iconactivate(self,widget):
 		window=self.view['window']
 		if not window.is_active():
+			print self.model.hidden
+			if self.model.hidden:
+				newx,newy=self.model.pos.get_pos()
+				print newx,newy
+				window.move(newx,newy)
+				self.model.hidden=False
+			else:
+				x,y=window.get_position()
+				self.model.pos.set_pos(x,y)
 			window.present()
 			window.show()		
 			self.view.icon.set_blinking(False)
-			#if self.hidden:
-			#	window.move(self.posx,self.posy)
-			self.model.hidden=False
 		if window.is_active():
 			window.present()
-			#self.posx,self.posy=self.window.get_position()
+			x,y=window.get_position()
+			self.model.pos.set_pos(x,y)
 			window.hide()
-			self.hidden=True
-	def windowevent(self,*args):
+			self.model.hidden=True
+	def wfocus(self,*args):
 		self.view.iconblink(False)
+		pass
 	def set_status_from_icon(self,widget):
 		show=widget.name.lstrip("popupstatus")
 		show=int(show)-1

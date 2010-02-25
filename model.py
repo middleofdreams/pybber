@@ -4,6 +4,7 @@ from gtkmvc import Model
 from connection_model import *
 from settings_model import *
 from archive_model import *
+from pos_model import *
 class MainModel (Model):
 	connection=ConnectionModel()
 	archive=ArchiveModel()
@@ -27,6 +28,7 @@ class MainModel (Model):
 		Model.__init__(self)
 
 		self.settings=SettingsModel()
+		self.pos=PosModel()
 		self.observe_model(self.connection)
 		self.observe_model(self.archive)
 		return

@@ -80,8 +80,8 @@ class ConnectionModel (ModelMT):
 			
 			
 			
-			#self.cl.UnregisterDisconnectHandler(self.cl.DisconnectHandler)
-			#self.cl.RegisterDisconnectHandler(self.disconnected)
+			self.cl.UnregisterDisconnectHandler(self.cl.DisconnectHandler)
+			self.cl.RegisterDisconnectHandler(self.disconnected)
 
 			
 			time.sleep(0.2)

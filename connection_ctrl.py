@@ -62,5 +62,8 @@ class ConnectionCtrl (Controller):
 			self.view['toolong'].hide()
 			self.view['not_connected'].hide()
 			self.view['progress'].hide()
+		else:
+			self.view['listmodel'].clear()
+			self.view['leftwindow'].hide()
 		return
 		pass # end of class
