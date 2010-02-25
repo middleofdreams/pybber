@@ -5,7 +5,7 @@ from gtkmvc import Controller
 from gtkmvc.adapters import Adapter
 from chathelpers import *
 from listhelpers import *
-import os,sys,re,gobject
+import os,sys,re,gobject,subprocess
 
 class MainCtrl (Controller):
 	"""Handles signal processing, and keeps alignment of model and
@@ -29,8 +29,13 @@ class MainCtrl (Controller):
 		view['chat'].connect("key-release-event", self.chat_keypressed)
 		view.icon.connect("activate", self.iconactivate) 
 		view.icon.connect("popup_menu",self.iconmenu)
+		view['chat'].connect("new-window-policy-decision-requested",self.link)
 		pynotify.init("Pybber")
 		return
+		
+	def link(self,widget,frame,request,navigation_action,policy):
+		subprocess.Popen(["xdg-open",request.get_uri()])
+
 		
 	def chat_keypressed(self,widget, event):
 		print gtk.gdk.keyval_name(event.keyval)
