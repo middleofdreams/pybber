@@ -8,11 +8,13 @@
     <signal name="hide" handler="hide"/>
     <signal name="activate_focus" handler="wfocus"/>
     <signal name="selection_get" handler="chatfocus"/>
+    <signal name="set_focus_child" handler="wfocus"/>
     <signal name="drag_drop" handler="resize"/>
     <signal name="drag_end" handler="resize"/>
     <signal name="event" handler="windowevent"/>
-    <signal name="delete_event" handler="on_window_delete_event"/>
+    <signal name="activate_default" handler="wfocus"/>
     <signal name="notify" handler="chatfocus"/>
+    <signal name="delete_event" handler="on_window_delete_event"/>
     <child>
       <widget class="GtkHBox" id="hbox1">
         <property name="visible">True</property>
@@ -133,9 +135,9 @@
                         <signal name="focus" handler="chatfocus"/>
                         <signal name="event" handler="chatfocus"/>
                         <signal name="grab_focus" handler="chatfocus"/>
-                        <accelerator key="c" signal="copy-clipboard" modifiers="GDK_CONTROL_MASK"/>
-                        <accelerator key="x" signal="cut-clipboard" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="v" signal="paste-clipboard" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="x" signal="cut-clipboard" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="c" signal="copy-clipboard" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                       <packing>
                         <property name="position">0</property>
@@ -714,7 +716,8 @@
                 <child>
                   <widget class="GtkLabel" id="label2">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">Nie udalo sie polaczyc</property>
+                    <property name="label" translatable="yes">Nie udalo sie polaczyc lub po&#x142;&#x105;czenie
+zosta&#x142;o zerwane.</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
