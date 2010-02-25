@@ -112,7 +112,9 @@ class ConnectionModel (ModelMT):
 		#Dopoki nie polaczany i self.i mniejsze od 1 dodawaj do paska		
 		while(self.ifrun and self.i<1.000):
 
-
+			if self.stop:
+				#threading.Thread(target=self.connecting,args=()).start()
+				break
 			time.sleep(0.1)
 			self.i=self.i+0.005
 			
@@ -140,7 +142,7 @@ class ConnectionModel (ModelMT):
 	def reconnect(self):
 		self.stop=True
 		#self.th.exit()
-		self.i=0
+		self.i=0.00
 		#del self.th
 		try:
 			self.connect_init(self.jid, self.pwd)

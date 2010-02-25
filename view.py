@@ -141,7 +141,7 @@ class MainView (View):
 		self['archivescroll'].show()
 		self['leftwindow'].show()
 		self['archivelist'].get_model().clear()
-		self['hbox3'].hide()
+		self['vbox8'].hide()
 	def archive_addtolist(self,day,recipent):
 		 self['archivelist'].get_model().append([day,recipent])
 	def archive_showchat(self,html):
@@ -155,7 +155,7 @@ class MainView (View):
 		self['archivewindow'].hide()
 		self['archivelist'].hide()
 		self['archivescroll'].hide()
-		self['hbox3'].show()
+		self['vbox8'].show()
 	def message_newline(self):
 		buffer=self['message'].get_buffer()
 		buffer.insert_at_cursor(chr(13))

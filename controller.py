@@ -321,6 +321,7 @@ class MainCtrl (Controller):
 				return True
 
 	def property_recipent_value_change(self, model, old, new):
+		print model
 		try:
 			self.view['message'].get_buffer().set_text(self.model.editmessage[new])
 		except:
@@ -400,4 +401,5 @@ class MainCtrl (Controller):
 			if state=="active":
 				self.view['state'].hide()
 				self.view['state'].set_text("")
-	
+	def property_archiveclose_signal_emit(self,signalname,args):
+		self.property_recipent_value_change(self.model,None,args)

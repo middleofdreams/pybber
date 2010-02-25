@@ -78,11 +78,11 @@ class ArchiveModel (Model):
         path=self.workpath+"/"+recipent
         try:
             d=[]
-            days=os.listdir(path)
+            days_showed=os.listdir(path)
             for i in days:
                 if ".txt" in i:
                     d.append(i)
-            days=d
+            days_showed=d
                     
         except:
             days=['Brak rozmￃﾳw']

@@ -30,5 +30,6 @@ class ArchiveCtrl (Controller):
         
     def closearchive(self,widget):
         self.view.archive_close()
-        #self.model.open=""
-        self.model.archiveclose.emit()
+        
+        self.model.archiveclose.emit(self.model.open)
+        self.model.open=""
