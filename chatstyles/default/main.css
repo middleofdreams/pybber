@@ -8,6 +8,7 @@ body {
 * {
 	word-wrap: break-word;
 	word-break: break-word;
+	font-size:10px
 }
 
 ul, ol, li, p {
@@ -25,7 +26,7 @@ ul, ol, li, p {
 .incheader {
 	background-color:#1E8A3E;
 	height: 26px;
-	font-size: 19;
+	font-size: 15;
 	position: relative;
 	padding: 0px;
 	border-bottom-style:dotted; 
@@ -35,7 +36,7 @@ ul, ol, li, p {
 .outheader {
 	background-color:#1E728A;
 	height: 26px;
-	font-size: 19;
+	font-size: 15;
 	position: relative;
 	padding: 0px;
 	border-bottom-style:dotted; 
@@ -46,7 +47,7 @@ ul, ol, li, p {
 .archive {
 	background-color:#BFBFBF;
 	height: 26px;
-	font-size: 19;
+	font-size: 15;
 	position: relative;
 	padding: 0px;
 	border-bottom-style:dotted; 
@@ -75,7 +76,7 @@ table {
 .right{
       float: right;
       display:inline;
-      font-size: 12px;
+      font-size: 10px;
       }
 .left{
       float: left;
@@ -84,9 +85,14 @@ table {
 .time {
 	display:none;
 	float: right;
-	font-size: 12px;
+	font-size: 9px;
+	text-align:right;
    }
 	
 .text:hover .time  {
 	display: inline;
+	font-style:italic;
+	color:#071085;
 }
+.message{
+	margin-right:37px !important;}

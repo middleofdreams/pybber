@@ -344,6 +344,7 @@ class MainCtrl (Controller):
 		except:
 			html=self.model.archive.loadlast(new,self.model.settings.style,self.model.settings.me)
 			model.messages[new]=html
+			print html
 		template=self.model.settings.style_template()
 		self.view.loadchat(html,style=self.model.settings.style,template=template)
 		if new==self.model.recipentname or self.model.recipentname==None :

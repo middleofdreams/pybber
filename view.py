@@ -27,19 +27,12 @@ class MainView (View):
 		self['leftwindow'].show()
 		
 	def loadchat(self,html,style,template=False):
-		css='<link rel=&#34;Stylesheet&#34; type=&#34;text/css&#34; href=&#34;chatstyles/'+style+'/main.css"&#34; /> '
 
 		if html!="":
-			if not "<link rel" in html:
-				html=css+html
-				print "aaa"
-				print html
 			self.hid=self['chat'].connect('load-finished',self.updatechat,html,False)
-		else:
-			if style!="default": 
-				self.hid=self['chat'].connect('load-finished',self.updatechat,css)
+
 		if not template:
-			self['chat'].load_uri('file://'+path+'/chat.html')
+			self['chat'].load_uri('file://'+path+'/chatstyles/default/Template.html')
 		else:
 			self['chat'].load_uri('file://'+path+'/chatstyles/'+style+'/Template.html')
 	

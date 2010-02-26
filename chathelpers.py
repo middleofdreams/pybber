@@ -36,14 +36,6 @@ def showimages(text):
 	return text
 
 def set_style(time,who,message,outgoing=True,continous=False,style="default"):
-	if style=="default":
-		if outgoing:
-			text="<i>("+time+")</i><b> <font color=blue>"+who+"</font></b>: "+message+"<br/>"
-		else:
-			text="<i>("+time+")</i><b> <font color=red>" \
-								+who+"</font></b>: "+message+"<br/>"
-			archive=text
-	else:
 		if outgoing:
 			if continous:
 				path='chatstyles/'+style+'/Outgoing/NextContent.html'
@@ -79,7 +71,7 @@ def set_style(time,who,message,outgoing=True,continous=False,style="default"):
 		
 		text=changetext(text,time,who,message)
 		archive=changetext(archive,time,who,message)
-	return text,archive
+		return text,archive
 
 def changetext(text,time,who,message):
 	text=striptext(text,False,False)
@@ -94,8 +86,8 @@ def changetext(text,time,who,message):
 	text=text.replace("%service%",'')
 	return text
 
-def set_archstyle(time,who,message,outgoing=True,continous=False,style="default"):
-	if style=="default":
+def set_archstyle(time,who,message,outgoing=True,continous=False,style="default",archive=False):
+	if archive:
 		if outgoing:
 			text="<i>("+time+")</i><b> <font color=blue>"+who+"</font></b>: "+message+"<br/>"
 		else:
