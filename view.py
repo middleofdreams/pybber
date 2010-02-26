@@ -18,6 +18,9 @@ class MainView (View):
 		View.__init__(self)
 		self['window'].set_title("Pybber")
 		self['window'].show()
+		self['chatstyle']=gtk.combo_box_new_text()
+		self['hbuttonbox4'].add(self['chatstyle'])
+		self['chatstyle'].show_all()
 		self.createchat()
 		self.hid=0
 		self.createicon()
@@ -99,13 +102,23 @@ class MainView (View):
 		self['window'].set_gravity(gtk.gdk.GRAVITY_SOUTH_WEST)
 		self['frame1'].hide()
 		self['window'].resize(300,mainh)
-	def opensettings(self,set):
+	def opensettings(self,set,styles):
 		self['window'].set_gravity(gtk.gdk.GRAVITY_SOUTH_WEST)
 		self['frame1'].show()
 		self['combobox2'].set_active(set['show'])
 		self['entry8'].set_text(set['status'])
 		self['entry11'].set_text(set['me'])
-		self['chatstyle'].set_text(set['style'])
+		self['chatstyle'].get_model().clear()
+
+		self['chatstyle'].get_model().append([set['style']])
+		self['chatstyle'].set_active(0)
+		for i in styles:
+			if i!=set['style']:
+				self['chatstyle'].get_model().append([i])
+		if set['notify1']=="True":self['notify1'].set_active(True)	
+		if set['notify2']=="True":self['notify2'].set_active(True)		
+	
+				
 	def list_showform(self,form,prop=False,jid=None,name=None):
 		self['list'].hide()
 		self[form+'form'].show()	

@@ -25,7 +25,9 @@ class SettingsModel(Model):
 		settings={"me":self.me,
 				  "show":self.show,
 				  "status":self.status,
-				  "style":self.style}
+				  "style":self.style,
+				  "notify1":self.notify1,
+				  "notify2":self.notify2}
 		return settings
 	def tryfiles(self):
 		if not os.path.isdir(self.workpath):
@@ -67,9 +69,17 @@ class SettingsModel(Model):
 		except:
 			self.style="default"	
 			
+		try:
+			self.notify1=d['notify1']
+		except:
+			self.notify1="True"
+		try:
+			self.notify2=d['notify2']
+		except:
+			self.notify2="True"
 		d.close()	
 		
-	def save(self,show,status,me,style):	
+	def save(self,show,status,me,style,notify1,notify2):	
 		
 		d = gdbm.open(self.prefs, 'c')
 		d['show']=str(show)
@@ -86,7 +96,10 @@ class SettingsModel(Model):
 			style="default"
 		self.style=style
 		d['style']=style
-		
+		d['notify1']=notify1
+		d['notify2']=notify2
+		self.notify1=notify1
+		self.notify2=notify2
 		d.close()	
 		
 	def saveacc(self,remember,login,passwd):

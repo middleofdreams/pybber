@@ -109,8 +109,10 @@ class MainCtrl (Controller):
 		if not self.view['window'].is_active() or self.model.recipent!=args[1]:
 			p = re.compile(r'<[^<]*?>')
 			chat=p.sub('', chat)
-			self.view.notification(args[2],chat)
-			self.view.iconblink()
+			if self.model.settings.notify1=="True":
+				self.view.notification(args[2],chat)
+			if self.model.settings.notify2=="True":
+				self.view.iconblink()
 			
 		
 	def property_newpresence_signal_emit(self, signal_name,args):
@@ -286,9 +288,14 @@ class MainCtrl (Controller):
 		me=self.view['entry11'].get_text()
 		if me=="":
 			me=self.model.login
-		style=self.view['chatstyle'].get_text()
+		style=self.view['chatstyle'].get_active()
+		style=self.view['chatstyle'].get_model()[style][0]
 		self.model.me=me
-		self.model.settings.save(show,status,me,style)
+		if self.view['notify1'].get_active():notify1="True"
+		else: notify1="False"
+		if self.view['notify2'].get_active():notify2="True"
+		else: notify2="False"
+		self.model.settings.save(show,status,me,style,notify1,notify2)
 		self.closesettings(widget)
 		
 	def closesettings(self,widget):
@@ -296,15 +303,11 @@ class MainCtrl (Controller):
 		self.view.closesettings(mainh)
 
 	def opensettings(self,widget):
-		self.view.opensettings(self.model.settings.get_all())
 		pathname = os.path.dirname(sys.argv[0])        
 		path= os.path.abspath(pathname)
-		list=os.listdir(path+'/chatstyles/')
-		l=""
-		for i in list:
-			l=l+i+"\n"
-		l=l.rstrip("\n")
-		self.view['chatstyle'].set_tooltip_text(l)
+		styles=os.listdir(path+'/chatstyles/')
+		self.view.opensettings(self.model.settings.get_all(),styles)
+
 
 	def on_statusbar_changed(self,*args):	
 		desc=self.view['desc'].get_text()
@@ -321,7 +324,6 @@ class MainCtrl (Controller):
 				path, col, cellx, celly = pthinfo
 				treeview.grab_focus()
 				treeview.set_cursor( path, col, 0)
-				#self.ui.staticon.set_blinking(False)
 				self.view['contactpopup'].popup( None, None, None, 3, time)
 				return True
 
