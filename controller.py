@@ -72,6 +72,9 @@ class MainCtrl (Controller):
 		chat=striptext(args[3])
 		chat=chat.replace("<","&lt;")
 		chat=chat.replace(">","&gt;")
+		chat=chat.replace("&lt;br/&gt;","<br/>")
+		chat=chat.replace("&lt;br&gt;","<br/>")
+
 		chat=intolink(chat)
 		time,day=messtime(args[0])
 		try:
@@ -103,7 +106,8 @@ class MainCtrl (Controller):
 		self.model.archive.archive_append(time,args[2],chat,day,args[1],text)
 		#self.model.archive.archive_append(args[1],text,day)
 		if not self.view['window'].is_active():
-			self.view.iconblink()
+			if self.model.settings.notify2=="True":
+				self.view.iconblink()
 			#text=intolink(text)
 			#text=showimages(text)
 		if not self.view['window'].is_active() or self.model.recipent!=args[1]:
@@ -202,10 +206,11 @@ class MainCtrl (Controller):
 		import gtk
 		if event.type == gtk.gdk.KEY_PRESS:
 			buffer=self.view['message'].get_buffer()
-			
+			state= str(event.state)
+			#print str(gtk.gdk.SHIFT_MASK | gtk.gdk.CONTROL_MASK)
 			if gtk.gdk.keyval_name(event.keyval)== 'Return' :
-				if event.state==gtk.gdk.SHIFT_MASK | gtk.gdk.MOD2_MASK or event.state==gtk.gdk.SHIFT_MASK:
-					self.view.message_newline()
+				if "SHIFT" in state:
+					self.view.message_newline()	
 					#buffer.place_cursor(buffer.get_end_iter())
 				else: self.sendmsg()
 					
