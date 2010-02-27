@@ -269,11 +269,12 @@ class MainCtrl (Controller):
 		# observable properties    
 		
 	def chat_clear(self, *widget):
+		self.model.messagetype.pop(self.model.recipent)
 		try:
 			self.model.messages[self.model.recipent]=""
 		except: pass
 		template=self.model.settings.style_template()
-		self.view.loadchat("",style=self.model.settings.style,template=template)
+		self.view.loadchat("",style=self.model.settings.style,template=template,variant=self.model.settings.stylevar)
 			
 	def on_desc_key_press_event(self,widget,event):
 		import gtk
@@ -300,7 +301,13 @@ class MainCtrl (Controller):
 		else: notify1="False"
 		if self.view['notify2'].get_active():notify2="True"
 		else: notify2="False"
-		self.model.settings.save(show,status,me,style,notify1,notify2)
+		if self.view['stylevarscheck'].get_active():
+			index=self.view['stylevarslist'].get_active()
+			model=self.view['stylevarslist'].get_model()
+			variant=model[index][0]
+		else:
+			variant=""
+		self.model.settings.save(show,status,me,style,variant,notify1,notify2)
 		self.closesettings(widget)
 		
 	def closesettings(self,widget):
@@ -311,8 +318,33 @@ class MainCtrl (Controller):
 		pathname = os.path.dirname(sys.argv[0])        
 		path= os.path.abspath(pathname)
 		styles=os.listdir(path+'/chatstyles/')
-		self.view.opensettings(self.model.settings.get_all(),styles)
-
+		try:
+			stylevars=os.listdir(path+"/chatstyles/"+self.model.settings.style+"/Variants")
+		except:
+			stylevars=""	
+		print stylevars
+		self.view.opensettings(self.model.settings.get_all(),styles,stylevars)
+		self.view['chatstyle'].connect("changed",self.check_style_variants)
+		
+	def check_style_variants(self,widget):
+		self.view['stylevarsbox'].set_sensitive(0)
+		self.view['stylevarscheck'].set_active(0)
+		self.view['stylevarslist'].get_model().clear()
+		model=widget.get_model()
+		index=widget.get_active()
+		style=model[index][0]
+		path='chatstyles/'+style+'/Variants'
+		if os.path.isdir(path):
+			list=os.listdir(path)
+			varlist=[]
+			for i in list:
+				if i.endswith(".css"):
+					variant=i.rstrip(".css")
+					varlist.append(variant)
+			if len(varlist)>0:		
+				self.view.create_style_variants(varlist)
+	
+			
 
 	def on_statusbar_changed(self,*args):	
 		desc=self.view['desc'].get_text()
@@ -353,7 +385,7 @@ class MainCtrl (Controller):
 			model.messages[new]=html
 			print html
 		template=self.model.settings.style_template()
-		self.view.loadchat(html,style=self.model.settings.style,template=template)
+		self.view.loadchat(html,style=self.model.settings.style,template=template,variant=self.model.settings.stylevar)
 		if new==self.model.recipentname or self.model.recipentname==None :
 			self.view['window'].set_title("Rozmowa z "+new)
 		else:

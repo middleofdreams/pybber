@@ -24,7 +24,7 @@ ul, ol, li, p {
 	border-style: groove;	
 }
 .incheader {
-	background-color:#1E8A3E;
+	background-color:#208A1E;
 	height: 26px;
 	font-size: 15;
 	position: relative;
@@ -34,7 +34,7 @@ ul, ol, li, p {
 	border-bottom-color:black; 
 	}
 .outheader {
-	background-color:#1E728A;
+	background-color:#1E778A;
 	height: 26px;
 	font-size: 15;
 	position: relative;

@@ -24,13 +24,22 @@ class MainView (View):
 		self.createchat()
 		self.hid=0
 		self.createicon()
-
+		self['stylevarslist']=gtk.combo_box_new_text()
+		self['stylevarsbox'].add(self['stylevarslist'])
+		self['stylevarslist'].show_all()
 		
 	def openchat(self):
 		self['leftwindow'].show()
 		
-	def loadchat(self,html,style,template=False):
+	def loadchat(self,html,style,template=False,variant=""):
+		if variant!="":	
+			variant='<link href="Variants/'+variant+'.css" rel="stylesheet" type="text/css">'
 
+			if html!="":
+				html=variant+html
+			else:
+				html=variant
+				
 		if html!="":
 			self.hid=self['chat'].connect('load-finished',self.updatechat,html,False)
 
@@ -38,7 +47,7 @@ class MainView (View):
 			self['chat'].load_uri('file://'+path+'/chatstyles/default/Template.html')
 		else:
 			self['chat'].load_uri('file://'+path+'/chatstyles/'+style+'/Template.html')
-	
+		print html
 	
 	def updatechat(self,html,a=None,html2=None,continous=False,):
 		if continous:
@@ -102,7 +111,7 @@ class MainView (View):
 		self['window'].set_gravity(gtk.gdk.GRAVITY_SOUTH_WEST)
 		self['frame1'].hide()
 		self['window'].resize(300,mainh)
-	def opensettings(self,set,styles):
+	def opensettings(self,set,styles,stylevars):
 		self['window'].set_gravity(gtk.gdk.GRAVITY_SOUTH_WEST)
 		self['frame1'].show()
 		self['combobox2'].set_active(set['show'])
@@ -117,7 +126,21 @@ class MainView (View):
 				self['chatstyle'].get_model().append([i])
 		if set['notify1']=="True":self['notify1'].set_active(True)	
 		if set['notify2']=="True":self['notify2'].set_active(True)		
-	
+		self['stylevarslist'].get_model().clear()
+
+		if stylevars!="":
+			self['stylevarsbox'].set_sensitive(1)
+			if set['stylevar']!="":
+				self['stylevarslist'].get_model().append([set['stylevar']])
+				self['stylevarscheck'].set_active(True)
+			for i in stylevars:
+				if i.endswith(".css"):
+					i=i.rstrip(".css")
+					if i!=set['stylevar']:
+						self['stylevarslist'].get_model().append([i])
+			self['stylevarslist'].set_active(0)
+
+			
 				
 	def list_showform(self,form,prop=False,jid=None,name=None):
 		self['list'].hide()
@@ -177,3 +200,8 @@ class MainView (View):
 			self.n = pynotify.Notification(title, text)  
 			#self.n.attach_to_status_icon(self.icon)
 		self.n.show()
+	def create_style_variants(self,vlist):
+		self['stylevarsbox'].set_sensitive(1)
+		for i in vlist:
+			self['stylevarslist'].get_model().append([i])
+		self['stylevarslist'].set_active(0)

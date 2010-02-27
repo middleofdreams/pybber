@@ -93,15 +93,15 @@ class ArchiveModel (Model):
 				days.append(day)        
      
         except:
-            days=['Brak rozmￃﾳw']
+            days=['Brak rozmów']
        
         
         self.open=recipent
         return days
     
     def get_html(self,day,recipent,me):
-        if day==None or day=="Brak rozmￃﾳw": 
-            html="<center> Brak rozmￃﾳw w archiwum"
+        if day==None or day=="Brak rozmów": 
+            html="<center> Brak rozmów w archiwum"
         else: 
             path=self.workpath+"/"+recipent
             filepath=path+"/"+day
