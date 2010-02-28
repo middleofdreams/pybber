@@ -5,16 +5,22 @@
   <widget class="GtkWindow" id="window">
     <property name="default_width">400</property>
     <property name="default_height">500</property>
+    <signal name="visibility_notify_event" handler="wfocus"/>
     <signal name="hide" handler="hide"/>
     <signal name="activate_focus" handler="wfocus"/>
     <signal name="selection_get" handler="chatfocus"/>
     <signal name="set_focus_child" handler="wfocus"/>
+    <signal name="button_press_event" handler="wfocus"/>
     <signal name="drag_drop" handler="resize"/>
     <signal name="drag_end" handler="resize"/>
+    <signal name="grab_focus" handler="wfocus"/>
+    <signal name="focus" handler="wfocus"/>
     <signal name="event" handler="windowevent"/>
+    <signal name="show" handler="wfocus"/>
     <signal name="activate_default" handler="wfocus"/>
     <signal name="notify" handler="chatfocus"/>
     <signal name="delete_event" handler="on_window_delete_event"/>
+    <signal name="drag_begin" handler="wfocus"/>
     <child>
       <widget class="GtkHBox" id="hbox1">
         <property name="visible">True</property>
@@ -69,17 +75,10 @@
                 <property name="visible">True</property>
                 <child>
                   <widget class="GtkScrolledWindow" id="chatwindow">
-                    <property name="width_request">402</property>
                     <property name="visible">True</property>
-                    <property name="app_paintable">True</property>
                     <property name="can_focus">True</property>
-                    <property name="border_width">3</property>
-                    <property name="hadjustment">0 0 0 0.01 0.10000000000000001 0</property>
-                    <property name="vadjustment">0 0 0 0.01 0.10000000000000001 0</property>
                     <property name="hscrollbar_policy">automatic</property>
                     <property name="vscrollbar_policy">automatic</property>
-                    <property name="shadow_type">etched-out</property>
-                    <signal name="move_focus" handler="on_click"/>
                     <child>
                       <placeholder/>
                     </child>
@@ -945,6 +944,8 @@
                                             <property name="width_chars">16</property>
                                           </widget>
                                           <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
                                             <property name="position">0</property>
                                           </packing>
                                         </child>
@@ -981,6 +982,8 @@
                                             <property name="width_chars">16</property>
                                           </widget>
                                           <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
                                             <property name="position">0</property>
                                           </packing>
                                         </child>
@@ -1020,6 +1023,8 @@ Niewidoczny</property>
                                             <property name="label" translatable="yes">W&#x142;asny alias</property>
                                           </widget>
                                           <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
                                             <property name="position">0</property>
                                           </packing>
                                         </child>
