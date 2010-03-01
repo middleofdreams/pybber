@@ -275,7 +275,8 @@ class MainCtrl (Controller):
 		except: pass
 		template=self.model.settings.style_template()
 		self.view.loadchat("",style=self.model.settings.style,template=template,variant=self.model.settings.stylevar)
-			
+		print self.view['message'].grab_focus()
+		print "blalbabla"	
 	def on_desc_key_press_event(self,widget,event):
 		import gtk
 		key=event.keyval

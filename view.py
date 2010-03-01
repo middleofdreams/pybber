@@ -47,7 +47,9 @@ class MainView (View):
 			self['chat'].load_uri('file://'+path+'/chatstyles/default/Template.html')
 		else:
 			self['chat'].load_uri('file://'+path+'/chatstyles/'+style+'/Template.html')
-		print html
+		print style,path
+-
+		gobject.idle_add(self['message'].grab_focus)
 	
 	def updatechat(self,html,a=None,html2=None,continous=False,):
 		if continous:
@@ -56,12 +58,15 @@ class MainView (View):
 			script="Message"
 		try:
 			gobject.idle_add(self['chat'].execute_script,"append"+script+"('"+html+"');")
+			
 		except:
 			gobject.idle_add(self['chat'].execute_script,"append"+script+"('"+html2+"');")
+			gobject.idle_add(self['chat'].execute_script,"alignChat(true)")
+
 		if self.hid>0:
 			self['chat'].disconnect(self.hid)
 			self.hid=0
-			
+
 	def updatelist(self,item,status,show):		
 		self['listmodel'].set_value(item,0,status)
 		show,priority=get_show(show)

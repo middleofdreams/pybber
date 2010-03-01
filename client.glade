@@ -9,11 +9,9 @@
     <signal name="hide" handler="hide"/>
     <signal name="activate_focus" handler="wfocus"/>
     <signal name="selection_get" handler="chatfocus"/>
-    <signal name="set_focus_child" handler="wfocus"/>
     <signal name="button_press_event" handler="wfocus"/>
     <signal name="drag_drop" handler="resize"/>
     <signal name="drag_end" handler="resize"/>
-    <signal name="grab_focus" handler="wfocus"/>
     <signal name="focus" handler="wfocus"/>
     <signal name="event" handler="windowevent"/>
     <signal name="show" handler="wfocus"/>
@@ -131,12 +129,9 @@
                         <property name="pixels_below_lines">1</property>
                         <property name="wrap_mode">word</property>
                         <signal name="key_press_event" handler="on_message_key_press_event"/>
-                        <signal name="focus" handler="chatfocus"/>
-                        <signal name="event" handler="chatfocus"/>
-                        <signal name="grab_focus" handler="chatfocus"/>
-                        <accelerator key="c" signal="copy-clipboard" modifiers="GDK_CONTROL_MASK"/>
-                        <accelerator key="x" signal="cut-clipboard" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="v" signal="paste-clipboard" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="x" signal="cut-clipboard" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="c" signal="copy-clipboard" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                       <packing>
                         <property name="position">0</property>

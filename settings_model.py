@@ -94,7 +94,8 @@ class SettingsModel(Model):
 		self.me=me
 		d['me']=me
 		print style
-		workpath=os.environ['HOME']+"/pybber"
+		pathname = os.path.dirname(sys.argv[0])        
+		workpath= os.path.abspath(pathname)
 		stylepath=workpath+"/chatstyles/"+style
 		print stylepath
 		if not os.path.isdir(stylepath):
@@ -123,7 +124,8 @@ class SettingsModel(Model):
 
 			
 	def style_template(self):
-		workpath=os.environ['HOME']+"/pybber"
+		pathname = os.path.dirname(sys.argv[0])        
+		workpath= os.path.abspath(pathname)
 		stylepath=workpath+"/chatstyles/"+self.style+"/Template.html"
 		try:
 			f=open(stylepath)
