@@ -48,7 +48,7 @@ class MainView (View):
 		else:
 			self['chat'].load_uri('file://'+path+'/chatstyles/'+style+'/Template.html')
 		print style,path
--
+
 		gobject.idle_add(self['message'].grab_focus)
 	
 	def updatechat(self,html,a=None,html2=None,continous=False,):
