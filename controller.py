@@ -91,6 +91,8 @@ class MainCtrl (Controller):
 			continous=False
 			text,archive=set_style(time,args[2],chat,False,style=style)
 		text=showimages(text)
+		#text=set_emoticons("grin",text)
+
 		if args[1]==self.model.recipent:
 			self.view.updatechat(unicode(text),continous=continous)
 			
@@ -234,6 +236,7 @@ class MainCtrl (Controller):
 			msg=striptext(msg)
 			msg=intolink(msg)
 			msg=showimages(msg)
+
 			try:
 				last=self.model.messagetype[self.model.recipent]
 			except:
@@ -245,6 +248,7 @@ class MainCtrl (Controller):
 				message,archive=set_style(time,self.model.settings.me,msg,continous=True,style=style)
 			else:
 				continous=False
+				
 				message,archive=set_style(time,self.model.settings.me,msg,style=style)
 			try:
 				self.model.messages[self.model.recipent]+=archive
@@ -253,6 +257,8 @@ class MainCtrl (Controller):
 			#guiclass.staticon.set_blinking(False)
 			#time,day=messtime(ts)
 			#savechat(guiclass,connection.vars,guiclass.recipent,"<font color=red>"+settings.me+"</font>",msg,time,day)
+			#message=set_emoticons("grin",message)
+
 			self.view.updatechat(message,continous=continous)
 			self.model.archive.archive_append(time,self.model.settings.me,msg,day,self.model.recipent,message,out=True)
 

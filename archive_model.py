@@ -3,7 +3,7 @@ import _importer,os,sys
 from gtkmvc import Model
 from connection_model import *
 from settings_model import *
-from chathelpers import set_archstyle
+from chathelpers import set_archstyle,set_emoticons
 pathname = os.path.dirname(sys.argv[0])        
 mpath= os.path.abspath(pathname)
 class ArchiveModel (Model):
@@ -70,7 +70,7 @@ class ArchiveModel (Model):
         except:
      
             html=""
-        from chathelpers import striptext
+        #html=set_emoticons("riceballs",html)
         return html
      
             #while 

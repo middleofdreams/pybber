@@ -1,3 +1,24 @@
+import os,sys
+emolist={";)":"Wink",
+			 ":)":"Smile",
+			 ";/":"Angry Face",
+			 ":/":"Angry Face",
+			 ";//":"Very Angry",
+			 "://":"Very Angry",
+			 ";*":"Kiss",
+			 ":*":"Kiss",
+			 ":D":"Green",
+			 ";D":"Green",
+			 ":d":"Green",
+			 ";d":"Green",
+			 "oO":"Sarcastic",
+			 "Oo":"Sarcastic",
+			 ":P":"Sticking Out Tongue",
+			 ";P":"Sticking Out Tongue",
+			 ":p":"Sticking Out Tongue",
+			 ";p":"Sticking Out Tongue",
+			 ";(":"Crying",
+			 ":(":"Frown"}
 def striptext(text,br=True,ss=True):
 	text=text.replace('"',"&#34;")
 	text=text.replace("'","&#39;")
@@ -119,3 +140,22 @@ def set_archstyle(time,who,message,outgoing=True,continous=False,style="default"
 		
 		text=changetext(text,time,who,message)
 	return text
+def set_emoticons(style,chat):
+	global emolist
+	pathname = os.path.dirname(sys.argv[0])        
+	workpath= os.path.abspath(pathname)
+	chat=chat.replace("&#40;","&#40;tag")
+	chat=chat.replace("&#41;","&#41;tag")
+	chat=chat.replace("&#34;","&#34;tag")
+	chat=chat.replace("&#39;","&#39;tag")
+
+	for i in emolist:
+		img="<img src=\""+workpath+"/emoticons/"+style+"/"+emolist[i]+".png\"/>"
+		print img
+		chat=chat.replace(i,img)
+	
+	chat=chat.replace("&#40;tag","&#40;")
+	chat=chat.replace("&#41;tag","&#41;")
+	chat=chat.replace("&#34;tag","&#34;")
+	chat=chat.replace("&#39;tag","&#39;")
+	return chat
