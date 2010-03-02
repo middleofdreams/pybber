@@ -65,7 +65,7 @@ def is_typing(widget,jid):
 def make_bold(nick,bold=True):
 	statch=False
 	if "\n" in nick:
-		n=nick.split("\n")
+		n=nick.split("\n",1)
 		nick=n[0]
 		status=n[1]
 		statch=True
