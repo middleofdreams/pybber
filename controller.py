@@ -5,7 +5,7 @@ from gtkmvc import Controller
 from gtkmvc.adapters import Adapter
 from chathelpers import *
 from listhelpers import *
-import os,sys,re,gobject,subprocess
+import os,sys,re,gobject,subprocess,threading
 
 class MainCtrl (Controller):
 	"""Handles signal processing, and keeps alignment of model and
@@ -206,6 +206,7 @@ class MainCtrl (Controller):
 		'''wysylanie wiadomosci
 		TODO: SKROCIC JAKOS/PRZENIES GDZIES'''
 		import gtk
+		self.wfocus()
 		if event.type == gtk.gdk.KEY_PRESS:
 			buffer=self.view['message'].get_buffer()
 			state= str(event.state)
@@ -401,6 +402,7 @@ class MainCtrl (Controller):
 		self.view.iconblink(False)
 		from listhelpers import show_back
 		show_back(new,self.view['listmodel'])
+		threading.Thread(target=self.align_chat,args=()).start()
 		
 	def iconactivate(self,widget):
 		window=self.view['window']
@@ -455,3 +457,7 @@ class MainCtrl (Controller):
 				self.view['state'].set_text("")
 	def property_archiveclose_signal_emit(self,signalname,args):
 		self.property_recipent_value_change(self.model,None,args)
+	def align_chat(self):
+		import time
+		time.sleep(0.5)
+		self.view.align_chat()

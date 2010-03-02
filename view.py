@@ -18,6 +18,7 @@ class MainView (View):
 		View.__init__(self)
 		self['window'].set_title("Pybber")
 		self['window'].show()
+		self['window'].set_icon_from_file(path+"/icons/pybber.png")
 		self['chatstyle']=gtk.combo_box_new_text()
 		self['hbuttonbox4'].add(self['chatstyle'])
 		self['chatstyle'].show_all()
@@ -210,3 +211,5 @@ class MainView (View):
 		for i in vlist:
 			self['stylevarslist'].get_model().append([i])
 		self['stylevarslist'].set_active(0)
+	def align_chat(self):
+		gobject.idle_add(self['chat'].execute_script,"alignChat(true)")
