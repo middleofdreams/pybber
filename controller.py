@@ -401,6 +401,8 @@ class MainCtrl (Controller):
 			self.view['window'].set_title("Rozmowa z "+self.model.recipentname+" ("+new+")")
 		self.view.archive_close()
 		self.view.iconblink(False)
+		gobject.idle_add(self.view['window'].set_urgency_hint,False)
+
 		from listhelpers import show_back
 		show_back(new,self.view['listmodel'])
 		threading.Thread(target=self.align_chat,args=()).start()
@@ -420,6 +422,8 @@ class MainCtrl (Controller):
 			window.present()
 			window.show()		
 			self.view.icon.set_blinking(False)
+			gobject.idle_add(self.view['window'].set_urgency_hint,False)
+
 		if window.is_active():
 			window.present()
 			x,y=window.get_position()
