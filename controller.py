@@ -432,6 +432,8 @@ class MainCtrl (Controller):
 			self.model.hidden=True
 	def wfocus(self,*args):
 		self.view.iconblink(False)
+		gobject.idle_add(self.view['window'].set_urgency_hint,False)
+
 		pass
 	def set_status_from_icon(self,widget):
 		show=widget.name.lstrip("popupstatus")
