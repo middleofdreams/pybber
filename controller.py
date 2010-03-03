@@ -108,6 +108,7 @@ class MainCtrl (Controller):
 		self.model.archive.archive_append(time,args[2],chat,day,args[1],text)
 		#self.model.archive.archive_append(args[1],text,day)
 		if not self.view['window'].is_active():
+			gobject.idle_add(self.view['window'].set_urgency_hint,True)
 			if self.model.settings.notify2=="True":
 				self.view.iconblink()
 			#text=intolink(text)
@@ -461,3 +462,4 @@ class MainCtrl (Controller):
 		import time
 		time.sleep(0.5)
 		self.view.align_chat()
+		

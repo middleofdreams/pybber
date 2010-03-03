@@ -28,6 +28,7 @@ class MainView (View):
 		self['stylevarslist']=gtk.combo_box_new_text()
 		self['stylevarsbox'].add(self['stylevarslist'])
 		self['stylevarslist'].show_all()
+		self['window'].set_role("Pybber")
 		
 	def openchat(self):
 		self['leftwindow'].show()
