@@ -8,7 +8,7 @@ import pygtk,gtk,xmpp,threading,time,gobject,sys,thread,pynotify
 class ConnectionModel (ModelMT):
 	stop=False
 	active=False
-	is_connecting=True
+	is_connecting=None
 	i=0.00
 	jid=""
 	newmessage=observable.Signal()
@@ -31,6 +31,7 @@ class ConnectionModel (ModelMT):
 	def connect_init(self,jid,pwd):
 		self.jid=jid
 		self.pwd=pwd
+		self.is_connecting=True
 		#rozpoczecie watku polaczenia
 	#	print jid
 	#	print pwd
@@ -141,6 +142,8 @@ class ConnectionModel (ModelMT):
 #----------funkcje dla komunikatow--------------------------------------
 	def reconnect(self):
 		self.stop=True
+		time.sleep(0.2)
+
 		#self.th.exit()
 		self.i=0.00
 		#del self.th

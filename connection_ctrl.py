@@ -19,6 +19,9 @@ class ConnectionCtrl (Controller):
 	def changedata(self, *widget):
 		self.view.changedata()
 		self.model.is_connecting=False
+		self.model.stop=True
+		self.view['progress'].hide()
+		self.view['jidlabel'].hide()
 	def hidewarn(self,widget):
 		self.view.hidewarn()
 	
@@ -26,13 +29,15 @@ class ConnectionCtrl (Controller):
 		print new
 		if new:
 			self.view['progress'].show()
+			self.view['jidlabel'].show()
 		else:
 			self.view['progress'].hide()
 			self.view['toolong'].hide()
 		return
 	
 	def property_i_value_change(self, model, old, new):
-		self.view['progress'].show()
+		#if new>old: self.view['progress'].show()
+
 		if new<1.000:
 			self.view['progress'].set_fraction(new)
 		if(str(new)=='0.15'):
