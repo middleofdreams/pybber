@@ -11,11 +11,14 @@ class ConnectionModel (ModelMT):
 	is_connecting=None
 	i=0.00
 	jid=""
+	tryid=0
+	autherror=False
+	connerror=0
 	newmessage=observable.Signal()
 	newpresence=observable.Signal()
 	composing=observable.Signal()
 	__observables__ = ('stop','active','is_connecting','i','jid', \
-	'newmessage', 'newpresence','composing')
+	'newmessage', 'newpresence','composing','connerror','autherror')
 	
 	def __init__(self):
 		ModelMT.__init__(self)
@@ -42,20 +45,23 @@ class ConnectionModel (ModelMT):
 		
 	def connecting(self):
 		self.ifrun=True
+		self.autherror=False
 		#start watku z progressbarem
-		
+		self.tryid+=1
+
 		threading.Thread(target=self.connectbar,args=()).start()
 		
 		jid=xmpp.protocol.JID(self.jid) 
-		
 		# testowe polaczenie:
 		cl=xmpp.Client(jid.getDomain(),debug=[])
 		if cl.connect() == "":
 			print "not connected"
+			self.connerror+=1
 			sys.exit(0) 
 		if not self.active:
 			if cl.auth(jid.getNode(),self.pwd) == None: 
 				print "authentication failed"
+				self.autherror=True
 				sys.exit(0)
 		
 		#jesli polaczy sie w czasie krotszym niz pare sekund przyjmij

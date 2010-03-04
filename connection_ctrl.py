@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import _importer
 from gtkmvc import Controller
 from gtkmvc.adapters import Adapter
@@ -35,6 +36,22 @@ class ConnectionCtrl (Controller):
 			self.view['toolong'].hide()
 		return
 	
+	def property_connerror_value_change(self,model,old,new):
+		if model.i<1.00:
+			if new==model.tryid:
+				model.stop=True
+				self.view['not_connected'].show()
+				self.view['errmessage'].show()
+				self.view['errmessage'].set_text("Sprawdź poprawność danych i połączenie z internetem")
+	def property_autherror_value_change(self,model,old,new):
+		if model.i<1.00:
+			if new:
+				model.stop=True
+				self.view['not_connected'].show()
+				self.view['errmessage'].show()
+				self.view['errmessage'].set_text("Hasło jest niepoprawne!")
+				
+				
 	def property_i_value_change(self, model, old, new):
 		#if new>old: self.view['progress'].show()
 
