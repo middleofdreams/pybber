@@ -5,7 +5,7 @@ from gtkmvc import Controller
 from gtkmvc.adapters import Adapter
 from chathelpers import *
 from listhelpers import *
-import os,sys,re,gobject,subprocess,threading
+import os,sys,re,gobject,subprocess,threading,time
 
 class MainCtrl (Controller):
 	"""Handles signal processing, and keeps alignment of model and
@@ -137,11 +137,12 @@ class MainCtrl (Controller):
 		else:	
 			show=self.model.connection.roster.getShow(jid.__str__())		
 		
+		gobject.idle_add(self.change_list_item,nick,status,show)
+		
+	def change_list_item(self,nick,status,show):
 		chitem=""
-		import time
-		while self.view['listmodel']==None:
-			#time.sleep(1)
-			pass
+		
+		
 		item = self.view['listmodel'].get_iter_first ()
 		while ( item != None ):
 			if self.view['listmodel'].get_value (item, 4)==nick:
@@ -358,7 +359,11 @@ class MainCtrl (Controller):
 	def on_statusbar_changed(self,*args):	
 		desc=self.view['desc'].get_text()
 		index=self.view['statusbar'].get_active()
-		self.model.connection.set_status(index,desc)
+		show =self.model.connection.set_status(index,desc)
+		try:
+			self.change_list_item(self.model.connection.jid,desc,show)
+		except:
+			pass
 		self.view.turn_desc_style(False)
 	def on_list_button_press_event(self, treeview, event):
 		if event.button == 3:
@@ -439,9 +444,11 @@ class MainCtrl (Controller):
 		show=widget.name.lstrip("popupstatus")
 		show=int(show)-1
 		desc=self.view['desc'].get_text()
-		self.model.connection.set_status(show,desc)
 		self.view['statusbar'].set_active(show)
-		
+		show=self.model.connection.set_status(show,desc)
+
+		self.change_list_item(self.model.connection.jid,desc,show)
+
 	def property_archiveclose_signal_emit(self, signalname,args):
 		self.model.recipent=self.model.archive.open
 		

@@ -195,10 +195,24 @@ class MainView (View):
 	def message_newline(self):
 		buffer=self['message'].get_buffer()
 		buffer.insert_at_cursor(chr(13))
-	def create_empty_clist(self,items,roster):
+	def create_empty_clist(self,items,roster,jid):
 		import list as clist
 		clist.create_empty_list(self)
-		clist.get_all(items,self['listmodel'],roster)	
+		index=self['statusbar'].get_active()
+		if index==0:
+			show= None
+		if index==1:
+			show= "away"
+		if index==2:
+			show= "xa"
+		if index==3:
+			show= "dnd"
+		if index==4:
+			show= "chat"
+		if index==5:
+			show= "unavailable"
+		desc=self['desc'].get_text()
+		clist.get_all(items,self['listmodel'],roster,jid,desc,show)	
 	def notification(self,user,text):
 		title="Nowa wiadomość od "+user
 		try:

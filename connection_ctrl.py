@@ -2,7 +2,7 @@
 import _importer
 from gtkmvc import Controller
 from gtkmvc.adapters import Adapter
-
+import time
 class ConnectionCtrl (Controller):
 	"""Handles signal processing, and keeps alignment of model and
 	view"""
@@ -82,7 +82,8 @@ class ConnectionCtrl (Controller):
 			self.view['desc'].set_text(model.status)
 			self.view['statusbar'].set_active(model.show)
 			items=model.get_list()
-			self.view.create_empty_clist(items,self.model.roster)
+			time.sleep(0.2)
+			self.view.create_empty_clist(items,self.model.roster,self.model.jid)
 			
 			#chowa ewentualne komunikaty
 			self.view['toolong'].hide()

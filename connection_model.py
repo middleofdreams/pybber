@@ -178,16 +178,22 @@ class ConnectionModel (ModelMT):
 		if index=="": index=0
 		if index==0:
 			self.cl.send(xmpp.dispatcher.Presence(show=None,status=desc))
+			return None
 		if index==1:
 			self.cl.send(xmpp.dispatcher.Presence(show="away",status=desc))
+			return "away"
 		if index==2:
 			self.cl.send(xmpp.dispatcher.Presence(show="xa",status=desc))
+			return "xa"
 		if index==3:
 			self.cl.send(xmpp.dispatcher.Presence(show="dnd",status=desc))
+			return "dnd"
 		if index==4:
 			self.cl.send(xmpp.dispatcher.Presence(show="chat",status=desc))
+			return "chat"
 		if index==5:
 			self.cl.send(xmpp.dispatcher.Presence(show="unavailable",status=desc))
+			return "unavailable"
 		
 	def get_list(self):
 		'''pobiera liste kontaktow'''

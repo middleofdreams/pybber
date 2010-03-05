@@ -25,14 +25,19 @@ def create_empty_list(view):
 
 
 
-def get_all(list,widget,roster):    
+def get_all(list,widget,roster,jid,desc,show):    
     '''pobiera wszystkie kontakty z rostera'''
     for i in list:        
-        status=roster.getStatus(str(xmpp.protocol.JID(jid=i)))     
-        name=roster.getName(str(xmpp.protocol.JID(jid=i)))
-        #domyslne oznaczanie kontaktow jako niedostepnych
-        if name==None: name=i
-        widget.append([name,status,get_show('offline')[0],None,i,0])
+		status=roster.getStatus(str(xmpp.protocol.JID(jid=i)))     
+		name=roster.getName(str(xmpp.protocol.JID(jid=i)))
+		#domyslne oznaczanie kontaktow jako niedostepnych
+		if name==None: name=i
+		if i==jid:
+			if desc!="":
+				name=name+"\n<i>"+desc+"</i>"
+				
+			widget.append([name,status,get_show(show)[0],None,i,0])
+		else:widget.append([name,status,get_show('offline')[0],None,i,0])
 
 def compare_data(model, iter1, iter2):
     data1 = model.get_value(iter1,5)
