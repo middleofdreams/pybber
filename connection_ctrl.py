@@ -42,7 +42,11 @@ class ConnectionCtrl (Controller):
 				model.stop=True
 				self.view['not_connected'].show()
 				self.view['errmessage'].show()
-				self.view['errmessage'].set_text("Sprawdź poprawność danych i połączenie z internetem")
+				login=self.view['login'].get_text()
+				text="Sprawdź poprawność danych i połączenie z internetem"
+				if not "@" in login or not "." in login:
+					text+="\n Poprawny format hasla to: <b>nazwa@domena.com</b>"
+				self.view['errmessage'].set_markup(text)
 	def property_autherror_value_change(self,model,old,new):
 		if model.i<1.00:
 			if new:
