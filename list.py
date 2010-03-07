@@ -35,8 +35,8 @@ def get_all(list,widget,roster,jid,desc,show):
 		if i==jid:
 			if desc!="":
 				name=name+"\n<i>"+desc+"</i>"
-				
-			widget.append([name,status,get_show(show)[0],None,i,0])
+			show,priority = get_show(show)
+			widget.append([name,status,show,None,i,priority])
 		else:widget.append([name,status,get_show('offline')[0],None,i,0])
 
 def compare_data(model, iter1, iter2):
