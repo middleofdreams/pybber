@@ -26,7 +26,6 @@ class ListCtrl (Controller):
         index=index.get_selected()[1]
         jid=self.view['listmodel'].get_value(index,4)
         name=self.view['listmodel'].get_value(index,0)
-        print name
         if "\n" in name:
             name=name.split("\n")[0]
         name=str(name)

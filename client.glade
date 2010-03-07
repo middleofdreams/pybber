@@ -137,9 +137,9 @@
                         <property name="pixels_below_lines">1</property>
                         <property name="wrap_mode">word</property>
                         <signal name="key_press_event" handler="on_message_key_press_event"/>
-                        <accelerator key="c" signal="copy-clipboard" modifiers="GDK_CONTROL_MASK"/>
-                        <accelerator key="x" signal="cut-clipboard" modifiers="GDK_CONTROL_MASK"/>
                         <accelerator key="v" signal="paste-clipboard" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="x" signal="cut-clipboard" modifiers="GDK_CONTROL_MASK"/>
+                        <accelerator key="c" signal="copy-clipboard" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                       <packing>
                         <property name="position">0</property>
@@ -628,6 +628,7 @@
                     <signal name="button_press_event" handler="on_list_button_press_event"/>
                     <signal name="select_cursor_row" handler="on_click"/>
                     <signal name="expose_event" handler="on_list_expose_event"/>
+                    <signal name="button_release_event" handler="on_list_button_release_event"/>
                   </widget>
                 </child>
               </widget>

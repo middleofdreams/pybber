@@ -51,7 +51,6 @@ def is_typing(widget,jid):
 	#tu gdzies trzeba sprawdzic czy juz ma zamieniona ikonke...
 	#w najgorszym wypadku dodac kolejna kolumne gdzie bedzie tylko 
 	#true/false gdy pisze lub nie
-	#print widget.get_value(item,3)
 	
 	if widget.get_value(item,3)==None:
 		gobject.idle_add(widget.set_value,item,3,pshow)

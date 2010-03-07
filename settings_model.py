@@ -93,11 +93,9 @@ class SettingsModel(Model):
 		self.status=d['status']
 		self.me=me
 		d['me']=me
-		print style
 		pathname = os.path.dirname(sys.argv[0])        
 		workpath= os.path.abspath(pathname)
 		stylepath=workpath+"/chatstyles/"+style
-		print stylepath
 		if not os.path.isdir(stylepath):
 			style="default"
 		self.style=style

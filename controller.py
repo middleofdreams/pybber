@@ -38,7 +38,6 @@ class MainCtrl (Controller):
 
 		
 	def chat_keypressed(self,widget, event):
-		print gtk.gdk.keyval_name(event.keyval)
 		if gtk.gdk.keyval_name(event.keyval) == 'x':
 			widget.copy_clipboard()
 		if gtk.gdk.keyval_name(event.keyval) == 'c':
@@ -156,13 +155,9 @@ class MainCtrl (Controller):
 		else:
 		#jesli tak - aktualizuj wpis
 			nick=self.view['listmodel'].get_value(chitem,0)
-			print "nick=%s \nstatus=%s"% (nick,status)
 			if "\n" in nick:
 				n=nick.split("\n")
-				print n
-				print n[0]
 				if status!="" and status!=None:
-					print "aaa"
 					status=n[0]+"\n<i>"+status+"</i>"
 				else: 
 					status=n[0]
@@ -170,8 +165,6 @@ class MainCtrl (Controller):
 				if status!="" and status!=None:
 					status=nick+"\n<i>"+status+"</i>"
 				else: status=nick
-				print "\n\nnewstatus=%s"%status
-			print "final status="+status
 			gobject.idle_add(self.view.updatelist,chitem,status,show)
 			#time.sleep(1)
 	
@@ -212,7 +205,6 @@ class MainCtrl (Controller):
 		if event.type == gtk.gdk.KEY_PRESS:
 			buffer=self.view['message'].get_buffer()
 			state= str(event.state)
-			#print str(gtk.gdk.SHIFT_MASK | gtk.gdk.CONTROL_MASK)
 			if gtk.gdk.keyval_name(event.keyval)== 'Return' :
 				if "SHIFT" in state:
 					self.view.message_newline()	
@@ -284,8 +276,7 @@ class MainCtrl (Controller):
 		except: pass
 		template=self.model.settings.style_template()
 		self.view.loadchat("",style=self.model.settings.style,template=template,variant=self.model.settings.stylevar)
-		print self.view['message'].grab_focus()
-		print "blalbabla"	
+		self.view['message'].grab_focus()
 	def on_desc_key_press_event(self,widget,event):
 		import gtk
 		key=event.keyval
@@ -332,7 +323,6 @@ class MainCtrl (Controller):
 			stylevars=os.listdir(path+"/chatstyles/"+self.model.settings.style+"/Variants")
 		except:
 			stylevars=""	
-		print stylevars
 		self.view.opensettings(self.model.settings.get_all(),styles,stylevars)
 		self.view['chatstyle'].connect("changed",self.check_style_variants)
 		
@@ -377,9 +367,16 @@ class MainCtrl (Controller):
 				treeview.set_cursor( path, col, 0)
 				self.view['contactpopup'].popup( None, None, None, 3, time)
 				return True
+	def on_list_button_release_event(self,treeview,event):
+		if event.button ==1:
+			index=self.view['list'].get_selection()
+			index=index.get_selected()[1]
+			try:
+				self.model.openchat(self.view['list'],index,None)
+			except:
+				self.view['message'].grab_focus()
 
 	def property_recipent_value_change(self, model, old, new):
-		print model
 		try:
 			self.view['message'].get_buffer().set_text(self.model.editmessage[new])
 		except:
@@ -397,7 +394,6 @@ class MainCtrl (Controller):
 		except:
 			html=self.model.archive.loadlast(new,self.model.settings.style,self.model.settings.me)
 			model.messages[new]=html
-			print html
 		template=self.model.settings.style_template()
 		self.view.loadchat(html,style=self.model.settings.style,template=template,variant=self.model.settings.stylevar)
 		if new==self.model.recipentname or self.model.recipentname==None :
@@ -415,10 +411,8 @@ class MainCtrl (Controller):
 	def iconactivate(self,widget):
 		window=self.view['window']
 		if not window.is_active():
-			print self.model.hidden
 			if self.model.hidden:
 				newx,newy=self.model.pos.get_pos()
-				print newx,newy
 				window.move(newx,newy)
 				self.model.hidden=False
 			else:

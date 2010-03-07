@@ -27,7 +27,6 @@ class ConnectionCtrl (Controller):
 		self.view.hidewarn()
 	
 	def property_is_connecting_value_change(self, model, old, new):
-		print new
 		if new:
 			self.view['progress'].show()
 			self.view['jidlabel'].show()
