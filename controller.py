@@ -308,7 +308,12 @@ class MainCtrl (Controller):
 			variant=model[index][0]
 		else:
 			variant=""
-		self.model.settings.save(show,status,me,style,variant,notify1,notify2)
+		if self.view['singlclkbtn'].get_active():
+			singleclick="True"
+		else:
+			singleclick="False"
+		
+		self.model.settings.save(show,status,me,style,variant,notify1,notify2,singleclick)
 		self.closesettings(widget)
 		
 	def closesettings(self,widget):
@@ -327,7 +332,8 @@ class MainCtrl (Controller):
 		self.view['chatstyle'].connect("changed",self.check_style_variants)
 		
 	def check_style_variants(self,widget):
-		self.view['stylevarsbox'].set_sensitive(0)
+		self.view['stylevarscheck'].set_sensitive(0)
+		self.view['stylevarslist'].set_sensitive(0)
 		self.view['stylevarscheck'].set_active(0)
 		self.view['stylevarslist'].get_model().clear()
 		model=widget.get_model()
@@ -368,13 +374,14 @@ class MainCtrl (Controller):
 				self.view['contactpopup'].popup( None, None, None, 3, time)
 				return True
 	def on_list_button_release_event(self,treeview,event):
-		if event.button ==1:
-			index=self.view['list'].get_selection()
-			index=index.get_selected()[1]
-			try:
-				self.model.openchat(self.view['list'],index,None)
-			except:
-				self.view['message'].grab_focus()
+		if self.model.settings.singleclick=="True":
+			if event.button ==1:
+				index=self.view['list'].get_selection()
+				index=index.get_selected()[1]
+				try:
+					self.model.openchat(self.view['list'],index,None)
+				except:
+					self.view['message'].grab_focus()
 
 	def property_recipent_value_change(self, model, old, new):
 		try:

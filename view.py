@@ -20,13 +20,13 @@ class MainView (View):
 		self['window'].show()
 		self['window'].set_icon_from_file(path+"/icons/pybber.png")
 		self['chatstyle']=gtk.combo_box_new_text()
-		self['hbuttonbox4'].add(self['chatstyle'])
+		self['vbuttonbox3'].add(self['chatstyle'])
 		self['chatstyle'].show_all()
 		self.createchat()
 		self.hid=0
 		self.createicon()
 		self['stylevarslist']=gtk.combo_box_new_text()
-		self['stylevarsbox'].add(self['stylevarslist'])
+		self['vbuttonbox3'].add(self['stylevarslist'])
 		self['stylevarslist'].show_all()
 		self['window'].set_role("Pybber")
 		
@@ -134,7 +134,8 @@ class MainView (View):
 		self['stylevarslist'].get_model().clear()
 
 		if stylevars!="":
-			self['stylevarsbox'].set_sensitive(1)
+			self['stylevarscheck'].set_sensitive(1)
+			self['stylevarslist'].set_sensitive(1)
 			if set['stylevar']!="":
 				self['stylevarslist'].get_model().append([set['stylevar']])
 				self['stylevarscheck'].set_active(True)
@@ -145,8 +146,10 @@ class MainView (View):
 						self['stylevarslist'].get_model().append([i])
 			self['stylevarslist'].set_active(0)
 
-			
-				
+		if set['singleclick']=="True":
+			self['singlclkbtn'].set_active(True)
+		else:
+			self['singlclkbtn'].set_active(False)	
 	def list_showform(self,form,prop=False,jid=None,name=None):
 		self['list'].hide()
 		self[form+'form'].show()	
@@ -220,7 +223,7 @@ class MainView (View):
 			#self.n.attach_to_status_icon(self.icon)
 		self.n.show()
 	def create_style_variants(self,vlist):
-		self['stylevarsbox'].set_sensitive(1)
+		self['stylevarslist'].set_sensitive(1)
 		for i in vlist:
 			self['stylevarslist'].get_model().append([i])
 		self['stylevarslist'].set_active(0)

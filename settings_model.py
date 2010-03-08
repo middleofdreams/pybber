@@ -28,7 +28,8 @@ class SettingsModel(Model):
 				  "style":self.style,
 				  "notify1":self.notify1,
 				  "notify2":self.notify2,
-				  "stylevar":self.stylevar}
+				  "stylevar":self.stylevar,
+				  "singleclick":self.singleclick}
 		return settings
 	def tryfiles(self):
 		if not os.path.isdir(self.workpath):
@@ -82,9 +83,13 @@ class SettingsModel(Model):
 			self.stylevar=d['stylevar']
 		except:
 			self.stylevar=""
+		try:	
+			self.singleclick=d['singleclick']
+		except:
+			self.singleclick="False"
 		d.close()	
 		
-	def save(self,show,status,me,style,variant,notify1,notify2):	
+	def save(self,show,status,me,style,variant,notify1,notify2,singleclick):	
 		
 		d = gdbm.open(self.prefs, 'c')
 		d['show']=str(show)
@@ -106,6 +111,8 @@ class SettingsModel(Model):
 		self.notify2=notify2
 		self.stylevar=variant
 		d['stylevar']=variant
+		d['singleclick']=singleclick
+		self.singleclick=singleclick
 		d.close()	
 		
 	def saveacc(self,remember,login,passwd):
